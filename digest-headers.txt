@@ -1151,7 +1151,7 @@ Internet-Draft               Digest Headers               September 2020
    suited towards cryptographic constructions such as signatures.
 
    However, these rely on collision-resistance for their security proofs
-   [CMU-836068].  The "MD5" and "SHA-1" digest algorithms are vulnerable
+   [CMU-836068].  The "md5" and "sha" digest-algorithms are vulnerable
    to collisions attacks, so they MUST NOT be used with "Digest".
 
 11.3.  Other Deprecated Algorithms
@@ -1178,7 +1178,7 @@ Polli & Pardue           Expires March 11, 2021                [Page 21]
 Internet-Draft               Digest Headers               September 2020
 
 
-   Moreover identity digest algorithms (eg. "id-sha-256" and "id-sha-
+   Moreover identity digest-algorithms (eg. "id-sha-256" and "id-sha-
    512") allow piecing together a resource from different sources (e.g.
    different servers that perhaps apply different content codings)
    enabling the user-agent to detect that the application-layer tasks
@@ -1246,7 +1246,7 @@ Internet-Draft               Digest Headers               September 2020
 
    "Digest" may expose information details of encrypted payload when the
    checksum is computed on the unencrypted data.  An example of that is
-   the use of the "id-sha-256" digest algorithm in conjuction with the
+   the use of the "id-sha-256" digest-algorithm in conjuction with the
    encrypted content-coding [RFC8188].
 
 11.9.  Algorithm Agility
@@ -1292,7 +1292,7 @@ Internet-Draft               Digest Headers               September 2020
 
 12.4.  Update "UNIXsum" Digest Algorithm
 
-   This memo updates the "UNIXsum" digest algorithm in the HTTP Digest
+   This memo updates the "UNIXsum" digest-algorithm in the HTTP Digest
    Algorithm Values [6] registry:
 
    o  Digest Algorithm: As specified in Section 5.
@@ -1303,7 +1303,7 @@ Internet-Draft               Digest Headers               September 2020
 
 12.5.  Update "UNIXcksum" Digest Algorithm
 
-   This memo updates the "UNIXcksum" digest algorithm in the HTTP Digest
+   This memo updates the "UNIXcksum" digest-algorithm in the HTTP Digest
    Algorithm Values [7] registry:
 
    o  Digest Algorithm: As specified in Section 5.
@@ -1384,7 +1384,7 @@ Internet-Draft               Digest Headers               September 2020
 
 12.10.  The "id-sha-256" Digest Algorithm
 
-   This memo registers the "id-sha-256" digest algorithm in the HTTP
+   This memo registers the "id-sha-256" digest-algorithm in the HTTP
    Digest Algorithm Values [12] registry:
 
    o  Digest Algorithm: id-sha-256
@@ -1404,7 +1404,7 @@ Internet-Draft               Digest Headers               September 2020
 
 12.11.  The "id-sha-512" Digest Algorithm
 
-   This memo registers the "id-sha-512" digest algorithm in the HTTP
+   This memo registers the "id-sha-512" digest-algorithm in the HTTP
    Digest Algorithm Values [13] registry:
 
    o  Digest Algorithm: id-sha-512
