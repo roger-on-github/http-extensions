@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-01T00:14:57.441549+00:00",
+  "timestamp": "2020-09-08T00:15:04.132416+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -21797,15 +21797,15 @@
       ],
       "body": "## I wish\r\n\r\nA threat model for `Digest`.\r\n\r\n## Questions\r\n\r\n- is this useful/required?\r\n- should this go into Security Considerations or in another document?",
       "createdAt": "2019-07-10T09:44:07Z",
-      "updatedAt": "2020-08-24T15:23:48Z",
+      "updatedAt": "2020-09-07T15:41:21Z",
       "closedAt": null,
       "comments": [
         {
           "author": "ioggstream",
           "authorAssociation": "CONTRIBUTOR",
-          "body": "# Security issues for HTTP Digest\r\n\r\n## Actors\r\n\r\n- User\r\n- User-Agent: see RFC7230\r\n- Intermediaries that do not do TLS termination\r\n- Intermediaries that do TLS termination.\r\n\r\n- Application: the application actually running the service\r\n\r\n## Attacker capabilities\r\n\r\n1. Intermediaries can alter HTTP messages\r\n\r\n2. Intermediaries that do transport-layer termination can alter HTTP messages\r\n\r\n3. The application can erroneously or purposedly alter the message\r\n\r\n4. User can forge messages with the same checksum values\r\n\r\n## Attacker non-capabilities\r\n\r\n# Attacks and mitigations\r\n\r\n## Alteration of HTTP message headers\r\n\r\n### The attack\r\n\r\nAn intermediary can alter an HTTP header by chance or purpose.\r\n\r\n### Proposed mitigation\r\n\r\n[x] Use an end-to-end transport-layer security mechanism.\r\n\r\n\r\n## Alteration of HTTP representation-metadata headers\r\n\r\n### The attack\r\n\r\nA TLS-terminator intermediary can alter representation-metadata by chance or purpose.\r\n\r\n### Proposed mitigation\r\n \r\n - [ ] Use a signature mechanism that covers both `Digest` and the representation-metadata.\r\n\r\n## Send a Digest header with a different payload\r\n\r\n### The attack\r\n\r\nA TLS-terminator intermediary can replace the representation-data with another\r\none having the same digest-algorithm.\r\n\r\nA malicious User can forge two messages with:\r\n\r\n  - different representation-data\r\n  - same Digest header values\r\n  \r\nsend an HTTP message with the first representation-data\r\nthen pretend he sent the one with the second representation-data.\r\n\r\nA malicious Server could implement a similar behavior.\r\n\r\n### Proposed mitigation\r\n\r\n[x] Use a digest-algorithm that is not subject to collision (eg. sha-256),\r\nor refuse to use digest-algorithms subject to collision.\r\n\r\n## Server resource exhaustion for calculating Digest on huge representation-data\r\n\r\n### The attack\r\n\r\nA User could exhaust server resources by chance or purpose via:\r\n\r\n1- sending a huge representation\r\n2- digest calculation of the complete representation\r\n3- forcing the server to evaluate the digest of the included representation\r\n\r\n### Proposed mitigation\r\n\r\n  - [x] To consume huge representation-data, you may consider\r\n         mechanisms sending progressive integrity checksums in the payload body\r\n         and just use `Digest` to provide the last checksum value.\r\n\r\n## Server resource exhaustion for calculating Digest on partial representations\r\n\r\n### The attack\r\n\r\nA malicious User could exhaust server resources via:\r\n\r\n1- reconstruction of the complete representation\r\n2- digest calculation of the complete representation\r\n3- forcing the server to evaluate many different digest-algorithms for a given representation\r\n\r\n### Proposed mitigation\r\n\r\nIf you are exposed to this kind of attack because \r\nreconstructing complete representations of your \r\nobjects is computationally intensive, avoid using\r\n[ ] Digest with mechanisms like Range-Requests and PATCH.\r\n\r\nIf you support multiple digest-algorithms:\r\n\r\n - [ ] limit the supported digest-algorithms to the\r\n  ones you really care for;\r\n - [ ] establish a policy for validating only the digest\r\n  using the stronger digest-algorithm.\r\n\r\n## Confidence in recipient's Digest validation \r\n\r\n### The attack\r\n\r\nThe recipient may skip Digest header validation by chance or purpose\r\nand still be compliant to the specification: as explained in {#digest-header} \r\nthe recipient MAY ignore any or all the received representation-data-digests.\r\n\r\nThis is because Digest was originally conceived in RFC3230 as a tool \r\nfor the recipient to validate the received representation, but not\r\nfor the sender to receive an integrity proof of the communication. \r\n\r\n- [ ] You should not rely on the recipient having correctly verified the Digest value\r\nof the selected representation.\r\n\r\n### Proposed mitigation\r\n\r\nIf you want the recipient to validate the `Digest`:\r\n\r\n- [ ] agree on `Digest` processing with your peer, like it is\r\n  done in [MICE](https://github.com/martinthomson/http-mice/blob/master/draft-thomson-http-mice.md)",
+          "body": "# Security issues for HTTP Digest\r\n\r\n## Actors\r\n\r\n- User\r\n- User-Agent: see RFC7230\r\n- Intermediaries that do not do TLS termination\r\n- Intermediaries that do TLS termination.\r\n\r\n- Application: the application actually running the service\r\n\r\n## Attacker capabilities\r\n\r\n1. Intermediaries can alter HTTP messages\r\n\r\n2. Intermediaries that do transport-layer termination can alter HTTP messages\r\n\r\n3. The application can erroneously or purposedly alter the message\r\n\r\n4. User can forge messages with the same checksum values\r\n\r\n## Attacker non-capabilities\r\n\r\n# Attacks and mitigations\r\n\r\n## Alteration of HTTP message headers\r\n\r\n### The attack\r\n\r\nAn intermediary can alter an HTTP header by chance or purpose.\r\n\r\n### Proposed mitigation\r\n\r\n[x] Use an end-to-end transport-layer security mechanism.\r\n\r\n\r\n## Alteration of HTTP representation-metadata headers\r\n\r\n### The attack\r\n\r\nA TLS-terminator intermediary can alter representation-metadata by chance or purpose.\r\n\r\n### Proposed mitigation\r\n \r\n - [x] Use a signature mechanism that covers both `Digest` and the representation-metadata.\r\n\r\n## Send a Digest header with a different payload\r\n\r\n### The attack\r\n\r\nA TLS-terminator intermediary can replace the representation-data with another\r\none having the same digest-algorithm.\r\n\r\nA malicious User can forge two messages with:\r\n\r\n  - different representation-data\r\n  - same Digest header values\r\n  \r\nsend an HTTP message with the first representation-data\r\nthen pretend he sent the one with the second representation-data.\r\n\r\nA malicious Server could implement a similar behavior.\r\n\r\n### Proposed mitigation\r\n\r\n[x] Use a digest-algorithm that is not subject to collision (eg. sha-256),\r\nor refuse to use digest-algorithms subject to collision.\r\n\r\n## Server resource exhaustion for calculating Digest on huge representation-data\r\n\r\n### The attack\r\n\r\nA User could exhaust server resources by chance or purpose via:\r\n\r\n1- sending a huge representation\r\n2- digest calculation of the complete representation\r\n3- forcing the server to evaluate the digest of the included representation\r\n\r\n### Proposed mitigation\r\n\r\n  - [x] To consume huge representation-data, you may consider\r\n         mechanisms sending progressive integrity checksums in the payload body\r\n         and just use `Digest` to provide the last checksum value.\r\n\r\n## Server resource exhaustion for calculating Digest on partial representations\r\n\r\n### The attack\r\n\r\nA malicious User could exhaust server resources via:\r\n\r\n1- reconstruction of the complete representation\r\n2- digest calculation of the complete representation\r\n3- forcing the server to evaluate many different digest-algorithms for a given representation\r\n\r\n### Proposed mitigation\r\n\r\nIf you are exposed to this kind of attack because \r\nreconstructing complete representations of your \r\nobjects is computationally intensive, avoid using\r\n[ ] Digest with mechanisms like Range-Requests and PATCH.\r\n\r\nIf you support multiple digest-algorithms:\r\n\r\n - [ ] limit the supported digest-algorithms to the\r\n  ones you really care for;\r\n - [ ] establish a policy for validating only the digest\r\n  using the stronger digest-algorithm.\r\n\r\n## Confidence in recipient's Digest validation \r\n\r\n### The attack\r\n\r\nThe recipient may skip Digest header validation by chance or purpose\r\nand still be compliant to the specification: as explained in {#digest-header} \r\nthe recipient MAY ignore any or all the received representation-data-digests.\r\n\r\nThis is because Digest was originally conceived in RFC3230 as a tool \r\nfor the recipient to validate the received representation, but not\r\nfor the sender to receive an integrity proof of the communication. \r\n\r\n- [ ] You should not rely on the recipient having correctly verified the Digest value\r\nof the selected representation.\r\n\r\n### Proposed mitigation\r\n\r\nIf you want the recipient to validate the `Digest`:\r\n\r\n- [ ] agree on `Digest` processing with your peer, like it is\r\n  done in [MICE](https://github.com/martinthomson/http-mice/blob/master/draft-thomson-http-mice.md)",
           "createdAt": "2019-07-24T08:50:16Z",
-          "updatedAt": "2020-08-24T15:23:48Z"
+          "updatedAt": "2020-09-07T15:41:21Z"
         },
         {
           "author": "LPardue",
@@ -25636,7 +25636,7 @@
       ],
       "body": "There has been some debate about the relative utility of frames as a means of prioritizing and reprioritizing requests.  \r\n\r\nFrames are not guaranteed to be end-to-end and don't enjoy the benefits listed in [Section 8.1](https://httpwg.org/http-extensions/draft-ietf-httpbis-priority.html#why-use-an-end-to-end-header-field).  An (unlisted) reason is that the API for header fields is better understood and more likely to be available than a new and unspecified API.  HTTP/2 defined the use of frames for reprioritization, but APIs are not widely available, nor are they consistent.\r\n\r\nFrames provide two obvious benefits:\r\n\r\n1. They are scoped to the current connection and so only propagate if the receiving endpoint explicitly propagates them.\r\n\r\n2. They can be sent at any time.  This allows for reprioritization, but the requirement to have them sent after requests are complete means that they can't be sent \"on\" a stream, they have to instead refer to a stream, which complicates the design somewhat.  The proposal to allow trailers at any time helps a little here, but only to the extent that it remains possible to send.  Stream closure is used to terminate request bodies in some cases, making any trailer-based solution limited.\r\n\r\nHowever, frames have shortcomings too:\r\n\r\n1. They are complex.  The encoding of a header field into a frame is suboptimal, but necessary for extensibility and consistency reasons.  And the manner in which they refer to requests (or pushes) makes them more complex to manage than a header field.\r\n\r\n2. They are only scoped to a connection, which means that the extent of propagation can be non-deterministic.  In particular, they depend on the connection supporting the signaling.  This is the flip side of the benefit, and - in my opinion - outweighs it.\r\n\r\n3. The API is far more difficult compared to header fields.\r\n\r\nWe know little enough about the efficacy of prioritization that we should defer the definition of frames absent strong motivation for their efficacy and desirability.  The current document makes a good case for header fields, but the motivation for frames is weaker.  It is true that cases like escalation of a speculative fetch to blocking status are *theoretically* appealing, but those cases are rare and unlikely to benefit from reprioritization.  In particular, the mismatch between end-to-end and hop-by-hop (excuse the use of deprecated terminology) characteristics here makes it very hard to reason about the outcome.\r\n\r\nI know that others (@RyanAtGoogle in particular) have questions about the header field from a different angle and would prefer frames, exclusively.  So this probably comes down to having more discussion about which approach to take: headers, frames, or both.  \r\n\r\nIn either case, I would suggest that we have a need for both clear signals that the mechanism is broadly useful and evidence that that it is likely to be widely implemented.\r\n",
       "createdAt": "2020-01-09T04:21:20Z",
-      "updatedAt": "2020-07-27T20:03:39Z",
+      "updatedAt": "2020-09-07T22:48:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -25764,6 +25764,13 @@
           "body": "Coming back to this after leave.\r\n\r\n1. The use cases I have in mind are Chrome and other clients that want to re-prioritize requests, particularly due to a change in viewport, so definitely not proprietary in anyway.  But I see there's a separate thread on the value of whether people intend to use reprioritization, so I'll catch up on that.\r\n2. At the time, people felt exposing this was too dangerous to assume, and at the very least it'd need to be confirmed with the W3C.  Even so, browsers may decide to limit its usage(ie: not allow the very highest priority/etc).\r\n\r\nI certainly can access a header, I'm just saying it adds complexity and risk to a very complex and risk-averse environment on the server side, and I can't see the value outside of a multiplexed connection.  I'm not saying we shouldn't include the header in the draft, but I don't see it as being that useful past the first hop.",
           "createdAt": "2020-07-27T20:03:39Z",
           "updatedAt": "2020-07-27T20:03:39Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "From the chairs' email on August 26 2020 https://lists.w3.org/Archives/Public/ietf-http-wg/2020JulSep/0118.html\r\n\r\n> After reviewing list and issue discussion, as well as the results of our previous request for implementer intent, the Chairs believe that there is rough consensus forming to support reprioritisation in draft-ietf-httpbis-priority. \r\n\r\n> If you object, please state so (ideally giving reasons).\r\n\r\n12 days on there's been no objections. We should start thinking about closing this issue soon.",
+          "createdAt": "2020-09-07T22:48:09Z",
+          "updatedAt": "2020-09-07T22:48:42Z"
         }
       ]
     },
@@ -28985,7 +28992,7 @@
       "id": "MDU6SXNzdWU2MjgzMDM0NzQ=",
       "title": "digest-algorithms SHOULD be lowercase (wrt structured headers)",
       "url": "https://github.com/httpwg/http-extensions/issues/1211",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -28996,8 +29003,8 @@
       ],
       "body": "## I suggest\r\n\r\nthat digest-algorithms `SHOULD` be lowercase\r\n\r\n## Note\r\n\r\ndigest-algorithms are currently case insensitive.\r\nWe won't break specs suggesting to express them in lowercase.\r\nThis could make it easy a future transition to S-H\r\n",
       "createdAt": "2020-06-01T09:51:20Z",
-      "updatedAt": "2020-08-18T07:48:30Z",
-      "closedAt": null,
+      "updatedAt": "2020-09-07T15:23:58Z",
+      "closedAt": "2020-09-07T15:23:58Z",
       "comments": [
         {
           "author": "mnot",
@@ -29808,9 +29815,9 @@
       "labels": [
         "digest-headers"
       ],
-      "body": "## Tasks\r\n\r\n- [ ] digest-algorithm lowercase #1253 \r\n- [ ] deprecate parameters and wait for feedback :)\r\n- [ ] clean up Representation Digest https://github.com/httpwg/http-extensions/pull/937#discussion_r472018411\r\n- [ ] remove reference to \"validator fields\" if they are not used anymore\r\n- [ ] consistent usage of backticks \r\n\r\n```\r\n`Digest` vs Digest vs \"Digest\"\r\n`digest-algorithms` vs digest-algoritms vs \"digest-algorithms\"\r\n```\r\n\r\n- [ ] consistent usage of \"-\" \r\n\r\n```\r\ndigest-algorithms vs digest algorithms\r\n```\r\n\r\n- [ ] consistent usage of lowercase digest-algorithms with backticks `sha-256` in text #1253 \r\n\r\n- [ ] close #1139 and #1138  about old algorithms unless somebody comes with a proposal. @LPardue ",
+      "body": "## Tasks\r\n\r\n- [ ] digest-algorithm lowercase #1253 \r\n- [ ] deprecate parameters and wait for feedback :)\r\n- [x] clean up Representation Digest https://github.com/httpwg/http-extensions/pull/937#discussion_r472018411\r\n- [x] remove reference to \"validator fields\" if they are not used anymore\r\n- [x] consistent usage of backticks #1255 \r\n\r\n```\r\n`Digest` vs Digest vs \"Digest\"\r\n`digest-algorithms` vs digest-algoritms vs \"digest-algorithms\"\r\n```\r\n\r\n- [x] consistent usage of \"-\" #1256  \r\n\r\n```\r\ndigest-algorithms vs digest algorithms\r\n\r\n```\r\n\r\n- [ ] consistent usage of lowercase digest-algorithms with double quote \"sha-256\" in text #1255\r\n\r\n- [ ] close #1139 and #1138  about old algorithms unless somebody comes with a proposal. @LPardue ",
       "createdAt": "2020-08-18T11:14:37Z",
-      "updatedAt": "2020-08-26T16:32:05Z",
+      "updatedAt": "2020-09-07T13:58:14Z",
       "closedAt": null,
       "comments": []
     },
@@ -63301,13 +63308,13 @@
       ],
       "body": "This attempts to address #1096 and #1079. It might help towards overcoming the headers vs frames debate.\r\n\r\nI made the call to restrict the PRIORITY_UPDATE frame to only be sent by clients.\r\n\r\nIt replaces ASCII art with new QUIC-style frame definitions.",
       "createdAt": "2020-04-30T13:45:24Z",
-      "updatedAt": "2020-07-15T04:35:35Z",
+      "updatedAt": "2020-09-07T22:41:56Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
-      "baseRefOid": "9e2bb280faa05fb9b7af494287ef5f5ce19bdb77",
+      "baseRefOid": "01511073277183a21344e8a22ee59eacfb6e5777",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority-update-frames",
-      "headRefOid": "ca71a499138f646c99fc1c57a72277f2db4fc1e0",
+      "headRefOid": "357b2ae851af6f33d8e76c46b4c3c1a5ca6b60d1",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -63382,6 +63389,13 @@
           "body": "We also discussed this PR during the May 2020 virtual interim and the conversation segued into a discussion about reprioritization which is related but ultimately is tracked separately in #1021.\r\n\r\nAs editor, I believe this PR adds changes that better describe the protocol with the design it had when adopted by the WG. And therefore it can be merged independent of the WG finding consensus on reprioritization. \r\n\r\nI've received a lot of feedback on this PR (thanks) and believe I've addressed all but one comment. I aim to resolve that one soon and then plan to merge this PR unless I hear some pushback.\r\n",
           "createdAt": "2020-05-26T23:55:54Z",
           "updatedAt": "2020-05-26T23:55:54Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This issue got tied up with the discussion about reprioritization. Now that the chairs believe there is rough consensus on the matter, I'm giving fair warning that I'm aiming to land this change in the next day or two. I'll remind folks that this has had pretty substantial review already and I'm not looking for relitigation.\r\n\r\nI've just pushed two commits: 1) revert the H2 frame diagram format, we can tackle this later if we care. 2) fix an inconsistency in frame type values report by @guoye-zhang.\r\n\r\nThere is an open question about a servers ability to understand a safe limit of buffering, which might be subject to implementation API. I'd like to spin that off into it's issue so we can make progress here. ",
+          "createdAt": "2020-09-07T22:36:13Z",
+          "updatedAt": "2020-09-07T22:38:21Z"
         }
       ],
       "reviews": [
@@ -63401,13 +63415,13 @@
               "originalPosition": 21,
               "body": "```suggestion\r\nHaving two mechanisms to carry the initial priority signal brings the dilemma of\r\n```",
               "createdAt": "2020-05-05T17:50:00Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 61,
               "body": "```suggestion\r\nof any other value MUST be treated as a connection error of type PROTOCOL_ERROR.\r\n```",
               "createdAt": "2020-05-05T17:51:18Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63427,7 +63441,7 @@
               "originalPosition": 21,
               "body": "+1",
               "createdAt": "2020-05-05T18:05:45Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63447,7 +63461,7 @@
               "originalPosition": 45,
               "body": "Should be more like\r\n\r\n```\r\n  Therefore, a client cannot reprioritize a response by\r\n  sending additional metadata (e.g., trailer fields) on the request stream.\r\n  We avoid interoperability failure by restricting PRIORITY_UPDATE\r\n  frames to the control stream, with each such frame explicitly identifying\r\n  the stream to which the new priority applies.\r\n```",
               "createdAt": "2020-05-05T18:27:45Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63467,7 +63481,7 @@
               "originalPosition": 45,
               "body": "Thanks. I tweaked the suggestion slightly and made cbcdc60cf5a92. PTAL.",
               "createdAt": "2020-05-06T13:13:38Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63500,19 +63514,19 @@
               "originalPosition": 131,
               "body": "0x10?",
               "createdAt": "2020-05-14T01:00:08Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 11,
               "body": "How about stating that endpoints that do not want to expose an end-to-end signal MAY omit the header field, but send the PRIORITY_UPDATE frame at an early moment assuming that it would reach the server as early as the request headers? Would could go on to explain that in such case, all the responses that the server would send would have the priority in the frame being applied.\r\n\r\nThe benefit of phrasing that way is that we can get rid of the last paragraph of this section.",
               "createdAt": "2020-05-14T01:04:23Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 91,
               "body": "Seeing the definition of the frame _headers_ for H2 was surprising to me, though I understand that it reflects the change to the HTTP/3 draft. Maybe I should ask if the change in HTTP/3 is a good thing.",
               "createdAt": "2020-05-14T01:08:39Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63532,7 +63546,7 @@
               "originalPosition": 91,
               "body": "As a personal opinion I prefer to see the frame in whole because it avoids having to cross reference to the frame headers, which are defined in some other document. \r\n\r\nBut I can drop them if people want. I see that as an editorial change so perhaps we can avoid blocking this and fix up later if needs be.",
               "createdAt": "2020-05-14T01:21:41Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63552,7 +63566,7 @@
               "originalPosition": 91,
               "body": "I agree that this is an editorial issue, and that we need to ask the WG to resolve (because it is about the convention covering all H2 extensions, not just this one).",
               "createdAt": "2020-05-14T01:43:01Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63572,7 +63586,7 @@
               "originalPosition": 91,
               "body": "FWIW, ALTSVC is the only extension to have reached RFC status previously.  It [does not include](https://tools.ietf.org/html/rfc7838#section-4) the frame header; only the payload.",
               "createdAt": "2020-05-14T14:41:04Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63592,7 +63606,7 @@
               "originalPosition": 91,
               "body": "You forgot ORIGIN frame https://tools.ietf.org/html/rfc8336#section-2.1 which also specifies the frame payload.\r\n\r\nNow that H2 and H3 have different frame format definitions, I think extensions applicable to both will hit this problem. I'd like to figure what people think is the most acceptable way to present things.",
               "createdAt": "2020-05-14T14:53:09Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63612,7 +63626,7 @@
               "originalPosition": 91,
               "body": "One option would be to write documents that update RFC 7838 and RFC 8336 to use the new format and define the H3 frame at the same time...",
               "createdAt": "2020-05-14T14:56:10Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63632,7 +63646,7 @@
               "originalPosition": 11,
               "body": "I've tried to incorporate this suggestion in https://github.com/httpwg/http-extensions/pull/1167/commits/f5ac92a045a3074e503c93d304a90799e387ab07 but found it trickier to write than I first thought it would be, so it ended up a little different in the end. Please take a look and add some further suggestions if I'm not hitting your mark.",
               "createdAt": "2020-05-15T11:53:22Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63652,7 +63666,7 @@
               "originalPosition": 91,
               "body": "True, I try to block that one out.\r\n\r\nThey have different frame format definitions, sure; the question is whether the payload needs to vary between H2/H3.  I think the real things you need to specify are:\r\n\r\n- What stream it's on (part of the header in H2, intrinsic property in H3)\r\n  - Control stream vs. stream zero language plays into this\r\n- Flags if used in H2; since H3 doesn't have flags, this might lead to a payload difference\r\n- Payload\r\n\r\nThe simplest path for dual-version extensions is not to use flags and only define the payload.",
               "createdAt": "2020-05-15T18:15:38Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63672,7 +63686,7 @@
               "originalPosition": 32,
               "body": "How about changing the last sentence to something like: _The signal carried by a PRIORITY_UPDATE frame overrides that carried by the header, even when the frame was received before the request headers._\r\n\r\nNote that this PR recommends such a behavior; it states that a server SHOULD buffer and apply the content of PRIORITY_UPDATE frame that precedes the header field. For good reasons.\r\n\r\nConsider the case of an H3 client sending a HTTP request with a Priority header field, then changing its mind and sending a PRIORITY_UPDATE frame. As H3 does not guarantee delivery order across streams, the server might receive the frame before the header. I'd assume that we'd want servers to apply the value carried by the frame. Even when the protocol is H2, I am not sure if all the H2 stacks have the guarantee that the information across multiple streams are sent in the order they are issued, or that they are provided to the application in the order they are received.",
               "createdAt": "2020-05-15T20:17:34Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63705,49 +63719,49 @@
               "originalPosition": 30,
               "body": "The important \"when\" here is \"before prioritization information is not useful to the server\".  That might be later than when the server receives the request.",
               "createdAt": "2020-05-22T03:13:28Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 112,
               "body": "SHOULD.  I don't think that I could guarantee that this could be enforced.\r\n\r\n```suggestion\r\nthis SHOULD be treated as a connection error of type PROTOCOL_ERROR.\r\n```\r\n\r\nWell, I guess that this is the h2 variant, but still.",
               "createdAt": "2020-05-22T03:14:24Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 202,
               "body": "This needs to be qualified; if the frame contains a Push ID, then this doesn't apply.",
               "createdAt": "2020-05-22T03:16:46Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 203,
               "body": "```suggestion\r\nID that is beyond the stream limits, this SHOULD be treated as a connection error\r\n```",
               "createdAt": "2020-05-22T03:16:55Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 213,
               "body": "This one could be a MUST.",
               "createdAt": "2020-05-22T03:17:17Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 231,
               "body": "I would skip a number here and let people use the low bit of the type as a flag if they want.  Otherwise, this is a tiny bit more awkward.",
               "createdAt": "2020-05-22T03:18:10Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 91,
               "body": "```suggestion\r\n  Stream Identifier (31) = 0,\r\n```",
               "createdAt": "2020-05-22T03:18:52Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             },
             {
               "originalPosition": 28,
               "body": "I just have to say that this \"do not want\" statement assumes a great deal without a whole lot of support.",
               "createdAt": "2020-05-22T03:20:04Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63767,7 +63781,7 @@
               "originalPosition": 213,
               "body": "hmm yeah, the current text is actually a bit nasty because it doesn't restrict PRIORITY_UPDATE to be within MAX_PUSH_ID either. Combining those factors means the client has a bit too much sway over the amount of state a server needs to hold. Let me fix both things.",
               "createdAt": "2020-05-22T14:24:32Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63787,7 +63801,7 @@
               "originalPosition": 28,
               "body": "paging @kazuho who suggested this text",
               "createdAt": "2020-05-26T23:45:14Z",
-              "updatedAt": "2020-06-04T12:59:09Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63807,7 +63821,7 @@
               "originalPosition": 28,
               "body": "should be fixed in https://github.com/httpwg/http-extensions/pull/1167/commits/ca71a499138f646c99fc1c57a72277f2db4fc1e0",
               "createdAt": "2020-06-04T13:01:33Z",
-              "updatedAt": "2020-06-04T13:01:34Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         },
@@ -63827,7 +63841,47 @@
               "originalPosition": 123,
               "body": "Is it 0x1CCB8BBF1F0700/0x1CCB8BBF1F0701 or 0x10/0x11?",
               "createdAt": "2020-07-15T04:35:35Z",
-              "updatedAt": "2020-07-15T04:35:36Z"
+              "updatedAt": "2020-09-07T22:41:56Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNzE2ODk4",
+          "commit": {
+            "abbreviatedOid": "ca71a49"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-07T22:09:28Z",
+          "updatedAt": "2020-09-07T22:09:28Z",
+          "comments": [
+            {
+              "originalPosition": 91,
+              "body": "Taking the feedback received here and elsewhere, I'm reverted the diagram back to our traditional format.",
+              "createdAt": "2020-09-07T22:09:28Z",
+              "updatedAt": "2020-09-07T22:41:56Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNzE2OTc5",
+          "commit": {
+            "abbreviatedOid": "ca71a49"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-07T22:10:16Z",
+          "updatedAt": "2020-09-07T22:10:17Z",
+          "comments": [
+            {
+              "originalPosition": 123,
+              "body": "In HTTP/3, the value should be the long 0x1CCB8BBF1F0700/0x1CCB8BBF1F0701, I'll fix this up.",
+              "createdAt": "2020-09-07T22:10:17Z",
+              "updatedAt": "2020-09-07T22:41:56Z"
             }
           ]
         }
@@ -65937,28 +65991,30 @@
     {
       "number": 1253,
       "id": "MDExOlB1bGxSZXF1ZXN0NDc0MDIwMzAy",
-      "title": "Fix: #1211. Recommend lowercase digest-algorithm names.",
+      "title": "Fix: #1211. Prefer lowercase digest-algorithm names.",
       "url": "https://github.com/httpwg/http-extensions/pull/1253",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "digest-headers"
       ],
-      "body": "## This PR\r\n\r\n- use lowercase for digest-algoritms in the doc\r\n- case is unchanged when referring to the actual algorithms (eg. SHA-1)\r\n- RECOMMEND lowercase for digest-algorithms\r\n- update IANA table to use lowercase digest-algorithms\r\n\r\n## Note\r\n\r\ndigest-algorithms remain case insensitive\r\n\r\nFixes #1211 Discussion here https://lists.w3.org/Archives/Public/ietf-http-wg/2020JulSep/0119.html",
+      "body": "## This PR\r\n\r\n- use lowercase for digest-algoritms in the doc\r\n- case is unchanged when referring to the actual algorithms (eg. SHA-1)\r\n- prefer lowercase for digest-algorithms\r\n- update IANA table to use lowercase digest-algorithms\r\n\r\n## Note\r\n\r\ndigest-algorithms remain case insensitive\r\n\r\nFixes #1211 Discussion here https://lists.w3.org/Archives/Public/ietf-http-wg/2020JulSep/0119.html",
       "createdAt": "2020-08-26T16:27:56Z",
-      "updatedAt": "2020-08-27T13:14:31Z",
+      "updatedAt": "2020-09-07T15:24:00Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
-      "baseRefOid": "2c56984393f9119e93153cdc6c2a4bf8d18a4e0f",
+      "baseRefOid": "87eccb57825cd0822a2025cbe0f8c0c1365eb6c8",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "1211-lowercase-algorithms",
-      "headRefOid": "62bb3d57bee13564f3b6d99274eb0145b929f263",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "11c0c7678a5f9da687172a6036055ef3c6d154a2",
+      "closedAt": "2020-09-07T15:23:58Z",
+      "mergedAt": "2020-09-07T15:23:58Z",
+      "mergedBy": "ioggstream",
+      "mergeCommit": {
+        "oid": "6455201fb9de8368d10f431ead91f792700aa3d8"
+      },
       "comments": [
         {
           "author": "ioggstream",
@@ -65977,9 +66033,9 @@
         {
           "author": "ioggstream",
           "authorAssociation": "CONTRIBUTOR",
-          "body": "> state our algorithm editorial rules in the terminology\r\n\r\n+1",
+          "body": "> state our algorithm editorial rules in the terminology\r\n\r\n+1. After this PR we should have that:\r\n\r\n- digest algorithms are *always* referred as digest-algorithms, and the associated tokens are always double-quoted, eg \r\n\r\n```\r\nthe \"sha\" digest-algorithm\r\n```\r\n\r\n- for the other cases, we use the algorithm word with the  same casing used in referenced spec\r\n\r\n```\r\nthe SHA-1 algorithm\r\n```\r\n\r\nimho the actual document does not contain instruction which can mislead implementors.",
           "createdAt": "2020-08-27T12:46:56Z",
-          "updatedAt": "2020-08-27T12:46:56Z"
+          "updatedAt": "2020-09-07T13:03:21Z"
         }
       ],
       "reviews": [
@@ -65999,7 +66055,7 @@
               "originalPosition": 156,
               "body": "@LPardue iiuc we forgot to mention the update of UNIX*sum",
               "createdAt": "2020-08-26T17:04:12Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66019,7 +66075,7 @@
               "originalPosition": 33,
               "body": "TBH, I'm not sure how a SHOULD is justified here. This is not using SF syntax, so why does it matter?",
               "createdAt": "2020-08-26T17:16:48Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66039,7 +66095,7 @@
               "originalPosition": 33,
               "body": "Which is a sensible way to signal we want to transition to lowercase and in future releases of Digest we may want to switch to SF ?",
               "createdAt": "2020-08-27T08:21:15Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66059,7 +66115,7 @@
               "originalPosition": 133,
               "body": "typo: unencrypted",
               "createdAt": "2020-08-27T09:02:21Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66079,7 +66135,7 @@
               "originalPosition": 133,
               "body": "Looks ok.\r\nGiven the labels are being changed to lowercase it might be good to add to the note on the IANA page https://www.iana.org/assignments/http-dig-alg/http-dig-alg.xhtml: \"Digest algorithm names are case-insensitive\"",
               "createdAt": "2020-08-27T09:07:44Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66099,7 +66155,7 @@
               "originalPosition": 133,
               "body": "fixed on master, thanks!",
               "createdAt": "2020-08-27T09:07:46Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66119,7 +66175,7 @@
               "originalPosition": 133,
               "body": "@manger imho as algorithms are case-insensitive since RFC3230 you can already add the note to the page: do you need any action on my side for that?",
               "createdAt": "2020-08-27T09:48:58Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66139,7 +66195,7 @@
               "originalPosition": 42,
               "body": "Unfortunately due to the overloading of algorithm and the way this section is structured, the lowercasing of these values seems inconsistent with your stated aims. A few ways to fix this come to mind:\r\n\r\n1) Unwind the change and leave them as uppercase\r\n2) \r\n\r\n```\r\nthe \"md5\" token MUST NOT be used due to collision attacks in the MD5 algorithm [link], the \"sha\" token MUST NOT be used due to collision attacks [link]\r\n```\r\n\r\n3) \r\n```\r\nthe MD5 algorithm (token \"md5\") MUST NOT be used ...\r\n```\r\n\r\nI have a slight preference for option 1.",
               "createdAt": "2020-08-27T12:24:44Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66159,7 +66215,7 @@
               "originalPosition": 162,
               "body": "For consistency, probably just easier to do these as separate items, even if it means the text is more verbose.",
               "createdAt": "2020-08-27T12:28:17Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
         },
@@ -66179,9 +66235,62 @@
               "originalPosition": 42,
               "body": "I interpreted the following as digest-algorithms because the sentence starts with\r\n\r\n> Some algorithms, although registered\r\n\r\nRewording like below should fix imho\r\n\r\n> Some digest-algorithms, although registered\r\n\r\nOTOH to reference algorithm names instead of tokens, we should use SHA-1\r\n\r\n```suggestion\r\nthe MD5 algorithm MUST NOT be used due to collision attacks [CMU-836068]\r\nand the SHA-1 algorithm MUST NOT be used due\r\n```\r\n\r\n\r\n",
               "createdAt": "2020-08-27T12:54:40Z",
-              "updatedAt": "2020-08-27T13:14:31Z"
+              "updatedAt": "2020-09-07T13:57:20Z"
             }
           ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNTc4MTY0",
+          "commit": {
+            "abbreviatedOid": "11c0c76"
+          },
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-07T13:59:37Z",
+          "updatedAt": "2020-09-07T13:59:37Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "@reschke I used `preferred`. WDYT?",
+              "createdAt": "2020-09-07T13:59:37Z",
+              "updatedAt": "2020-09-07T13:59:37Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNTc4NTQ1",
+          "commit": {
+            "abbreviatedOid": "11c0c76"
+          },
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-07T14:00:16Z",
+          "updatedAt": "2020-09-07T14:00:17Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "Avoid repetitions.",
+              "createdAt": "2020-09-07T14:00:17Z",
+              "updatedAt": "2020-09-07T14:00:17Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNjIxMjMz",
+          "commit": {
+            "abbreviatedOid": "11c0c76"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-09-07T15:08:08Z",
+          "updatedAt": "2020-09-07T15:08:08Z",
+          "comments": []
         }
       ]
     },
@@ -66220,7 +66329,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDc2Mjg1MjM0",
       "title": "Always use digest-algorithm (with dash). See #1211.",
       "url": "https://github.com/httpwg/http-extensions/pull/1255",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -66229,17 +66338,19 @@
       ],
       "body": "## This PR\r\n\r\n- is preliminary to #1253 \r\n\r\nConsistently use `digest-algorithm` instead of `digest algorithm`.  In case we need to further focus on the value, we can say `digest-algorithm value` or `digest-algorithm token`.\r\n\r\nLooking at \"content-coding\" vs \"content coding\" in https://httpwg.org/http-core/draft-ietf-httpbis-semantics-latest.html I think that this choice makes the document more readable.",
       "createdAt": "2020-08-31T13:04:51Z",
-      "updatedAt": "2020-08-31T13:28:55Z",
+      "updatedAt": "2020-09-07T12:49:14Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
-      "baseRefOid": "2c56984393f9119e93153cdc6c2a4bf8d18a4e0f",
+      "baseRefOid": "9e8176b00290ae93a936b65baf5147b7a1bb9096",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "1211-algorithm-editorial",
-      "headRefOid": "e77efb8f506700e94d7515a5264ed8e1be13b1c2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "7e7c2d091aa52d657baba3606037234f7f031ac0",
+      "closedAt": "2020-09-07T12:49:13Z",
+      "mergedAt": "2020-09-07T12:49:13Z",
+      "mergedBy": "ioggstream",
+      "mergeCommit": {
+        "oid": "87eccb57825cd0822a2025cbe0f8c0c1365eb6c8"
+      },
       "comments": [],
       "reviews": [
         {
@@ -66258,7 +66369,7 @@
               "originalPosition": 46,
               "body": "If we want to reference the crypto algorithm, SHA-1 is the right name.\r\n\r\nGenerally, with this statement we explicitly forbid using SHA-1 and MD5 based digest-algorithms, even if not listed here (that is: a future  multihash digest-algorithm with https://github.com/multiformats/multicodec/blob/master/table.csv#L71)",
               "createdAt": "2020-08-31T13:10:01Z",
-              "updatedAt": "2020-08-31T13:10:01Z"
+              "updatedAt": "2020-09-07T09:45:59Z"
             }
           ]
         },
@@ -66278,11 +66389,224 @@
               "originalPosition": 82,
               "body": "@LPardue here and below, we could replace `digest-algorithm` with `entry`",
               "createdAt": "2020-08-31T13:14:00Z",
-              "updatedAt": "2020-08-31T13:14:00Z"
+              "updatedAt": "2020-09-07T09:45:59Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNDkzMDYz",
+          "commit": {
+            "abbreviatedOid": "7e7c2d0"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-07T11:47:29Z",
+          "updatedAt": "2020-09-07T11:55:58Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "Based on your other PR, I think this would be lower case md5 and sha?",
+              "createdAt": "2020-09-07T11:47:29Z",
+              "updatedAt": "2020-09-07T11:55:58Z"
+            },
+            {
+              "originalPosition": 82,
+              "body": "Based on your other PR, lowercase again?",
+              "createdAt": "2020-09-07T11:48:00Z",
+              "updatedAt": "2020-09-07T11:55:58Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNTI2NTI2",
+          "commit": {
+            "abbreviatedOid": "7e7c2d0"
+          },
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-07T12:42:54Z",
+          "updatedAt": "2020-09-07T12:42:54Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "I split the PRs:\r\n\r\n- #1256  lowercased only the *new* digest algorithms because that doesn't update anything;\r\n- this will consistently use digest-algorithm\r\n- the last PR will lowercase existing algorithms name.",
+              "createdAt": "2020-09-07T12:42:54Z",
+              "updatedAt": "2020-09-07T12:42:54Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNTI3NTk0",
+          "commit": {
+            "abbreviatedOid": "7e7c2d0"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-07T12:44:36Z",
+          "updatedAt": "2020-09-07T12:44:37Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "Makes sense, please proceed \ud83d\ude42",
+              "createdAt": "2020-09-07T12:44:37Z",
+              "updatedAt": "2020-09-07T12:44:37Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNTI3NzMz",
+          "commit": {
+            "abbreviatedOid": "7e7c2d0"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2020-09-07T12:44:50Z",
+          "updatedAt": "2020-09-07T12:44:50Z",
+          "comments": []
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDgzNTMwMTYz",
+          "commit": {
+            "abbreviatedOid": "7e7c2d0"
+          },
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-07T12:48:39Z",
+          "updatedAt": "2020-09-07T12:48:39Z",
+          "comments": [
+            {
+              "originalPosition": 82,
+              "body": "will be lowercased by the other PR but not in this one.",
+              "createdAt": "2020-09-07T12:48:39Z",
+              "updatedAt": "2020-09-07T12:48:39Z"
             }
           ]
         }
       ]
+    },
+    {
+      "number": 1256,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDgxMTc0MTg1",
+      "title": "Digest: editorial work (quoting, casing, ..)",
+      "url": "https://github.com/httpwg/http-extensions/pull/1256",
+      "state": "MERGED",
+      "author": "ioggstream",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "digest-headers"
+      ],
+      "body": "## This PR\r\n\r\nAdds more consistent editorial rules:\r\n\r\n- headers are always backticked to ease readability\r\n- qvalue is quoted like in SEMANTICS\r\n- new digest-algorithms are quoted like content codings in SEMANTICS",
+      "createdAt": "2020-09-07T08:18:19Z",
+      "updatedAt": "2020-09-07T15:50:01Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "7ff98196a9dad193c98c438117852f11f271fb7c",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "1211-editorial-1",
+      "headRefOid": "eba9c533de7d4ba6fa49bed032661e409363fca4",
+      "closedAt": "2020-09-07T08:55:01Z",
+      "mergedAt": "2020-09-07T08:55:01Z",
+      "mergedBy": "ioggstream",
+      "mergeCommit": {
+        "oid": "c5bae89d0dc6016d3908f95823853d79d6ca9f84"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 1257,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDgxMjIwMDYz",
+      "title": "We forgot to align this part with the SHA-1 deprecation.",
+      "url": "https://github.com/httpwg/http-extensions/pull/1257",
+      "state": "MERGED",
+      "author": "ioggstream",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "digest-headers"
+      ],
+      "body": "## This PR\r\n\r\nAligns a part of the doc with the SHA-1 deprecation we decided in #1020 \r\n\r\n## Note\r\n\r\nWe correctly deprecated SHA-1 but in this part we left it as NOT RECOMMENDED.",
+      "createdAt": "2020-09-07T09:23:53Z",
+      "updatedAt": "2020-09-07T15:50:02Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "c5bae89d0dc6016d3908f95823853d79d6ca9f84",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "ioggstream-1020-ter",
+      "headRefOid": "38a07ca6593e528533c6bbdcefee72dd5bfadcae",
+      "closedAt": "2020-09-07T09:28:37Z",
+      "mergedAt": "2020-09-07T09:28:37Z",
+      "mergedBy": "ioggstream",
+      "mergeCommit": {
+        "oid": "9e8176b00290ae93a936b65baf5147b7a1bb9096"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 1258,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDgxNTA3MjMz",
+      "title": "Align missing digest-algorithm parts. See #1211",
+      "url": "https://github.com/httpwg/http-extensions/pull/1258",
+      "state": "MERGED",
+      "author": "ioggstream",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## This PR\r\n\r\n- editorial fix of digest-algorithms\r\n",
+      "createdAt": "2020-09-07T15:57:01Z",
+      "updatedAt": "2020-09-07T15:57:31Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "6455201fb9de8368d10f431ead91f792700aa3d8",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "ioggstream-1211-bis",
+      "headRefOid": "a4893e65f893a4972bd5355d91faa1108de50245",
+      "closedAt": "2020-09-07T15:57:30Z",
+      "mergedAt": "2020-09-07T15:57:30Z",
+      "mergedBy": "ioggstream",
+      "mergeCommit": {
+        "oid": "01511073277183a21344e8a22ee59eacfb6e5777"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 1259,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDgxNTQxNDcw",
+      "title": "Fix: #850. Obsolete parameters.",
+      "url": "https://github.com/httpwg/http-extensions/pull/1259",
+      "state": "OPEN",
+      "author": "ioggstream",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "## This PR\r\n\r\n- obsoletes digest parameters",
+      "createdAt": "2020-09-07T16:46:16Z",
+      "updatedAt": "2020-09-07T16:46:35Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "01511073277183a21344e8a22ee59eacfb6e5777",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "ioggstream-850-no-parameters",
+      "headRefOid": "1000200cea51072cdfa71296ebfebecef6ec772f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
