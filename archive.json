@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-08T00:15:04.132416+00:00",
+  "timestamp": "2020-09-10T00:14:54.345921+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -22489,7 +22489,7 @@
       ],
       "body": "draft-ietf-httpbis-digest-headers introduces id-sha-256 as a separate algorithm to sha-256 for the Digest HTTP header to allow an integrity check that doesn't depend on the content-encoding.\r\n\r\nThe desire to apply integrity to the content-encoded representation, or the decoded representation, is independent of the choice of integrity algorithm.\r\n\r\nHow about defining \"id-\" as a prefix that can be applied to any integrity algorithm to indicate the choice of representation? That avoids the need to duplicate sha-256 and sha-512 entries (and others) in the table of Digest algorithms.",
       "createdAt": "2019-08-01T03:12:56Z",
-      "updatedAt": "2020-08-18T11:45:24Z",
+      "updatedAt": "2020-09-08T16:11:25Z",
       "closedAt": null,
       "comments": [
         {
@@ -22533,6 +22533,13 @@
           "body": "I'll accept your suggestion to check the impacts. \r\n\r\nIn general:\r\n\r\n1- ok to a new I-D \"id- prefix for digest algorithms\"\r\n2- I will retain `id-sha` in Digest without references to other I-D\r\n3- we could reserve the `id-` prefix for Digest algorithms in this I-D so we can close this issue\r\n\r\n",
           "createdAt": "2020-08-18T11:45:24Z",
           "updatedAt": "2020-08-18T11:45:24Z"
+        },
+        {
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "\"id-\" prefix for digest-algorithms:\r\n\r\n- https://datatracker.ietf.org/doc/draft-polli-id-digest-algorithms/\r\n- https://github.com/ioggstream/draft-polli-id-digest-algorithms \r\n\r\nIMHO id-sha-256 and id-sha-512 are one selling point for this I-D, as they give the opportunity to implementors to avoid the fallacies of their current implementations (that is, they always send the sha-256 of the unencoded body even when Content-Encoding != null) \r\n\r\n@LPardue @manger can we close now?",
+          "createdAt": "2020-09-08T14:24:01Z",
+          "updatedAt": "2020-09-08T16:11:25Z"
         }
       ]
     },
@@ -24443,7 +24450,7 @@
       ],
       "body": "## Uniform digest request semantic\r\n\r\nWhile discussing #923 @reschke made the following consideration\r\n\r\n> I just don't think that it would be a good idea to vary the semantics based on the request method. \r\n\r\nIn this issue we will gather some examples and considerations so that we can state that \r\ndigest in requests is always computed on the request body.",
       "createdAt": "2019-10-31T17:25:47Z",
-      "updatedAt": "2020-08-17T15:26:20Z",
+      "updatedAt": "2020-09-09T10:26:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -24459,6 +24466,13 @@
           "body": "I'll add a FAQ and close.",
           "createdAt": "2020-08-17T15:26:20Z",
           "updatedAt": "2020-08-17T15:26:20Z"
+        },
+        {
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "IMHO: we should find a better name for this issue.\r\n\r\n- the digest semantic is always the same: digest is computed on the selected resource representation data;\r\n- digest computation depends on method and headers, because they alter the meaning of the payload body (eg. with partial representations).\r\n\r\n",
+          "createdAt": "2020-09-09T10:26:44Z",
+          "updatedAt": "2020-09-09T10:26:44Z"
         }
       ]
     },
@@ -27100,7 +27114,7 @@
       "id": "MDU6SXNzdWU1NzIxODg2MTc=",
       "title": "Can server send PRIORITY_UPDATE?",
       "url": "https://github.com/httpwg/http-extensions/issues/1079",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -27109,8 +27123,8 @@
       ],
       "body": "_Migrating this issue originally reported by @dikhonov - https://github.com/kazuho/draft-kazuho-httpbis-priority/issues/121#issue-551513184_\r\n\r\nSection 5 discusses how client can re-prioritize using the _PRIORITY_UPDATE_ frame and Section 6 discusses how the server can override priority using the `priority` header. It seems, then, that the server cannot send the _PRIORITY_UPDATE_ frame, but it is not forbidden in the draft.\r\n\r\nMy reply on the original issue was \r\n\r\n> Thanks for raising the issue. This is a gap in the spec and will need filling. The answer depends a little on the direction that the design takes in the WG; the salient question, I think, is: _what is the collaboration story for reprioritization?_\r\n> \r\n> Once there is a answer, we can lock down some of the normative text in the TODO placeholder\r\n> \r\n> ```\r\n> TODO: add more description of how to handle things like receiving PRIORITY_UPDATE \r\n> on wrong stream, a PRIORITY_UPDATE with an invalid ID, etc.wro\r\n> ```\r\n\r\n",
       "createdAt": "2020-02-27T16:13:53Z",
-      "updatedAt": "2020-02-27T16:13:53Z",
-      "closedAt": null,
+      "updatedAt": "2020-09-09T21:14:20Z",
+      "closedAt": "2020-09-09T21:14:20Z",
       "comments": []
     },
     {
@@ -27386,7 +27400,7 @@
       "id": "MDU6SXNzdWU1NzUzNDUzMTY=",
       "title": "Multiple PRIORITY_UPDATE frame types instead of internal bitfield ",
       "url": "https://github.com/httpwg/http-extensions/issues/1096",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -27395,8 +27409,8 @@
       ],
       "body": "This issue channels the original issue, https://github.com/kazuho/draft-kazuho-httpbis-priority/issues/120, opened by @ianswett but reflects the final state of discussion.\r\n\r\nThe PRIORITY_UPDATE frame is inspired by the HTTP/3 PRIORITY frame (RIP) and it reserves a byte to act as a bit-field that indicates the target of signal: a request or a push. The frame layout spends a byte for a single bit and is also inconsistent with the layout of other HTTP/3 frames, which makes things mildly more difficult for implementations.\r\n\r\nIan suggested we use different frame type codepoints to signal the target of the PRIORITY_UPDATE frame. There is already precendence for this and Kazuho noted that \r\n\r\n> In IETF 106, we had a similar discussion IIRC with regard to the QUIC datagram extension, and the WG seemed to favor allowing extensions to reserve a couple of adjacent frame types instead of using bits in the payload. Based on that, I am incliend to changing our design to use two frame types values.\r\n\r\nThe use of a frame for the initial priority is dependent on other issues such as the headers vs frame debate. If we needed a frame for that purpose, we probably want three frame types and the earliest code point with 3 spaces is 0xF, thus:\r\n\r\n* Initial Priority - 0xF - one and only one sent on request stream, contains priority-value\r\n*  Priority Update - 0x10 - reprioritize request stream, sent on control stream, contains ID and priority-value\r\n*    Priority Update - 0x11 - reprioritize push stream, sent on control stream, contains ID and priority-value\r\n\r\nIn order to make progress independent of the discussion on initial priority frame, we could shift the PRIORITY_UPDATE frame codepoint from 0xF to 0x10, but reserve 0xF for now.",
       "createdAt": "2020-03-04T11:58:42Z",
-      "updatedAt": "2020-03-04T14:58:49Z",
-      "closedAt": null,
+      "updatedAt": "2020-09-09T21:14:16Z",
+      "closedAt": "2020-09-09T21:14:16Z",
       "comments": []
     },
     {
@@ -29160,9 +29174,9 @@
       "labels": [
         "digest-headers"
       ],
-      "body": "## I expect\r\n\r\nTo clarify usage of duplicate algorithms, eg. with different parameters\r\n\r\n## Instead\r\n\r\nIt is not specified\r\n\r\n## Note\r\n\r\nRFC3230 does not forbid duplicate digest-algorithm in field value, because the receiver MAY ignore one or more representation-digest eg:\r\n\r\n```\r\nDigest: sha256=bxxx.., sha256=axxx...\r\n```\r\n\r\nIn case of digest-algorithms with parameters, this is more complex. The following valid example shows a duplicate digest-algorithm `bs` with two different parameter values.\r\n\r\n```\r\nDigest: bs=axxx; p=1,    bs=bxxx; p=2\r\n```\r\n\r\nA use-case for duplicate algorithms and parameters is eg. to differentiate digest-values for algorithms like [multihash](https://multiformats.io/multihash/#examples) where the algorithm is encoded inside the string. This behavior is not in-line with Structured Fields though.\r\n\r\n```\r\nDigest: multihash=fafafaf ;n=1, multihash=fbfbfbf ;n=2\r\n```\r\n\r\n\r\nDo we need an example for that?\r\nWhich is a suitable way to define it using structured fields/headers?\r\n\r\n@LPardue ",
+      "body": "## I expect\r\n\r\nTo clarify usage of duplicate algorithms, eg. with different parameters\r\n\r\n## Instead\r\n\r\nIt is not specified\r\n\r\n## Note\r\n\r\nRFC3230 does not forbid duplicate digest-algorithm in field value, because the receiver MAY ignore one or more representation-digest eg:\r\n\r\n```\r\nDigest: sha-256=bxxx.., sha-256=axxx...\r\n```\r\n\r\n[multihash](https://multiformats.io/multihash/#examples) encodes the algorithm and its parameters inside the string, and this is a use-case for duplicate digest-algorithms. This behavior is not in line with S-F though. \r\n\r\n```\r\nDigest: mh=fafafaf, mh=fbfbfbf\r\n```\r\n\r\nIn case of digest-algorithms with parameters, this is more complex. The following valid example shows a duplicate digest-algorithm `bs` with two different parameter values.\r\n\r\n```\r\nDigest: bs=axxx; p=1,    bs=bxxx; p=2\r\n```\r\n\r\n\r\nDo we need an example for that?\r\nWhich is a suitable way to define it using structured fields/headers?\r\n\r\n@LPardue ",
       "createdAt": "2020-06-18T10:09:48Z",
-      "updatedAt": "2020-08-27T08:37:18Z",
+      "updatedAt": "2020-09-09T10:10:51Z",
       "closedAt": null,
       "comments": [
         {
@@ -29178,6 +29192,27 @@
           "body": "Forbidding parameters would fix this.",
           "createdAt": "2020-08-17T09:58:31Z",
           "updatedAt": "2020-08-17T09:58:31Z"
+        },
+        {
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@msporny do you see any drawback in this? PTAL :) ",
+          "createdAt": "2020-09-08T16:43:01Z",
+          "updatedAt": "2020-09-08T16:43:01Z"
+        },
+        {
+          "author": "msporny",
+          "authorAssociation": "NONE",
+          "body": "Multihash doesn't have any parameter use cases that I can think of since you're supposed to encode all of those parameters via the multihash header. That is, it's always one multibase encoded multihash-header plus value. Multihash specifically would be fine w/ forbidding parameters.\r\n\r\nIt does raise the question on what happens if multiple multihash values are expressed. They would probably all be valid... one is a sha-256, one is a blake2b-32, etc. So, there is a strong use case for multiple \"duplicate\" \"mh\" digest algorithms (without parameters).\r\n\r\nI can't comment on other hash expression schemes as it's not an area with which I'm an expert.\r\n\r\nDoes that help, @ioggstream?",
+          "createdAt": "2020-09-08T18:22:29Z",
+          "updatedAt": "2020-09-08T18:22:29Z"
+        },
+        {
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "@msporny thanks for your feedback!\r\n\r\n> Multihash specifically would be fine w/ forbidding parameters.\r\n\r\nOk!\r\n\r\n> ... if multiple multihash values are expressed. They would probably all be valid\r\n\r\nThat is fine with the current Digest definition, but does not fit with structured-fields where every token is an unique keyword.\r\nSeems that a future transition to a S-F scheme has many points to tackle...\r\n\r\nA solution could be the following (but I suggest you to get in touch with people working on SF):\r\n\r\n- digest-algorithms that supports multiple digest-value should be declared;\r\n- in that case, those algorithms can be serialized as an InnerList;\r\n- `mh` digest-algorithm should be serialized as a sf-item or sf-itemlist\r\n- we should *extend* the serialization of digest-algorithms to support double quotes or bytes...\r\n\r\n\r\nexample\r\n\r\n```\r\nDigest: sha-256=\"xxx\", sha-512=\"yyy\", mh=(\"zzz\" \"qqq\")\r\n```\r\n",
+          "createdAt": "2020-09-09T08:02:33Z",
+          "updatedAt": "2020-09-09T10:10:51Z"
         }
       ]
     },
@@ -29815,9 +29850,9 @@
       "labels": [
         "digest-headers"
       ],
-      "body": "## Tasks\r\n\r\n- [ ] digest-algorithm lowercase #1253 \r\n- [ ] deprecate parameters and wait for feedback :)\r\n- [x] clean up Representation Digest https://github.com/httpwg/http-extensions/pull/937#discussion_r472018411\r\n- [x] remove reference to \"validator fields\" if they are not used anymore\r\n- [x] consistent usage of backticks #1255 \r\n\r\n```\r\n`Digest` vs Digest vs \"Digest\"\r\n`digest-algorithms` vs digest-algoritms vs \"digest-algorithms\"\r\n```\r\n\r\n- [x] consistent usage of \"-\" #1256  \r\n\r\n```\r\ndigest-algorithms vs digest algorithms\r\n\r\n```\r\n\r\n- [ ] consistent usage of lowercase digest-algorithms with double quote \"sha-256\" in text #1255\r\n\r\n- [ ] close #1139 and #1138  about old algorithms unless somebody comes with a proposal. @LPardue ",
+      "body": "## Tasks\r\n\r\n- [x] digest-algorithm lowercase #1253 \r\n- [ ] deprecate parameters and wait for feedback :) #1259 @LPardue \r\n- [x] clean up Representation Digest https://github.com/httpwg/http-extensions/pull/937#discussion_r472018411\r\n- [x] remove reference to \"validator fields\" if they are not used anymore\r\n- [x] consistent usage of backticks #1255 \r\n\r\n```\r\n`Digest` vs Digest vs \"Digest\"\r\n`digest-algorithms` vs digest-algoritms vs \"digest-algorithms\"\r\n```\r\n\r\n- [x] consistent usage of \"-\" #1256  \r\n\r\n```\r\ndigest-algorithms vs digest algorithms\r\n\r\n```\r\n\r\n- [x] consistent usage of lowercase digest-algorithms with double quote \"sha-256\" in text #1255\r\n\r\n- [ ] close #1139 and #1138  about old algorithms unless somebody comes with a proposal. @LPardue ",
       "createdAt": "2020-08-18T11:14:37Z",
-      "updatedAt": "2020-09-07T13:58:14Z",
+      "updatedAt": "2020-09-08T13:55:06Z",
       "closedAt": null,
       "comments": []
     },
@@ -29982,6 +30017,85 @@
           "updatedAt": "2020-08-19T15:28:38Z"
         }
       ]
+    },
+    {
+      "number": 1260,
+      "id": "MDU6SXNzdWU2OTU5NDI0Nzg=",
+      "title": "Buffering PRIORITY_UPDATES and early responses",
+      "url": "https://github.com/httpwg/http-extensions/issues/1260",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "I think it might be better to say \"SHOULD be buffered and be applied once the stream is opened.\"\r\n\r\nThe problem with current text is that it does deal with servers sending responses _while_ they receive requests (i.e. early response).\r\n\r\n_Originally posted by @kazuho in https://github.com/httpwg/http-extensions/pull/1167#r484963926_",
+      "createdAt": "2020-09-08T14:52:48Z",
+      "updatedAt": "2020-09-09T21:20:27Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "It's interesting that serving early response with appropriate priority is not a use case anyone came up with in defence of PRIORITY_UPDATE frames. \r\n\r\nI think we can support an early response case but we need to make sure the language is precise. For example, the document says\r\n\r\n> The signal carried by a PRIORITY_UPDATE frame overrides that carried by the\r\nheader field, even when the frame was received before the request headers.\r\n\r\nWhat we're asking implementers to do with Kazuho's suggestion to ignore any Priority header that might be in the request if they choose to process headers after they started serving a response. I'd like implementers to confirm that they think this is a reasonable thing to do.",
+          "createdAt": "2020-09-08T20:35:38Z",
+          "updatedAt": "2020-09-08T20:35:38Z"
+        },
+        {
+          "author": "MikeBishop",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "In general, an early response is because the *headers* are sufficient to generate a response without processing the body of the request.  (POST somewhere that requires authentication you don't have, for example.)  Talking about an early response before you've processed the headers seems kind of nonsensical, unless *maybe* you're talking about a 404 once you've seen the URL.  Even then, I suspect most servers would simplify their processing by waiting until they see the end of the header section.",
+          "createdAt": "2020-09-08T21:02:27Z",
+          "updatedAt": "2020-09-08T21:02:27Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Apologies. This issue would have been improved if GitHub included the text that Kazuho was speaking to. So here it is\r\n\r\n> Request-stream variant PRIORITY_UPDATE frames (type=0xF0700) received before the\r\nrequest or response has started SHOULD be buffered until the stream is opened\r\nand applied immediately after the request message has been processed.\r\n\r\nKazuho was suggesting that we change this to\r\n\r\n> Request-stream variant PRIORITY_UPDATE frames (type=0xF0700) received before the\r\nrequest or response has started SHOULD be buffered and applied once the stream is opened.\r\n",
+          "createdAt": "2020-09-08T21:22:16Z",
+          "updatedAt": "2020-09-08T21:22:36Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "If we want to be precise, I think the best way would be to change the model that we assume in the document.\r\n\r\nThe document (including the changes proposed in #1167, which I think we should merge and then try to adjust) assumes that the priority is carried by the priority header field, with PRIORITY_UPDATE frame updating the information. That's correct on the client-side, but on the server-side, as we know, PRIORITY_UPDATE frame can arrive before the stream is being created or before the request headers are received. And in theory, a server might start sending response before it receives the priority request header field (though that's rare as @MikeBishop points out).\r\n\r\nWe could instead say that from server's viewpoint, the PRIORITY_UPDATE frame always carries the up-to-date signal, whereas the value of priority request header field is adopted only when a PRIORITY_UPDATE frame has not (yet) been received for that request.",
+          "createdAt": "2020-09-08T23:23:01Z",
+          "updatedAt": "2020-09-08T23:23:57Z"
+        },
+        {
+          "author": "MikeBishop",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think that's a reasonable way to frame it.  It is equivalent, of course, to simply state that the PRIORITY_UPDATE frame is an update which might race the initial value.  If the server knows it's an update, it can ignore the older message when it sees it.",
+          "createdAt": "2020-09-09T18:39:11Z",
+          "updatedAt": "2020-09-09T18:39:11Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I agree that we can go either directions, being precise, or concisely stating that it is an update that replaces the value sent in the header field (if any).",
+          "createdAt": "2020-09-09T19:08:12Z",
+          "updatedAt": "2020-09-09T19:08:12Z"
+        }
+      ]
+    },
+    {
+      "number": 1261,
+      "id": "MDU6SXNzdWU2OTcwMDQ1NTY=",
+      "title": "\"Within the stream limit\" in HTTP/2?",
+      "url": "https://github.com/httpwg/http-extensions/issues/1261",
+      "state": "OPEN",
+      "author": "MikeBishop",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "What does \"within the stream limit\" mean in this case?  HTTP/2 specifies a maximum number of concurrently active streams, with streams which are either \"open\" or \"half-open\" counting toward the limit regardless of the ID.  I think what you're saying here is that you're modifying the definition of the limit to also include \"idle\" streams where priority information has been received.  However, you're not explicitly calling this out as a modification to the 7540 concurrency logic.\r\n\r\n_Originally posted by @MikeBishop in https://github.com/httpwg/http-extensions/pull/1167#discussion_r485149756_",
+      "createdAt": "2020-09-09T17:16:24Z",
+      "updatedAt": "2020-09-09T17:16:42Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -63299,7 +63413,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDExNTE0MTA5",
       "title": "PRIORITY_UPDATE can be used for initial priority, split H3 frames into two types",
       "url": "https://github.com/httpwg/http-extensions/pull/1167",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -63308,17 +63422,19 @@
       ],
       "body": "This attempts to address #1096 and #1079. It might help towards overcoming the headers vs frames debate.\r\n\r\nI made the call to restrict the PRIORITY_UPDATE frame to only be sent by clients.\r\n\r\nIt replaces ASCII art with new QUIC-style frame definitions.",
       "createdAt": "2020-04-30T13:45:24Z",
-      "updatedAt": "2020-09-07T22:41:56Z",
+      "updatedAt": "2020-09-09T21:13:56Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "01511073277183a21344e8a22ee59eacfb6e5777",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority-update-frames",
-      "headRefOid": "357b2ae851af6f33d8e76c46b4c3c1a5ca6b60d1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "fd1c710f5e03d0067bccfb63bce0707169630e80",
+      "closedAt": "2020-09-09T21:13:55Z",
+      "mergedAt": "2020-09-09T21:13:55Z",
+      "mergedBy": "LPardue",
+      "mergeCommit": {
+        "oid": "8eb70f80d60f02152f05996d96577df6b41ef59b"
+      },
       "comments": [
         {
           "author": "LPardue",
@@ -63350,7 +63466,7 @@
         },
         {
           "author": "ianswett",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "FWIW, I'm ok with changing the frame type value, but in our code it's just as easy(or easier) to switch by draft version.",
           "createdAt": "2020-05-15T13:26:49Z",
           "updatedAt": "2020-05-15T13:26:49Z"
@@ -63364,7 +63480,7 @@
         },
         {
           "author": "ianswett",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Our servers will likely support draft 25, 27 and 28 at once.\r\n\r\nIs the concern that servers will support multiple drafts at once, and clients will typically only support a single version, but server connections won't be aware of what version they're speaking?\r\n\r\nI suspect this is a case of different implementations having very different ways of supporting multiple versions of QUIC at once?",
           "createdAt": "2020-05-15T18:00:31Z",
           "updatedAt": "2020-05-15T18:00:31Z"
@@ -63378,7 +63494,7 @@
         },
         {
           "author": "ianswett",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Thanks for clarifying @LPardue, that makes sense.  I was a bit confused about how one might not know what version they're speaking.",
           "createdAt": "2020-05-15T18:14:03Z",
           "updatedAt": "2020-05-15T18:14:03Z"
@@ -63396,6 +63512,13 @@
           "body": "This issue got tied up with the discussion about reprioritization. Now that the chairs believe there is rough consensus on the matter, I'm giving fair warning that I'm aiming to land this change in the next day or two. I'll remind folks that this has had pretty substantial review already and I'm not looking for relitigation.\r\n\r\nI've just pushed two commits: 1) revert the H2 frame diagram format, we can tackle this later if we care. 2) fix an inconsistency in frame type values report by @guoye-zhang.\r\n\r\nThere is an open question about a servers ability to understand a safe limit of buffering, which might be subject to implementation API. I'd like to spin that off into it's issue so we can make progress here. ",
           "createdAt": "2020-09-07T22:36:13Z",
           "updatedAt": "2020-09-07T22:38:21Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "FYI I had some feedback that the frame type values were a bit cumbersome so I've shortened them to 0xF0700 and 0xF0701. See https://github.com/httpwg/http-extensions/pull/1167/commits/b007e937c7c4572fe4bf2437ed38eb8a360696aa",
+          "createdAt": "2020-09-08T13:13:00Z",
+          "updatedAt": "2020-09-08T13:13:00Z"
         }
       ],
       "reviews": [
@@ -63405,7 +63528,7 @@
             "abbreviatedOid": "b0976a6"
           },
           "author": "ianswett",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "It seems like there may be some opportunities for de-duplicating some text, but I don't have a specific suggestion.",
           "createdAt": "2020-05-05T17:50:00Z",
@@ -63415,13 +63538,13 @@
               "originalPosition": 21,
               "body": "```suggestion\r\nHaving two mechanisms to carry the initial priority signal brings the dilemma of\r\n```",
               "createdAt": "2020-05-05T17:50:00Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 61,
               "body": "```suggestion\r\nof any other value MUST be treated as a connection error of type PROTOCOL_ERROR.\r\n```",
               "createdAt": "2020-05-05T17:51:18Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63441,7 +63564,7 @@
               "originalPosition": 21,
               "body": "+1",
               "createdAt": "2020-05-05T18:05:45Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63461,7 +63584,7 @@
               "originalPosition": 45,
               "body": "Should be more like\r\n\r\n```\r\n  Therefore, a client cannot reprioritize a response by\r\n  sending additional metadata (e.g., trailer fields) on the request stream.\r\n  We avoid interoperability failure by restricting PRIORITY_UPDATE\r\n  frames to the control stream, with each such frame explicitly identifying\r\n  the stream to which the new priority applies.\r\n```",
               "createdAt": "2020-05-05T18:27:45Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63481,7 +63604,7 @@
               "originalPosition": 45,
               "body": "Thanks. I tweaked the suggestion slightly and made cbcdc60cf5a92. PTAL.",
               "createdAt": "2020-05-06T13:13:38Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63514,19 +63637,19 @@
               "originalPosition": 131,
               "body": "0x10?",
               "createdAt": "2020-05-14T01:00:08Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 11,
               "body": "How about stating that endpoints that do not want to expose an end-to-end signal MAY omit the header field, but send the PRIORITY_UPDATE frame at an early moment assuming that it would reach the server as early as the request headers? Would could go on to explain that in such case, all the responses that the server would send would have the priority in the frame being applied.\r\n\r\nThe benefit of phrasing that way is that we can get rid of the last paragraph of this section.",
               "createdAt": "2020-05-14T01:04:23Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 91,
               "body": "Seeing the definition of the frame _headers_ for H2 was surprising to me, though I understand that it reflects the change to the HTTP/3 draft. Maybe I should ask if the change in HTTP/3 is a good thing.",
               "createdAt": "2020-05-14T01:08:39Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63546,7 +63669,7 @@
               "originalPosition": 91,
               "body": "As a personal opinion I prefer to see the frame in whole because it avoids having to cross reference to the frame headers, which are defined in some other document. \r\n\r\nBut I can drop them if people want. I see that as an editorial change so perhaps we can avoid blocking this and fix up later if needs be.",
               "createdAt": "2020-05-14T01:21:41Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63566,7 +63689,7 @@
               "originalPosition": 91,
               "body": "I agree that this is an editorial issue, and that we need to ask the WG to resolve (because it is about the convention covering all H2 extensions, not just this one).",
               "createdAt": "2020-05-14T01:43:01Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63586,7 +63709,7 @@
               "originalPosition": 91,
               "body": "FWIW, ALTSVC is the only extension to have reached RFC status previously.  It [does not include](https://tools.ietf.org/html/rfc7838#section-4) the frame header; only the payload.",
               "createdAt": "2020-05-14T14:41:04Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63606,7 +63729,7 @@
               "originalPosition": 91,
               "body": "You forgot ORIGIN frame https://tools.ietf.org/html/rfc8336#section-2.1 which also specifies the frame payload.\r\n\r\nNow that H2 and H3 have different frame format definitions, I think extensions applicable to both will hit this problem. I'd like to figure what people think is the most acceptable way to present things.",
               "createdAt": "2020-05-14T14:53:09Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63626,7 +63749,7 @@
               "originalPosition": 91,
               "body": "One option would be to write documents that update RFC 7838 and RFC 8336 to use the new format and define the H3 frame at the same time...",
               "createdAt": "2020-05-14T14:56:10Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63646,7 +63769,7 @@
               "originalPosition": 11,
               "body": "I've tried to incorporate this suggestion in https://github.com/httpwg/http-extensions/pull/1167/commits/f5ac92a045a3074e503c93d304a90799e387ab07 but found it trickier to write than I first thought it would be, so it ended up a little different in the end. Please take a look and add some further suggestions if I'm not hitting your mark.",
               "createdAt": "2020-05-15T11:53:22Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63666,7 +63789,7 @@
               "originalPosition": 91,
               "body": "True, I try to block that one out.\r\n\r\nThey have different frame format definitions, sure; the question is whether the payload needs to vary between H2/H3.  I think the real things you need to specify are:\r\n\r\n- What stream it's on (part of the header in H2, intrinsic property in H3)\r\n  - Control stream vs. stream zero language plays into this\r\n- Flags if used in H2; since H3 doesn't have flags, this might lead to a payload difference\r\n- Payload\r\n\r\nThe simplest path for dual-version extensions is not to use flags and only define the payload.",
               "createdAt": "2020-05-15T18:15:38Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63686,7 +63809,7 @@
               "originalPosition": 32,
               "body": "How about changing the last sentence to something like: _The signal carried by a PRIORITY_UPDATE frame overrides that carried by the header, even when the frame was received before the request headers._\r\n\r\nNote that this PR recommends such a behavior; it states that a server SHOULD buffer and apply the content of PRIORITY_UPDATE frame that precedes the header field. For good reasons.\r\n\r\nConsider the case of an H3 client sending a HTTP request with a Priority header field, then changing its mind and sending a PRIORITY_UPDATE frame. As H3 does not guarantee delivery order across streams, the server might receive the frame before the header. I'd assume that we'd want servers to apply the value carried by the frame. Even when the protocol is H2, I am not sure if all the H2 stacks have the guarantee that the information across multiple streams are sent in the order they are issued, or that they are provided to the application in the order they are received.",
               "createdAt": "2020-05-15T20:17:34Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63719,49 +63842,49 @@
               "originalPosition": 30,
               "body": "The important \"when\" here is \"before prioritization information is not useful to the server\".  That might be later than when the server receives the request.",
               "createdAt": "2020-05-22T03:13:28Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 112,
               "body": "SHOULD.  I don't think that I could guarantee that this could be enforced.\r\n\r\n```suggestion\r\nthis SHOULD be treated as a connection error of type PROTOCOL_ERROR.\r\n```\r\n\r\nWell, I guess that this is the h2 variant, but still.",
               "createdAt": "2020-05-22T03:14:24Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 202,
               "body": "This needs to be qualified; if the frame contains a Push ID, then this doesn't apply.",
               "createdAt": "2020-05-22T03:16:46Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 203,
               "body": "```suggestion\r\nID that is beyond the stream limits, this SHOULD be treated as a connection error\r\n```",
               "createdAt": "2020-05-22T03:16:55Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 213,
               "body": "This one could be a MUST.",
               "createdAt": "2020-05-22T03:17:17Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 231,
               "body": "I would skip a number here and let people use the low bit of the type as a flag if they want.  Otherwise, this is a tiny bit more awkward.",
               "createdAt": "2020-05-22T03:18:10Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 91,
               "body": "```suggestion\r\n  Stream Identifier (31) = 0,\r\n```",
               "createdAt": "2020-05-22T03:18:52Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             },
             {
               "originalPosition": 28,
               "body": "I just have to say that this \"do not want\" statement assumes a great deal without a whole lot of support.",
               "createdAt": "2020-05-22T03:20:04Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63781,7 +63904,7 @@
               "originalPosition": 213,
               "body": "hmm yeah, the current text is actually a bit nasty because it doesn't restrict PRIORITY_UPDATE to be within MAX_PUSH_ID either. Combining those factors means the client has a bit too much sway over the amount of state a server needs to hold. Let me fix both things.",
               "createdAt": "2020-05-22T14:24:32Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63801,7 +63924,7 @@
               "originalPosition": 28,
               "body": "paging @kazuho who suggested this text",
               "createdAt": "2020-05-26T23:45:14Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63821,7 +63944,7 @@
               "originalPosition": 28,
               "body": "should be fixed in https://github.com/httpwg/http-extensions/pull/1167/commits/ca71a499138f646c99fc1c57a72277f2db4fc1e0",
               "createdAt": "2020-06-04T13:01:33Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63841,7 +63964,7 @@
               "originalPosition": 123,
               "body": "Is it 0x1CCB8BBF1F0700/0x1CCB8BBF1F0701 or 0x10/0x11?",
               "createdAt": "2020-07-15T04:35:35Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63861,7 +63984,7 @@
               "originalPosition": 91,
               "body": "Taking the feedback received here and elsewhere, I'm reverted the diagram back to our traditional format.",
               "createdAt": "2020-09-07T22:09:28Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         },
@@ -63881,7 +64004,317 @@
               "originalPosition": 123,
               "body": "In HTTP/3, the value should be the long 0x1CCB8BBF1F0700/0x1CCB8BBF1F0701, I'll fix this up.",
               "createdAt": "2020-09-07T22:10:17Z",
-              "updatedAt": "2020-09-07T22:41:56Z"
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg0MTg2MDQz",
+          "commit": {
+            "abbreviatedOid": "b007e93"
+          },
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "@LPardue Thank you for all the work. LGTM, just editorial suggestions.",
+          "createdAt": "2020-09-08T14:16:40Z",
+          "updatedAt": "2020-09-08T14:30:35Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "```suggestion\r\nFurthermore, clients might omit the priority request header field, using\r\n```",
+              "createdAt": "2020-09-08T14:16:40Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 51,
+              "body": "```suggestion\r\nheader field, even when the frame was received before the request headers.\r\n```",
+              "createdAt": "2020-09-08T14:17:45Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 179,
+              "body": "This is about existing text, and we can defer the decision, but I think it might be better to say \"SHOULD be buffered and be applied once the stream is opened.\"\r\n\r\nThe problem with current text is that it does deal with servers sending responses _while_ they receive requests (i.e. early response).",
+              "createdAt": "2020-09-08T14:27:34Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 83,
+              "body": "```suggestion\r\nrequest message has been processed. Holding PRIORITY_UPDATEs consumes extra\r\n```",
+              "createdAt": "2020-09-08T14:29:19Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg0MjA3NjE3",
+          "commit": {
+            "abbreviatedOid": "f441d5f"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-08T14:37:58Z",
+          "updatedAt": "2020-09-08T14:37:58Z",
+          "comments": [
+            {
+              "originalPosition": 179,
+              "body": "Agreed that is better.",
+              "createdAt": "2020-09-08T14:37:58Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg0MjIzNTQ5",
+          "commit": {
+            "abbreviatedOid": "f441d5f"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-08T14:54:07Z",
+          "updatedAt": "2020-09-08T14:54:07Z",
+          "comments": [
+            {
+              "originalPosition": 179,
+              "body": "At first I agrred but I've thought about a downside. So I've created https://github.com/httpwg/http-extensions/issues/1260 where we can discuss separately.",
+              "createdAt": "2020-09-08T14:54:07Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg0NDI0MzYy",
+          "commit": {
+            "abbreviatedOid": "c45f532"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "All of these are nits except for the \"within the stream limit\" conversation on the HTTP/2 piece.  Feel free to split that to a separate issue if needed.",
+          "createdAt": "2020-09-08T19:16:29Z",
+          "updatedAt": "2020-09-08T20:15:41Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "```suggestion\r\nidentifier. In HTTP/2, this identifier is the Stream ID; in HTTP/3, the\r\nidentifier is either the Stream ID or Push ID. Unlike the Priority header field,\r\nthe PRIORITY_UPDATE frame is a hop-by-hop signal.\r\n```\r\nA comma-splice that should be a semicolon, but the semicolon looks awkward because it's already in a semicolon-delimited clause.  Just make a new sentence, even if it needs more words.",
+              "createdAt": "2020-09-08T19:16:29Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 38,
+              "body": "```suggestion\r\ncan be sent even after the sending part of the request stream is being closed. This\r\n```",
+              "createdAt": "2020-09-08T19:17:16Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 39,
+              "body": "```suggestion\r\nalso allows the PRIORITY_UPDATE frame to be sent as soon as the stream it\r\n```",
+              "createdAt": "2020-09-08T19:17:42Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 43,
+              "body": "```suggestion\r\nFurthermore, clients might omit the Priority request header field, using\r\n```",
+              "createdAt": "2020-09-08T19:18:18Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 48,
+              "body": "```suggestion\r\nrequest that has not yet been opened, the server buffers the priorities\r\n```",
+              "createdAt": "2020-09-08T19:19:12Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 49,
+              "body": "```suggestion\r\ncarried by the received frame and applies them once the request arrives.\r\n```",
+              "createdAt": "2020-09-08T19:19:31Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 51,
+              "body": "```suggestion\r\nPriority header field, even when the frame was received before the request\r\nheaders.\r\n```",
+              "createdAt": "2020-09-08T19:20:12Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 61,
+              "body": "```suggestion\r\nsame representation as the Priority header field value.\r\n```",
+              "createdAt": "2020-09-08T19:20:59Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 78,
+              "body": "What does \"within the stream limit\" mean in this case?  HTTP/2 specifies a maximum number of concurrently active streams, with streams which are either \"open\" or \"half-open\" counting toward the limit regardless of the ID.  I think what you're saying here is that you're modifying the definition of the limit to also include \"idle\" streams where priority information has been received.  However, you're not explicitly calling this out as a modification to the 7540 concurrency logic.",
+              "createdAt": "2020-09-08T19:33:03Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 91,
+              "body": "So the frame has both a \"Stream Identifier\" and a \"Stream ID\" field; one field has a mandatory fixed value which is a protocol violation to use in the other.  That will _never_ confuse anyone.  \ud83d\ude09\r\n\r\nA more specific name for this field might be useful.  For example, the H3 frame uses \"Prioritized Element ID,\" so perhaps \"Prioritized Stream ID\"?",
+              "createdAt": "2020-09-08T19:37:27Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 107,
+              "body": "```suggestion\r\nused for request streams, while PRIORITY_UPDATE with a frame type of 0xF0701 is\r\nused for push streams.\r\n```",
+              "createdAt": "2020-09-08T19:40:16Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 191,
+              "body": "```suggestion\r\npush stream. If a server receives a PRIORITY_UPDATE (type=0xF0701) with a Push ID\r\nthat is greater than the maximum Push ID or which has not yet been promised, this\r\nMUST be treated as a connection error of type H3_ID_ERROR.\r\n```",
+              "createdAt": "2020-09-08T20:11:54Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            },
+            {
+              "originalPosition": 193,
+              "body": "```suggestion\r\nPRIORITY_UPDATE frames of either type are only sent by clients. If a client\r\n```",
+              "createdAt": "2020-09-08T20:12:12Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg0NDgzNTcy",
+          "commit": {
+            "abbreviatedOid": "805e5c5"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-08T20:50:44Z",
+          "updatedAt": "2020-09-08T20:50:45Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "I agree that \"is being opened\" is ugly. However, I think substituting it for \"arrives\" in touching on https://github.com/httpwg/http-extensions/issues/1260\r\n\r\nFor consistency with other text in this PR, how about I use \"processed\" here and we can change it again in the resolution to #1260?",
+              "createdAt": "2020-09-08T20:50:44Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg0NDg1MDcx",
+          "commit": {
+            "abbreviatedOid": "805e5c5"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-08T20:53:16Z",
+          "updatedAt": "2020-09-08T20:53:16Z",
+          "comments": [
+            {
+              "originalPosition": 91,
+              "body": "Yes. I spotted this when used the HTTP/3 format to describe the full HTTP/2 frame (not just the payload). In that version I called it Prioritized Stream ID to avoid the ambiguation. I'd lost that change by reverting. Thanks for spotting it.",
+              "createdAt": "2020-09-08T20:53:16Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg0NTEzNTEx",
+          "commit": {
+            "abbreviatedOid": "01414f5"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-08T21:44:24Z",
+          "updatedAt": "2020-09-08T21:44:24Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "This is an important observation, thanks for catching it. I think this is a side effect of applying H3's rules naively rather than an intentional action. I'm open to phrasing this differently but I fear that the scope of the problem is actually a bit large. We probably need a little bit more thought about what it means to receive PRIORITY_UPDATES for H2 idle or closed streams. Especially given the amount of text RFC 7540 spends on describing this.\r\n\r\nPerhaps the best action is to excise the entirety of this paragraph and create an issue to track this?",
+              "createdAt": "2020-09-08T21:44:24Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg1MDc2NjA4",
+          "commit": {
+            "abbreviatedOid": "01414f5"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-09T14:35:50Z",
+          "updatedAt": "2020-09-09T14:35:50Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "I'd also be okay keeping it, provided there's an issue to figure out the right language in 7540-land.",
+              "createdAt": "2020-09-09T14:35:50Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg1MDc3MjQz",
+          "commit": {
+            "abbreviatedOid": "01414f5"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-09T14:36:26Z",
+          "updatedAt": "2020-09-09T14:36:27Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "WFM.",
+              "createdAt": "2020-09-09T14:36:26Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg1MjM3Mjkz",
+          "commit": {
+            "abbreviatedOid": "01414f5"
+          },
+          "author": "MikeBishop",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-09T17:17:06Z",
+          "updatedAt": "2020-09-09T17:17:07Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "Split out as #1261.",
+              "createdAt": "2020-09-09T17:17:06Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg1Mjc5MTg1",
+          "commit": {
+            "abbreviatedOid": "01414f5"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-09T18:15:37Z",
+          "updatedAt": "2020-09-09T18:15:37Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "thanks! In that case I'm intending to keep the text",
+              "createdAt": "2020-09-09T18:15:37Z",
+              "updatedAt": "2020-09-09T20:43:30Z"
             }
           ]
         }
@@ -65721,7 +66154,7 @@
       ],
       "body": "## This PR\r\n\r\nClarifies why digest semantic on requests depends on the underlying method semantic and can't be generalized on all methods.\r\n\r\nThe clarification is added in the FAQ.\r\n\r\nFixes: #970 ",
       "createdAt": "2020-08-17T16:38:26Z",
-      "updatedAt": "2020-08-26T15:38:51Z",
+      "updatedAt": "2020-09-09T10:50:51Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "54472b0c7e9f1c66dbef5bf79b8db00c7e058e39",
@@ -65774,6 +66207,20 @@
           "body": "> The spec needs to state what the Digest header field means on any request and response. We can't leave that open.\r\n\r\nI agree. It is up to some future proposal to make the argument for special case behaviour.",
           "createdAt": "2020-08-26T12:56:24Z",
           "updatedAt": "2020-08-26T12:56:24Z"
+        },
+        {
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think the issue name is misleading, as:\r\n\r\n- digest semantic is always the same: digest is computed on the selected resource representation data;\r\n- digest computation depends on method;\r\n\r\nStating that on requests, digest should always be computed on the payload body effectively *alters* digest semantic depending on request and response.\r\n\r\n",
+          "createdAt": "2020-09-09T10:20:18Z",
+          "updatedAt": "2020-09-09T10:20:18Z"
+        },
+        {
+          "author": "reschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Stating that on requests, digest should always be computed on the payload body effectively alters digest semantic depending on request and response.\r\n\r\nSo what do you think the digest *should* refer to in request?",
+          "createdAt": "2020-09-09T10:30:50Z",
+          "updatedAt": "2020-09-09T10:50:51Z"
         }
       ],
       "reviews": [
@@ -66591,16 +67038,67 @@
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "digest-headers"
+      ],
       "body": "## This PR\r\n\r\n- obsoletes digest parameters",
       "createdAt": "2020-09-07T16:46:16Z",
-      "updatedAt": "2020-09-07T16:46:35Z",
+      "updatedAt": "2020-09-08T17:59:23Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "01511073277183a21344e8a22ee59eacfb6e5777",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "ioggstream-850-no-parameters",
       "headRefOid": "1000200cea51072cdfa71296ebfebecef6ec772f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg0MzcyODUz",
+          "commit": {
+            "abbreviatedOid": "1000200"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-08T17:59:23Z",
+          "updatedAt": "2020-09-08T17:59:23Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "These paragraphs are confusing under the section title. I think it would be clearer to \r\n\r\n1) Take what's in the first paragraph and combine it with what's in section 12.2 and 12.3. I suggest we do that in a different PR\r\n\r\n2) Rename the section to something like \"Paramaterising digest-algorithms\"\r\n\r\n3) Take the second paragraph and explain a little more why the old means was \"bad or insecure\". For example, what could have gone wrong? That makes the problem statement clearer so that the solution of embedding parameters make more sense to anyone considering what to do.\r\n",
+              "createdAt": "2020-09-08T17:59:23Z",
+              "updatedAt": "2020-09-08T17:59:23Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1262,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDgzMTkwODUy",
+      "title": "Better explain PRIORITY_UPDATE buffering and application",
+      "url": "https://github.com/httpwg/http-extensions/pull/1262",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "The old text had a loose definition of when to apply buffered frames.\r\nIt also had a fair amount of repetition.\r\n\r\nThis change tweaks the sections a bit so that we have one that discusses\r\nhow a server should handle PRIORITY_UPDATES for either initial signal or\r\nreprioritization. It incorporates the suggestions on issue #1260 mixed\r\nin with some text we already had.\r\n\r\nThere is still a question about how an implementation can limit its buffering commitments, which depends on the servers applications ability to access stream information. This might no be exposed by a QUIC library for instance. I suggest we punt on that unless there is something easy we can capture now.\r\n\r\nCloses #1260 ",
+      "createdAt": "2020-09-09T23:04:26Z",
+      "updatedAt": "2020-09-09T23:27:11Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "8eb70f80d60f02152f05996d96577df6b41ef59b",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "fix-1260-frame-buffer",
+      "headRefOid": "cc852d4d4156df74adb1b8c7abb5762752c1713f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
