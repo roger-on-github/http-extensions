@@ -5,8 +5,8 @@
 HTTP Working Group                                                K. Oku
 Internet-Draft                                                    Fastly
 Intended status: Standards Track                               L. Pardue
-Expires: March 13, 2021                                       Cloudflare
-                                                      September 09, 2020
+Expires: March 14, 2021                                       Cloudflare
+                                                      September 10, 2020
 
 
                Extensible Prioritization Scheme for HTTP
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 1]
+Oku & Pardue             Expires March 14, 2021                 [Page 1]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -61,7 +61,7 @@ Internet-Draft               HTTP Priorities              September 2020
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 13, 2021.
+   This Internet-Draft will expire on March 14, 2021.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 2]
+Oku & Pardue             Expires March 14, 2021                 [Page 2]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -165,7 +165,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 3]
+Oku & Pardue             Expires March 14, 2021                 [Page 3]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -221,7 +221,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 4]
+Oku & Pardue             Expires March 14, 2021                 [Page 4]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -277,7 +277,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 5]
+Oku & Pardue             Expires March 14, 2021                 [Page 5]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -333,7 +333,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 6]
+Oku & Pardue             Expires March 14, 2021                 [Page 6]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -389,7 +389,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 7]
+Oku & Pardue             Expires March 14, 2021                 [Page 7]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -445,7 +445,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 8]
+Oku & Pardue             Expires March 14, 2021                 [Page 8]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -468,10 +468,10 @@ Internet-Draft               HTTP Priorities              September 2020
    hop-by-hop signal.
 
    PRIORITY_UPDATE frames are sent by clients on the control stream,
-   allowing them to be sent independent from the the prioritization
-   target lifecycle.  This means they can be used to signal the initial
-   priority of a response instead of the Priority header; or to
-   reprioritize a response or a push stream.
+   allowing them to be sent independent from the stream that carries the
+   response.  This means they can be used to signal the initial priority
+   of a response instead of the Priority header; or to reprioritize a
+   response or a push stream.
 
    A client MAY send a PRIORITY_UPDATE frame before the stream that it
    references is open.  Furthermore, HTTP/3 offers no guaranteed
@@ -501,7 +501,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                 [Page 9]
+Oku & Pardue             Expires March 14, 2021                 [Page 9]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -557,7 +557,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 10]
+Oku & Pardue             Expires March 14, 2021                [Page 10]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -613,7 +613,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 11]
+Oku & Pardue             Expires March 14, 2021                [Page 11]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -669,7 +669,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 12]
+Oku & Pardue             Expires March 14, 2021                [Page 12]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -725,7 +725,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 13]
+Oku & Pardue             Expires March 14, 2021                [Page 13]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -781,7 +781,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 14]
+Oku & Pardue             Expires March 14, 2021                [Page 14]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -837,7 +837,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 15]
+Oku & Pardue             Expires March 14, 2021                [Page 15]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -893,7 +893,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 16]
+Oku & Pardue             Expires March 14, 2021                [Page 16]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -913,8 +913,8 @@ Internet-Draft               HTTP Priorities              September 2020
 
    [I-D.ietf-quic-transport]
               Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
-              and Secure Transport", draft-ietf-quic-transport-29 (work
-              in progress), June 2020.
+              and Secure Transport", draft-ietf-quic-transport-30 (work
+              in progress), September 2020.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -949,7 +949,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 17]
+Oku & Pardue             Expires March 14, 2021                [Page 17]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -1005,7 +1005,7 @@ Appendix A.  Acknowledgements
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 18]
+Oku & Pardue             Expires March 14, 2021                [Page 18]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -1061,7 +1061,7 @@ B.3.  Since draft-kazuho-httpbis-priority-03
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 19]
+Oku & Pardue             Expires March 14, 2021                [Page 19]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -1117,4 +1117,4 @@ Authors' Addresses
 
 
 
-Oku & Pardue             Expires March 13, 2021                [Page 20]
+Oku & Pardue             Expires March 14, 2021                [Page 20]
