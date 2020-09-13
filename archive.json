@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-10T00:14:54.345921+00:00",
+  "timestamp": "2020-09-13T00:15:31.121791+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -25641,7 +25641,7 @@
       "id": "MDU6SXNzdWU1NDcyMzg5Mzc=",
       "title": "Reprioritization frames",
       "url": "https://github.com/httpwg/http-extensions/issues/1021",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinthomson",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -25650,8 +25650,8 @@
       ],
       "body": "There has been some debate about the relative utility of frames as a means of prioritizing and reprioritizing requests.  \r\n\r\nFrames are not guaranteed to be end-to-end and don't enjoy the benefits listed in [Section 8.1](https://httpwg.org/http-extensions/draft-ietf-httpbis-priority.html#why-use-an-end-to-end-header-field).  An (unlisted) reason is that the API for header fields is better understood and more likely to be available than a new and unspecified API.  HTTP/2 defined the use of frames for reprioritization, but APIs are not widely available, nor are they consistent.\r\n\r\nFrames provide two obvious benefits:\r\n\r\n1. They are scoped to the current connection and so only propagate if the receiving endpoint explicitly propagates them.\r\n\r\n2. They can be sent at any time.  This allows for reprioritization, but the requirement to have them sent after requests are complete means that they can't be sent \"on\" a stream, they have to instead refer to a stream, which complicates the design somewhat.  The proposal to allow trailers at any time helps a little here, but only to the extent that it remains possible to send.  Stream closure is used to terminate request bodies in some cases, making any trailer-based solution limited.\r\n\r\nHowever, frames have shortcomings too:\r\n\r\n1. They are complex.  The encoding of a header field into a frame is suboptimal, but necessary for extensibility and consistency reasons.  And the manner in which they refer to requests (or pushes) makes them more complex to manage than a header field.\r\n\r\n2. They are only scoped to a connection, which means that the extent of propagation can be non-deterministic.  In particular, they depend on the connection supporting the signaling.  This is the flip side of the benefit, and - in my opinion - outweighs it.\r\n\r\n3. The API is far more difficult compared to header fields.\r\n\r\nWe know little enough about the efficacy of prioritization that we should defer the definition of frames absent strong motivation for their efficacy and desirability.  The current document makes a good case for header fields, but the motivation for frames is weaker.  It is true that cases like escalation of a speculative fetch to blocking status are *theoretically* appealing, but those cases are rare and unlikely to benefit from reprioritization.  In particular, the mismatch between end-to-end and hop-by-hop (excuse the use of deprecated terminology) characteristics here makes it very hard to reason about the outcome.\r\n\r\nI know that others (@RyanAtGoogle in particular) have questions about the header field from a different angle and would prefer frames, exclusively.  So this probably comes down to having more discussion about which approach to take: headers, frames, or both.  \r\n\r\nIn either case, I would suggest that we have a need for both clear signals that the mechanism is broadly useful and evidence that that it is likely to be widely implemented.\r\n",
       "createdAt": "2020-01-09T04:21:20Z",
-      "updatedAt": "2020-09-07T22:48:42Z",
-      "closedAt": null,
+      "updatedAt": "2020-09-10T14:55:37Z",
+      "closedAt": "2020-09-10T14:55:25Z",
       "comments": [
         {
           "author": "tombergan",
@@ -25753,7 +25753,7 @@
         },
         {
           "author": "ianswett",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@martinthomson I don't think it's possible to conclude that the old prioritization scheme wasn't widely used because it was a frame.  The main reason I've heard cited for why it wasn't widely used was excess complexity for implementers and for developers who used it.  If the scheme had been simpler, I believe APIs would be widespread by now.\r\n\r\nAbove, you talk about using priorities across multiple HTTP 1.1 connections and how it might work.  For every load balancer setup I've ever heard of, that would be somewhere between impractical and impossible.  Either way, I can't imagine anyone doing this.  Cookies are a particularly bad example, because they are visible long after the connection has been load-balanced.\r\n\r\nAlso, the frame solves a problem besides re-prioritization, which is how to convey a hop-by-hop signal when a header indicates an E2E signal, such as on a multiplexed connection behind a load balancer.\r\n\r\nSome points that came out of the design team that are still important:\r\n1) Re-prioritization is used today and was believed to be useful.  I realize you're questioning that here, but it seems like your real goal is to get rid of the frame.\r\n2) The design team decided that the header should not be exposed directly to Javascript, at least not without the agreement of the W3C that was the right thing to do, so it's not as simple as making it  a header and the API is done.\r\n3) It was pretty clear consensus would never be obtained on a single option(header or frame), due to the varied set of use cases.\r\n\r\nMy personal opinion is that the header is primarily useful for server infrastructure to fix poor or non-existent client prioritization, which is the use case Cloudflare was successful with.  I've seen no evidence the header has any advantages over the frame in the browser use case, and it does introduce complexity, since now my multi-tier load balancer infrastructure needs to do special case handling for a new header based on whether it's directly user-facing.  Realistically, stripping it may be the safest option for load balancers.",
           "createdAt": "2020-06-08T21:00:37Z",
           "updatedAt": "2020-06-08T21:00:37Z"
@@ -25774,7 +25774,7 @@
         },
         {
           "author": "ianswett",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "Coming back to this after leave.\r\n\r\n1. The use cases I have in mind are Chrome and other clients that want to re-prioritize requests, particularly due to a change in viewport, so definitely not proprietary in anyway.  But I see there's a separate thread on the value of whether people intend to use reprioritization, so I'll catch up on that.\r\n2. At the time, people felt exposing this was too dangerous to assume, and at the very least it'd need to be confirmed with the W3C.  Even so, browsers may decide to limit its usage(ie: not allow the very highest priority/etc).\r\n\r\nI certainly can access a header, I'm just saying it adds complexity and risk to a very complex and risk-averse environment on the server side, and I can't see the value outside of a multiplexed connection.  I'm not saying we shouldn't include the header in the draft, but I don't see it as being that useful past the first hop.",
           "createdAt": "2020-07-27T20:03:39Z",
           "updatedAt": "2020-07-27T20:03:39Z"
@@ -25785,6 +25785,13 @@
           "body": "From the chairs' email on August 26 2020 https://lists.w3.org/Archives/Public/ietf-http-wg/2020JulSep/0118.html\r\n\r\n> After reviewing list and issue discussion, as well as the results of our previous request for implementer intent, the Chairs believe that there is rough consensus forming to support reprioritisation in draft-ietf-httpbis-priority. \r\n\r\n> If you object, please state so (ideally giving reasons).\r\n\r\n12 days on there's been no objections. We should start thinking about closing this issue soon.",
           "createdAt": "2020-09-07T22:48:09Z",
           "updatedAt": "2020-09-07T22:48:42Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Closing this issue.\r\n\r\nIf folks want to open new specific issues on the draft text, editor's copy or when we cut draft -02, that's fine.",
+          "createdAt": "2020-09-10T14:55:25Z",
+          "updatedAt": "2020-09-10T14:55:37Z"
         }
       ]
     },
@@ -30023,7 +30030,7 @@
       "id": "MDU6SXNzdWU2OTU5NDI0Nzg=",
       "title": "Buffering PRIORITY_UPDATES and early responses",
       "url": "https://github.com/httpwg/http-extensions/issues/1260",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -30032,8 +30039,8 @@
       ],
       "body": "I think it might be better to say \"SHOULD be buffered and be applied once the stream is opened.\"\r\n\r\nThe problem with current text is that it does deal with servers sending responses _while_ they receive requests (i.e. early response).\r\n\r\n_Originally posted by @kazuho in https://github.com/httpwg/http-extensions/pull/1167#r484963926_",
       "createdAt": "2020-09-08T14:52:48Z",
-      "updatedAt": "2020-09-09T21:20:27Z",
-      "closedAt": null,
+      "updatedAt": "2020-09-11T10:56:31Z",
+      "closedAt": "2020-09-11T10:56:31Z",
       "comments": [
         {
           "author": "LPardue",
@@ -30093,9 +30100,17 @@
       ],
       "body": "What does \"within the stream limit\" mean in this case?  HTTP/2 specifies a maximum number of concurrently active streams, with streams which are either \"open\" or \"half-open\" counting toward the limit regardless of the ID.  I think what you're saying here is that you're modifying the definition of the limit to also include \"idle\" streams where priority information has been received.  However, you're not explicitly calling this out as a modification to the 7540 concurrency logic.\r\n\r\n_Originally posted by @MikeBishop in https://github.com/httpwg/http-extensions/pull/1167#discussion_r485149756_",
       "createdAt": "2020-09-09T17:16:24Z",
-      "updatedAt": "2020-09-09T17:16:42Z",
+      "updatedAt": "2020-09-10T14:23:46Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "PR #1262 moves some of the text around but the issue here still remains. In [review of PR #1262](https://github.com/httpwg/http-extensions/pull/1262/files#r485975868) Kazuho said \r\n\r\n> I think we should RECOMMEND servers to buffer the most recent PRIORITY_UPDATE frames it receives for all the unopened streams, provided that the stream ID being specified by the frame is within the concurrency window.\r\n\r\n> Otherwise, the server will fail to prioritize the responses correctly when a client issues many requests at once (e.g., when finding lots of tags in a HTML document).",
+          "createdAt": "2020-09-10T14:23:46Z",
+          "updatedAt": "2020-09-10T14:23:46Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -67083,7 +67098,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDgzMTkwODUy",
       "title": "Better explain PRIORITY_UPDATE buffering and application",
       "url": "https://github.com/httpwg/http-extensions/pull/1262",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -67092,19 +67107,127 @@
       ],
       "body": "The old text had a loose definition of when to apply buffered frames.\r\nIt also had a fair amount of repetition.\r\n\r\nThis change tweaks the sections a bit so that we have one that discusses\r\nhow a server should handle PRIORITY_UPDATES for either initial signal or\r\nreprioritization. It incorporates the suggestions on issue #1260 mixed\r\nin with some text we already had.\r\n\r\nThere is still a question about how an implementation can limit its buffering commitments, which depends on the servers applications ability to access stream information. This might no be exposed by a QUIC library for instance. I suggest we punt on that unless there is something easy we can capture now.\r\n\r\nCloses #1260 ",
       "createdAt": "2020-09-09T23:04:26Z",
-      "updatedAt": "2020-09-09T23:27:11Z",
+      "updatedAt": "2020-09-11T10:56:32Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "8eb70f80d60f02152f05996d96577df6b41ef59b",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "fix-1260-frame-buffer",
-      "headRefOid": "cc852d4d4156df74adb1b8c7abb5762752c1713f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "c52dbfcb6e478c2be93082a886a04fbf407a315a",
+      "closedAt": "2020-09-11T10:56:31Z",
+      "mergedAt": "2020-09-11T10:56:31Z",
+      "mergedBy": "LPardue",
+      "mergeCommit": {
+        "oid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg1NDY1OTM5",
+          "commit": {
+            "abbreviatedOid": "cc852d4"
+          },
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Thank you for working on this PR. Just have tiny suggestions and one point that can be solved separately.",
+          "createdAt": "2020-09-09T23:20:51Z",
+          "updatedAt": "2020-09-10T05:31:01Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "Just a slight preference, but it might help if we'd be a bit more specific.\r\n```suggestion\r\nto be sent independent from the stream that carries the response. This means\r\n```\r\n",
+              "createdAt": "2020-09-09T23:20:51Z",
+              "updatedAt": "2020-09-10T14:31:27Z"
+            },
+            {
+              "originalPosition": 47,
+              "body": "Would be less surprising to acknowledge that the main purpose of PRIORITY_UPDATE frames is to \"re\"-prioritize the responses. That's what we state above.\r\n\r\n```suggestion\r\nthey can also be used to signal the initial priority of a response instead of the\r\n```",
+              "createdAt": "2020-09-09T23:23:12Z",
+              "updatedAt": "2020-09-10T14:31:27Z"
+            },
+            {
+              "originalPosition": 60,
+              "body": "(We can leave this as a ToDo in this PR, but) Regarding implementations, I think we should RECOMMEND servers to buffer the most recent PRIORITY_UPDATE frames it receives for all the unopened streams, provided that the stream ID being specified by the frame is within the concurrency window.\r\n\r\nOtherwise, the server will fail to prioritize the responses correctly when a client issues many requests at once (e.g., when finding lots of <IMG> tags in a HTML document).",
+              "createdAt": "2020-09-09T23:27:11Z",
+              "updatedAt": "2020-09-10T14:31:27Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg1OTg2MjUz",
+          "commit": {
+            "abbreviatedOid": "cc852d4"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-10T14:19:32Z",
+          "updatedAt": "2020-09-10T14:19:33Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "I struggled with this, which explains the typo in my text. I was trying to write something that could apply to both requests and push. I'll accept your change and we can refine later if needed.",
+              "createdAt": "2020-09-10T14:19:33Z",
+              "updatedAt": "2020-09-10T14:31:27Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg1OTkxMzE0",
+          "commit": {
+            "abbreviatedOid": "cc852d4"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-10T14:24:26Z",
+          "updatedAt": "2020-09-10T14:24:26Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "Yeah. I was hoping to come back to this when we have a proposal #1261. Let me add that into the TODO comment.",
+              "createdAt": "2020-09-10T14:24:26Z",
+              "updatedAt": "2020-09-10T14:31:27Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg1OTkzODYw",
+          "commit": {
+            "abbreviatedOid": "cc852d4"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-10T14:26:51Z",
+          "updatedAt": "2020-09-10T14:26:51Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "If you prefer stating it that way then I'll reverse the ordering in this sentence.",
+              "createdAt": "2020-09-10T14:26:51Z",
+              "updatedAt": "2020-09-10T14:31:27Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDg2Njc2Mjcz",
+          "commit": {
+            "abbreviatedOid": "c52dbfc"
+          },
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Thank you for the changes! LGTM.",
+          "createdAt": "2020-09-11T10:05:33Z",
+          "updatedAt": "2020-09-11T10:05:33Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
