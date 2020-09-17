@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-13T00:15:31.121791+00:00",
+  "timestamp": "2020-09-17T00:15:42.333966+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -29779,7 +29779,7 @@
       ],
       "body": "Could someone please explain the history behind why we have two drafts (https://tools.ietf.org/html/draft-west-cookie-incrementalism and https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis) that are somewhat incompatible with each other? Could the proposals that have support from the WG move into RFC6265bis?",
       "createdAt": "2020-08-05T14:49:01Z",
-      "updatedAt": "2020-08-11T02:46:17Z",
+      "updatedAt": "2020-09-16T11:40:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -29788,6 +29788,20 @@
           "body": "I see `draft-west-cookie-incrementalism` as a proposal for modifying RFC6265bis; @mikewest is that the intent?\r\n\r\n",
           "createdAt": "2020-08-06T02:56:25Z",
           "updatedAt": "2020-08-06T02:56:25Z"
+        },
+        {
+          "author": "krgovind",
+          "authorAssociation": "NONE",
+          "body": "I humbly accept the mantle of moving these drafts along, and will be discussing logistics with @mikewest  in two weeks.\r\n\r\nChrome is already shipping Lax-by-default and requires \"Secure\" for \"SameSite=None\", and is now tackling [Schemeful SameSite](https://www.chromestatus.com/feature/5096179480133632). I think it make sense to at least fold those parts of draft-west-cookie-incrementalism-01 into RFC6265bis.\r\n",
+          "createdAt": "2020-09-15T16:26:56Z",
+          "updatedAt": "2020-09-15T16:26:56Z"
+        },
+        {
+          "author": "annevk",
+          "authorAssociation": "NONE",
+          "body": "Great to hear you'll be taking on cookies @krgovind! Mozilla supports adding those to that draft and effectively having the HTTP WG adopt them.",
+          "createdAt": "2020-09-16T11:40:22Z",
+          "updatedAt": "2020-09-16T11:40:22Z"
         }
       ]
     },
