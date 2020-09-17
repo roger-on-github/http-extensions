@@ -160,8 +160,8 @@ Internet-Draft               HTTP Priorities              September 2020
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [RFC2119].
 
-   The terms sf-token and sf-boolean are imported from
-   [STRUCTURED-FIELDS].
+   The terms sh-token and sh-boolean are imported from
+   [STRUCTURED-HEADERS].
 
 
 
@@ -203,13 +203,13 @@ Internet-Draft               HTTP Priorities              September 2020
    intervene accordingly.
 
    Many HTTP/2 server implementations do not include support for the
-   priority scheme, some favoring instead bespoke server-driven schemes
-   based on heuristics and other hints, like the content type of
-   resources and the request generation order.  For example, a server,
-   with knowledge of the document structure, might want to prioritize
-   the delivery of images that are critical to user experience above
-   other images, but below the CSS files.  Since client trees vary, it
-   is impossible for the server to determine how such images should be
+   priority scheme.  Some instead favor custom server-driven schemes
+   based on heuristics or other hints, such as resource content type of
+   resources or request generation order.  For example, a server, with
+   knowledge of the document structure, might want to prioritize the
+   delivery of images that are critical to user experience above other
+   images, but below the CSS files.  Since client trees vary, it is
+   impossible for the server to determine how such images should be
    prioritized against other responses.
 
    The HTTP/2 scheme allows intermediaries to coalesce multiple client
@@ -309,7 +309,7 @@ Internet-Draft               HTTP Priorities              September 2020
    field.
 
    In both cases, the set of priority parameters is encoded as a
-   Structured Fields Dictionary ([STRUCTURED-FIELDS]).
+   Structured Headers Dictionary ([STRUCTURED-HEADERS]).
 
    This document defines the urgency("u") and incremental("i")
    parameters.  When receiving an HTTP request that does not carry these
@@ -327,7 +327,7 @@ Internet-Draft               HTTP Priorities              September 2020
    granularity for prioritizing responses for ordinary web browsing, at
    minimal complexity.
 
-   The value is encoded as an sf-integer.  The default value is 3.
+   The value is encoded as an sh-integer.  The default value is 3.
 
 
 
@@ -363,7 +363,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 3.2.  Incremental
 
-   The incremental parameter ("i") takes an sf-boolean as the value that
+   The incremental parameter ("i") takes an sh-boolean as the value that
    indicates if an HTTP response can be processed incrementally, i.e.
    provide some meaningful output as chunks of the response arrive.
 
@@ -526,7 +526,7 @@ Internet-Draft               HTTP Priorities              September 2020
       that is the target of the priority update.
 
    Priority Field Value:  The priority update value in ASCII text,
-      encoded using Structured Fields.
+      encoded using Structured Headers.
 
    The PRIORITY_UPDATE frame MAY be sent before the stream that it
    references has been created.  The Prioritized Stream ID MUST be
@@ -587,7 +587,7 @@ Internet-Draft               HTTP Priorities              September 2020
       of the priority update.
 
    Priority Field Value:  The priority update value in ASCII text,
-      encoded using Structured Fields.
+      encoded using Structured Headers.
 
    The request-stream variant of PRIORITY_UPDATE (type=0xF0700) MUST
    reference a request stream.  If a server receives a PRIORITY_UPDATE
@@ -954,7 +954,7 @@ Oku & Pardue             Expires March 21, 2021                [Page 17]
 Internet-Draft               HTTP Priorities              September 2020
 
 
-   [STRUCTURED-FIELDS]
+   [STRUCTURED-HEADERS]
               Nottingham, M. and P. Kamp, "Structured Field Values for
               HTTP", draft-ietf-httpbis-header-structure-19 (work in
               progress), June 2020.
