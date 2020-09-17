@@ -204,13 +204,13 @@ Internet-Draft               HTTP Priorities              September 2020
 
    Many HTTP/2 server implementations do not include support for the
    priority scheme.  Some instead favor custom server-driven schemes
-   based on heuristics or other hints, such as resource content type of
-   resources or request generation order.  For example, a server, with
-   knowledge of the document structure, might want to prioritize the
-   delivery of images that are critical to user experience above other
-   images, but below the CSS files.  Since client trees vary, it is
-   impossible for the server to determine how such images should be
-   prioritized against other responses.
+   based on heuristics or other hints, such as resource content type or
+   request generation order.  For example, a server, with knowledge of
+   the document structure, might want to prioritize the delivery of
+   images that are critical to user experience above other images, but
+   below the CSS files.  Since client trees vary, it is impossible for
+   the server to determine how such images should be prioritized against
+   other responses.
 
    The HTTP/2 scheme allows intermediaries to coalesce multiple client
    trees into a single tree that is used for a single upstream HTTP/2
