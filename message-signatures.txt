@@ -5,10 +5,10 @@
 HTTP Working Group                                            A. Backman
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                               J. Richer
-Expires: March 15, 2021                              Bespoke Engineering
+Expires: March 21, 2021                              Bespoke Engineering
                                                                M. Sporny
                                                           Digital Bazaar
-                                                      September 11, 2020
+                                                      September 17, 2020
 
 
                          Signing HTTP Messages
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 1]
+Backman, et al.          Expires March 21, 2021                 [Page 1]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -66,7 +66,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 15, 2021.
+   This Internet-Draft will expire on March 21, 2021.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 2]
+Backman, et al.          Expires March 21, 2021                 [Page 2]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -165,7 +165,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 3]
+Backman, et al.          Expires March 21, 2021                 [Page 3]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -221,7 +221,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 4]
+Backman, et al.          Expires March 21, 2021                 [Page 4]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -277,7 +277,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 5]
+Backman, et al.          Expires March 21, 2021                 [Page 5]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -333,7 +333,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 6]
+Backman, et al.          Expires March 21, 2021                 [Page 6]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -389,7 +389,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 7]
+Backman, et al.          Expires March 21, 2021                 [Page 7]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -445,7 +445,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 8]
+Backman, et al.          Expires March 21, 2021                 [Page 8]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -501,7 +501,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                 [Page 9]
+Backman, et al.          Expires March 21, 2021                 [Page 9]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -557,7 +557,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 10]
+Backman, et al.          Expires March 21, 2021                [Page 10]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -613,7 +613,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 11]
+Backman, et al.          Expires March 21, 2021                [Page 11]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -669,7 +669,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 12]
+Backman, et al.          Expires March 21, 2021                [Page 12]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -725,7 +725,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 13]
+Backman, et al.          Expires March 21, 2021                [Page 13]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -781,7 +781,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 14]
+Backman, et al.          Expires March 21, 2021                [Page 14]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -837,7 +837,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 15]
+Backman, et al.          Expires March 21, 2021                [Page 15]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -893,7 +893,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 16]
+Backman, et al.          Expires March 21, 2021                [Page 16]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -949,7 +949,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 17]
+Backman, et al.          Expires March 21, 2021                [Page 17]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 18]
+Backman, et al.          Expires March 21, 2021                [Page 18]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 19]
+Backman, et al.          Expires March 21, 2021                [Page 19]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 20]
+Backman, et al.          Expires March 21, 2021                [Page 20]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1173,7 +1173,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 21]
+Backman, et al.          Expires March 21, 2021                [Page 21]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1229,7 +1229,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 22]
+Backman, et al.          Expires March 21, 2021                [Page 22]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1285,7 +1285,7 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 23]
+Backman, et al.          Expires March 21, 2021                [Page 23]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1341,7 +1341,7 @@ A.1.1.  Example Key RSA test
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 24]
+Backman, et al.          Expires March 21, 2021                [Page 24]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1397,7 +1397,7 @@ A.2.  Example keyId Values
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 25]
+Backman, et al.          Expires March 21, 2021                [Page 25]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1453,7 +1453,7 @@ A.3.1.1.  hs2019 signature over minimal recommended content
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 26]
+Backman, et al.          Expires March 21, 2021                [Page 26]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1509,7 +1509,7 @@ A.3.1.2.  hs2019 signature covering all header fields
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 27]
+Backman, et al.          Expires March 21, 2021                [Page 27]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1565,7 +1565,7 @@ A.3.2.1.  Minimal Required Signature Header
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 28]
+Backman, et al.          Expires March 21, 2021                [Page 28]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1621,7 +1621,7 @@ A.3.2.2.  Minimal Recommended Signature Header
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 29]
+Backman, et al.          Expires March 21, 2021                [Page 29]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1677,7 +1677,7 @@ Appendix B.  Topics for Working Group Discussion
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 30]
+Backman, et al.          Expires March 21, 2021                [Page 30]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1733,7 +1733,7 @@ B.1.3.  Algorithm Registry duplicates work of JWA
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 31]
+Backman, et al.          Expires March 21, 2021                [Page 31]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1789,7 +1789,7 @@ B.1.8.  Multiple Set-Cookie headers are not well supported
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 32]
+Backman, et al.          Expires March 21, 2021                [Page 32]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1845,7 +1845,7 @@ B.1.15.  Should require lowercased header field names as identifiers
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 33]
+Backman, et al.          Expires March 21, 2021                [Page 33]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1901,7 +1901,7 @@ B.1.22.  Expiration not needed
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 34]
+Backman, et al.          Expires March 21, 2021                [Page 34]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -1957,7 +1957,7 @@ B.2.2.  Multiple signature support
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 35]
+Backman, et al.          Expires March 21, 2021                [Page 35]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -2013,7 +2013,7 @@ B.2.5.  Support for signing specific cookies
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 36]
+Backman, et al.          Expires March 21, 2021                [Page 36]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -2069,7 +2069,7 @@ Document History
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 37]
+Backman, et al.          Expires March 21, 2021                [Page 37]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -2125,7 +2125,7 @@ Authors' Addresses
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 38]
+Backman, et al.          Expires March 21, 2021                [Page 38]
 
 Internet-Draft            Signing HTTP Messages           September 2020
 
@@ -2181,4 +2181,4 @@ Internet-Draft            Signing HTTP Messages           September 2020
 
 
 
-Backman, et al.          Expires March 15, 2021                [Page 39]
+Backman, et al.          Expires March 21, 2021                [Page 39]
