@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-17T00:15:42.333966+00:00",
+  "timestamp": "2020-09-20T00:16:08.267126+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -25809,9 +25809,17 @@
       ],
       "body": "In [Section 7.1](https://httpwg.org/http-extensions/draft-ietf-httpbis-priority.html#coalescing-intermediaries) there is a rather firm recommendation to erase priorities at servers that are served by coalescing intermediaries:\r\n\r\n> the server SHOULD prioritize the response as if it was assigned the priority of u=1, i=?1 (i.e. round-robin) \r\n\r\nThis seems wrong to me.  The Priority header field provides information about what the User Agent thinks of priority.  This might be adjusted by intermediaries on the path, and it might not be globally consistent, but that does not mean the information should be discarded.  Instead, I would prefer that we say that when an intermediary coalesces requests from multiple clients, servers need to be aware of that and account for that in their processing.\r\n\r\nThe remainder of this text is fine in the sense that it identifies information the server can use to more fairly allocate resources to different requests, but - again - this is just information the server uses when making prioritization decisions.\r\n\r\nThe model we operate on should not assume be that Priority is an instruction to the server, but that it provides the server (or intermediary) clues about how it might decide to allocate resources.",
       "createdAt": "2020-01-09T04:26:10Z",
-      "updatedAt": "2020-01-09T04:26:10Z",
+      "updatedAt": "2020-09-17T00:28:29Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "No one responded to this for a while, sorry. The text is mostly untouched but I did change the example to just `u=1,i`.\r\n\r\nMy read of this today, I'm concerned that the requirement is a bit specific. It's not clear if a server applying this would also discard any additional priority parameters. I don't know if @martinthomson's original point was along those lines or not, but I'll try to make a PR to address what I think needs fixing",
+          "createdAt": "2020-09-17T00:28:29Z",
+          "updatedAt": "2020-09-17T00:28:29Z"
+        }
+      ]
     },
     {
       "number": 1023,
@@ -67240,6 +67248,169 @@
           "createdAt": "2020-09-11T10:05:33Z",
           "updatedAt": "2020-09-11T10:05:33Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 1263,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDg4MzI4NDkx",
+      "title": "s/headers/fields in priorities",
+      "url": "https://github.com/httpwg/http-extensions/pull/1263",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "Update to use Structured Fields terminology",
+      "createdAt": "2020-09-17T00:18:37Z",
+      "updatedAt": "2020-09-17T00:59:15Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "priority-structured-fields",
+      "headRefOid": "b777042b92186d9f5c5d499787a0c8bd61380ede",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 1264,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDg4MzM3Nzgy",
+      "title": "Be less specific about urgency when behind an intermediary",
+      "url": "https://github.com/httpwg/http-extensions/pull/1264",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "Closes #1022",
+      "createdAt": "2020-09-17T00:55:30Z",
+      "updatedAt": "2020-09-17T01:07:52Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "priority-coalescing",
+      "headRefOid": "686f7998de13c71605b21e54e4e63d8cc0e6666d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 1265,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDg4MzQwNTI1",
+      "title": "bespoke is uncommon",
+      "url": "https://github.com/httpwg/http-extensions/pull/1265",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "cc @dtikhonov",
+      "createdAt": "2020-09-17T01:06:18Z",
+      "updatedAt": "2020-09-17T01:08:05Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "bespoke-embiggens-confusion",
+      "headRefOid": "c2f8131bb6def74253fe7c66e9e40baca019eaca",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 1266,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDg4MzY3MDYy",
+      "title": "rough in server scheduling guidance",
+      "url": "https://github.com/httpwg/http-extensions/pull/1266",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "This tries to address two sets of comments on \"what signals are subsumed by priority hints\" and \"how should a server implement things\". \r\n\r\nOne aspect of this is setting client expectations straight; they should have a vague idea what will happen if a server plays ball but also expect that servers can and will do whatever they want.\r\n\r\nThe other aspect of this is describing what signals servers have at their disposal, and presenting some of the gotchas or tradeoffs that might happen if the extensible priority scheme is implemented too matter-of-fact. Some people would like to see more explicit guidance for servers, that's a fine request. However, I don't see how any single scheduling algorithm would work for the range of vendors and deployments that have shown an interest Priorities, so I've focused on the common criteria.\r\n\r\nWhile adding this section, the thought did cross my mind to move the sections on scheduling. We can always do that as a followup.\r\n\r\nCloses #1216 and #1232.\r\n\r\ncc @ekinnear, @guoye-zhang, @martinthomson ",
+      "createdAt": "2020-09-17T02:47:10Z",
+      "updatedAt": "2020-09-17T05:46:07Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "priority-server-scheduling",
+      "headRefOid": "606787fb45ebac7ddeefe41315f9043ab5616f64",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDkwMjQ4ODI1",
+          "commit": {
+            "abbreviatedOid": "606787f"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-17T05:16:57Z",
+          "updatedAt": "2020-09-17T05:46:07Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "\"Priority\" as a proper noun or an error?",
+              "createdAt": "2020-09-17T05:16:57Z",
+              "updatedAt": "2020-09-17T05:46:07Z"
+            },
+            {
+              "originalPosition": 52,
+              "body": "isn't it time from request to last byte delivered?",
+              "createdAt": "2020-09-17T05:18:03Z",
+              "updatedAt": "2020-09-17T05:46:07Z"
+            },
+            {
+              "originalPosition": 54,
+              "body": "For incremental resources, the time to deliver every byte is important.\r\n\r\nI wonder if the split here is between atomic and incremental.",
+              "createdAt": "2020-09-17T05:18:58Z",
+              "updatedAt": "2020-09-17T05:46:07Z"
+            },
+            {
+              "originalPosition": 60,
+              "body": "```suggestion\r\n```",
+              "createdAt": "2020-09-17T05:44:29Z",
+              "updatedAt": "2020-09-17T05:46:07Z"
+            },
+            {
+              "originalPosition": 58,
+              "body": "I don't get this point about unbalanced scheduling.  It seems to imply that there might be some other reason to balance between atomic and incremental resources, but I don't think that is the intent.",
+              "createdAt": "2020-09-17T05:45:29Z",
+              "updatedAt": "2020-09-17T05:46:07Z"
+            },
+            {
+              "originalPosition": 62,
+              "body": "What if that is all it gets?  I think that you need to provide more exposition for this recommendation.",
+              "createdAt": "2020-09-17T05:46:04Z",
+              "updatedAt": "2020-09-17T05:46:07Z"
+            }
+          ]
         }
       ]
     }
