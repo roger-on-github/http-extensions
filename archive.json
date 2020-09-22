@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-20T00:16:08.267126+00:00",
+  "timestamp": "2020-09-22T00:16:57.826264+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -30133,6 +30133,22 @@
           "updatedAt": "2020-09-10T14:23:46Z"
         }
       ]
+    },
+    {
+      "number": 1267,
+      "id": "MDU6SXNzdWU3MDU1OTM5MjM=",
+      "title": "State that priority parameters cannot be split across PRIORITY_UPDATE frames",
+      "url": "https://github.com/httpwg/http-extensions/issues/1267",
+      "state": "OPEN",
+      "author": "dtikhonov",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Because priority parameters are an sf-dictionary, they can be split across header lines.  This is not the case for priority updates carried in _PRIORITY_UPDATE_ frames.\r\n\r\nWhile this restriction can be inferred from a couple of sentences in the draft, stating it explicitly -- priority parameters cannot be split across _PRIORITY_UPDATE_ frames -- would make the draft clearer.",
+      "createdAt": "2020-09-21T13:22:03Z",
+      "updatedAt": "2020-09-21T13:22:03Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
