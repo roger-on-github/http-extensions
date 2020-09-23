@@ -98,7 +98,7 @@ Table of Contents
    9.  Fairness  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
      9.1.  Coalescing Intermediaries . . . . . . . . . . . . . . . .  14
      9.2.  HTTP/1.x Back Ends  . . . . . . . . . . . . . . . . . . .  15
-     9.3.  Intentional Introduction of Unfairness  . . . . . . . . .  15
+     9.3.  Intentional Introduction of Unfairness  . . . . . . . . .  16
    10. Why use an End-to-End Header Field? . . . . . . . . . . . . .  16
    11. Security Considerations . . . . . . . . . . . . . . . . . . .  16
    12. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
@@ -697,7 +697,7 @@ Internet-Draft               HTTP Priorities              September 2020
    peer to process concurrent request in a particular order using
    priority.  Expressing priority is therefore only a suggestion.
 
-   A server can use Priority signals along with other inputs to make
+   A server can use priority signals along with other inputs to make
    scheduling decisions.  No guidance is provided about how this can or
    should be done.  Factors such as implementation choices or deployment
    environment also play a role.  Any given connection is likely to have
@@ -745,8 +745,12 @@ Internet-Draft               HTTP Priorities              September 2020
    Servers are RECOMMENDED to avoid starvation but no specific method of
    doing so is prescribed.
 
-   An HTTP/2 server that sends SETTINGS_DEPRECATE_HTTP2_PRIORITIES
-   (Section 2.1) SHOULD NOT act on HTTP/2 priority signals.
+   An HTTP/2 server implementing the Extensible Priorities scheme
+   instead of the HTTP/2 priority sends
+   SETTINGS_DEPRECATE_HTTP2_PRIORITIES; see Section 2.1.  It SHOULD NOT
+   act on priority signals belonging to the HTTP/2 scheme.  The absence
+   of a client Extensible Priority signal for SHOULD be treated as
+   though default urgency and incremental parameters were sent.
 
 9.  Fairness
 
@@ -774,10 +778,6 @@ Internet-Draft               HTTP Priorities              September 2020
 
    It is sometimes beneficial for the server running behind an
    intermediary to obey to the value of the Priority header field.  As
-   an example, a resource-constrained server might defer the
-   transmission of software update files that would have the background
-   urgency being associated.  However, in the worst case, the asymmetry
-   between the precedence declared by multiple clients might cause
 
 
 
@@ -786,6 +786,10 @@ Oku & Pardue             Expires March 27, 2021                [Page 14]
 Internet-Draft               HTTP Priorities              September 2020
 
 
+   an example, a resource-constrained server might defer the
+   transmission of software update files that would have the background
+   urgency being associated.  However, in the worst case, the asymmetry
+   between the precedence declared by multiple clients might cause
    responses going to one end client to be delayed totally after those
    going to another.
 
@@ -829,10 +833,6 @@ Internet-Draft               HTTP Priorities              September 2020
    can be scoped to individual end clients.  Authentication and other
    session information might provide this linkability.
 
-9.3.  Intentional Introduction of Unfairness
-
-   It is sometimes beneficial to deprioritize the transmission of one
-   connection over others, knowing that doing so introduces a certain
 
 
 
@@ -842,6 +842,10 @@ Oku & Pardue             Expires March 27, 2021                [Page 15]
 Internet-Draft               HTTP Priorities              September 2020
 
 
+9.3.  Intentional Introduction of Unfairness
+
+   It is sometimes beneficial to deprioritize the transmission of one
+   connection over others, knowing that doing so introduces a certain
    amount of unfairness between the connections and therefore between
    the requests served on those connections.
 
@@ -886,10 +890,6 @@ Internet-Draft               HTTP Priorities              September 2020
 
    [RFC7540], Section 5.3.4 describes a scenario where closure of
    streams in the priority tree could cause suboptimal prioritization.
-   To avoid this, [RFC7540] states that "an endpoint SHOULD retain
-   stream prioritization state for a period after streams become
-   closed".  Retaining state for streams no longer counted towards
-   stream concurrency consumes server resources.  Furthermore, [RFC7540]
 
 
 
@@ -898,6 +898,10 @@ Oku & Pardue             Expires March 27, 2021                [Page 16]
 Internet-Draft               HTTP Priorities              September 2020
 
 
+   To avoid this, [RFC7540] states that "an endpoint SHOULD retain
+   stream prioritization state for a period after streams become
+   closed".  Retaining state for streams no longer counted towards
+   stream concurrency consumes server resources.  Furthermore, [RFC7540]
    identifies that reprioritization of a closed stream could affect
    dependents; it recommends updating the priority tree if sufficient
    state is stored, which will also consume server resources.  To limit
@@ -942,10 +946,6 @@ Internet-Draft               HTTP Priorities              September 2020
 
    Name:  SETTINGS_DEPRECATE_HTTP2_PRIORITIES
 
-   Code:  0x9
-
-   Initial value:  0
-
 
 
 
@@ -953,6 +953,10 @@ Oku & Pardue             Expires March 27, 2021                [Page 17]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   Code:  0x9
+
+   Initial value:  0
 
    Specification:  This document
 
@@ -998,10 +1002,6 @@ Internet-Draft               HTTP Priorities              September 2020
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
               <https://www.rfc-editor.org/info/rfc7230>.
 
-   [RFC7540]  Belshe, M., Peon, R., and M. Thomson, Ed., "Hypertext
-              Transfer Protocol Version 2 (HTTP/2)", RFC 7540,
-              DOI 10.17487/RFC7540, May 2015,
-              <https://www.rfc-editor.org/info/rfc7540>.
 
 
 
@@ -1009,6 +1009,11 @@ Oku & Pardue             Expires March 27, 2021                [Page 18]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   [RFC7540]  Belshe, M., Peon, R., and M. Thomson, Ed., "Hypertext
+              Transfer Protocol Version 2 (HTTP/2)", RFC 7540,
+              DOI 10.17487/RFC7540, May 2015,
+              <https://www.rfc-editor.org/info/rfc7540>.
 
    [STRUCTURED-HEADERS]
               Nottingham, M. and P. Kamp, "Structured Field Values for
@@ -1053,11 +1058,6 @@ Internet-Draft               HTTP Priorities              September 2020
 
    [3] https://github.com/httpwg/http-extensions/labels/priorities
 
-   [4] http://tools.ietf.org/agenda/83/slides/slides-83-httpbis-5.pdf
-
-   [5] https://github.com/pmeenan/http3-prioritization-proposal
-
-
 
 
 
@@ -1065,6 +1065,10 @@ Oku & Pardue             Expires March 27, 2021                [Page 19]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   [4] http://tools.ietf.org/agenda/83/slides/slides-83-httpbis-5.pdf
+
+   [5] https://github.com/pmeenan/http3-prioritization-proposal
 
 Appendix A.  Acknowledgements
 
@@ -1111,16 +1115,14 @@ B.2.  Since draft-kazuho-httpbis-priority-04
 
    o  Make changes due to WG adoption
 
-   o  Removed outdated Consideration (#118)
-
-
-
 
 
 Oku & Pardue             Expires March 27, 2021                [Page 20]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   o  Removed outdated Consideration (#118)
 
 B.3.  Since draft-kazuho-httpbis-priority-03
 
@@ -1163,8 +1165,6 @@ Authors' Addresses
    Cloudflare
 
    Email: lucaspardue.24.7@gmail.com
-
-
 
 
 
