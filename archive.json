@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-22T00:16:57.826264+00:00",
+  "timestamp": "2020-09-24T00:16:08.964322+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -29787,7 +29787,7 @@
       ],
       "body": "Could someone please explain the history behind why we have two drafts (https://tools.ietf.org/html/draft-west-cookie-incrementalism and https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis) that are somewhat incompatible with each other? Could the proposals that have support from the WG move into RFC6265bis?",
       "createdAt": "2020-08-05T14:49:01Z",
-      "updatedAt": "2020-09-16T11:40:22Z",
+      "updatedAt": "2020-09-22T06:47:44Z",
       "closedAt": null,
       "comments": [
         {
@@ -29810,6 +29810,13 @@
           "body": "Great to hear you'll be taking on cookies @krgovind! Mozilla supports adding those to that draft and effectively having the HTTP WG adopt them.",
           "createdAt": "2020-09-16T11:40:22Z",
           "updatedAt": "2020-09-16T11:40:22Z"
+        },
+        {
+          "author": "mnot",
+          "authorAssociation": "MEMBER",
+          "body": "The bar for getting something into 6265bis is what '[reflects implementation experience](https://lists.w3.org/Archives/Public/ietf-http-wg/2015OctDec/0165.html).' So, I think the next step here is to have a Call for Adoption for the draft; I've opened up https://github.com/httpwg/admin/issues/13 to track that.",
+          "createdAt": "2020-09-22T06:47:44Z",
+          "updatedAt": "2020-09-22T06:47:44Z"
         }
       ]
     },
@@ -30143,12 +30150,69 @@
       "author": "dtikhonov",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "priorities"
+      ],
       "body": "Because priority parameters are an sf-dictionary, they can be split across header lines.  This is not the case for priority updates carried in _PRIORITY_UPDATE_ frames.\r\n\r\nWhile this restriction can be inferred from a couple of sentences in the draft, stating it explicitly -- priority parameters cannot be split across _PRIORITY_UPDATE_ frames -- would make the draft clearer.",
       "createdAt": "2020-09-21T13:22:03Z",
-      "updatedAt": "2020-09-21T13:22:03Z",
+      "updatedAt": "2020-09-23T23:58:02Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I hadn't thought much about this. https://tools.ietf.org/html/draft-ietf-httpbis-header-structure-19#section-3.2 says \r\n\r\n>  Note that Dictionaries can have their members split across multiple\r\n>    lines inside a header or trailer section; for example, the following\r\n>    are equivalent:\r\n> \r\n>    Example-Hdr: foo=1, bar=2\r\n> \r\n>    and\r\n> \r\n>    Example-Hdr: foo=1\r\n>    Example-Hdr: bar=2\r\n> \r\n>    However, individual members of a Dictionary cannot be safely split\r\n>    between lines; see Section 4.2 for details.\r\n\r\nA client could send urgency and incremental parameters in separate PRIORITY_UPDATE frames. However, that risks the server processing each as if the other parameter was omitted, which is probably surprising and not the intention. Is that what you mean by \"cannot be split\"?\r\n\r\n@kazuho WDYT about us adding text making this situation clearer? ",
+          "createdAt": "2020-09-23T23:58:02Z",
+          "updatedAt": "2020-09-23T23:58:02Z"
+        }
+      ]
+    },
+    {
+      "number": 1268,
+      "id": "MDU6SXNzdWU3MDc1NzY5MzI=",
+      "title": "What happens if PRIORITY_UPDATE's PFV is not a valid SF?",
+      "url": "https://github.com/httpwg/http-extensions/issues/1268",
+      "state": "OPEN",
+      "author": "dtikhonov",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "The `Priority` field's field value and the Priority Field Value carried in _PRIORITY_UPDATE_ frame may not be a well-structured Structured Field (i.e. it may fail to parse).  While ignoring unexpected parameters and values is discussed in the draft, handling unparseable Structured Fields is not.",
+      "createdAt": "2020-09-23T18:15:48Z",
+      "updatedAt": "2020-09-23T22:51:57Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Good question.\r\n\r\nI don't believe that Structured Fields spec has any guidance other than to fail parsing. I'm open to ideas on what to suggest. \r\n\r\nFail closed seems quite harsh. My gut feeling is to suggest the treating as though default values were received.",
+          "createdAt": "2020-09-23T19:50:18Z",
+          "updatedAt": "2020-09-23T19:50:18Z"
+        },
+        {
+          "author": "dtikhonov",
+          "authorAssociation": "NONE",
+          "body": "That may become an optimization: send invalid Dictionary to send default values.\r\n\r\nUnlike HTTP Fields, the contents of the _PRIORITY_UPDATE_ frame are not expected to come directly from the user of the protocol.  We should at least ignore such frames.",
+          "createdAt": "2020-09-23T21:24:46Z",
+          "updatedAt": "2020-09-23T21:24:46Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Omitting the parameters implies defaults, so omitting the header or sending a frame with empty value would work just as well as sending a malformed value.\r\n\r\nTake for example Chrome which sends initial priority in PRIORITY_UPDATE. If that is malformed and it's ignored, how would a server prioritise things?",
+          "createdAt": "2020-09-23T21:56:49Z",
+          "updatedAt": "2020-09-23T21:56:49Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "+1 to using defaults. IMO, implementations can sent an Warning response header field if they want to be helpful, but I do not think we need to state that (as we do not make such statement in each of the HTTP-related specifications).",
+          "createdAt": "2020-09-23T22:51:57Z",
+          "updatedAt": "2020-09-23T22:51:57Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -67272,7 +67336,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDg4MzI4NDkx",
       "title": "s/headers/fields in priorities",
       "url": "https://github.com/httpwg/http-extensions/pull/1263",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -67281,17 +67345,19 @@
       ],
       "body": "Update to use Structured Fields terminology",
       "createdAt": "2020-09-17T00:18:37Z",
-      "updatedAt": "2020-09-17T00:59:15Z",
+      "updatedAt": "2020-09-23T12:55:32Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority-structured-fields",
       "headRefOid": "b777042b92186d9f5c5d499787a0c8bd61380ede",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2020-09-23T12:55:31Z",
+      "mergedAt": "2020-09-23T12:55:31Z",
+      "mergedBy": "LPardue",
+      "mergeCommit": {
+        "oid": "465911e1b9e7f5acc81e5c4055ae1214207e55d1"
+      },
       "comments": [],
       "reviews": []
     },
@@ -67309,7 +67375,7 @@
       ],
       "body": "Closes #1022",
       "createdAt": "2020-09-17T00:55:30Z",
-      "updatedAt": "2020-09-17T01:07:52Z",
+      "updatedAt": "2020-09-23T14:02:37Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
@@ -67320,7 +67386,15 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "cc @martinthomson, since it closes your issue.",
+          "createdAt": "2020-09-23T14:02:37Z",
+          "updatedAt": "2020-09-23T14:02:37Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -67328,7 +67402,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDg4MzQwNTI1",
       "title": "bespoke is uncommon",
       "url": "https://github.com/httpwg/http-extensions/pull/1265",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -67337,17 +67411,19 @@
       ],
       "body": "cc @dtikhonov",
       "createdAt": "2020-09-17T01:06:18Z",
-      "updatedAt": "2020-09-17T01:08:05Z",
+      "updatedAt": "2020-09-23T12:54:14Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "bespoke-embiggens-confusion",
       "headRefOid": "c2f8131bb6def74253fe7c66e9e40baca019eaca",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2020-09-23T12:54:12Z",
+      "mergedAt": "2020-09-23T12:54:12Z",
+      "mergedBy": "LPardue",
+      "mergeCommit": {
+        "oid": "0c7cb57e7e73d955992c6b324e309467d3e9605a"
+      },
       "comments": [],
       "reviews": []
     },
@@ -67365,13 +67441,13 @@
       ],
       "body": "This tries to address two sets of comments on \"what signals are subsumed by priority hints\" and \"how should a server implement things\". \r\n\r\nOne aspect of this is setting client expectations straight; they should have a vague idea what will happen if a server plays ball but also expect that servers can and will do whatever they want.\r\n\r\nThe other aspect of this is describing what signals servers have at their disposal, and presenting some of the gotchas or tradeoffs that might happen if the extensible priority scheme is implemented too matter-of-fact. Some people would like to see more explicit guidance for servers, that's a fine request. However, I don't see how any single scheduling algorithm would work for the range of vendors and deployments that have shown an interest Priorities, so I've focused on the common criteria.\r\n\r\nWhile adding this section, the thought did cross my mind to move the sections on scheduling. We can always do that as a followup.\r\n\r\nCloses #1216 and #1232.\r\n\r\ncc @ekinnear, @guoye-zhang, @martinthomson ",
       "createdAt": "2020-09-17T02:47:10Z",
-      "updatedAt": "2020-09-17T05:46:07Z",
+      "updatedAt": "2020-09-23T14:02:02Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority-server-scheduling",
-      "headRefOid": "606787fb45ebac7ddeefe41315f9043ab5616f64",
+      "headRefOid": "930fe0ddd924358c4464afc4268c18da9faa3352",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -67394,37 +67470,117 @@
               "originalPosition": 27,
               "body": "\"Priority\" as a proper noun or an error?",
               "createdAt": "2020-09-17T05:16:57Z",
-              "updatedAt": "2020-09-17T05:46:07Z"
+              "updatedAt": "2020-09-23T14:00:57Z"
             },
             {
               "originalPosition": 52,
               "body": "isn't it time from request to last byte delivered?",
               "createdAt": "2020-09-17T05:18:03Z",
-              "updatedAt": "2020-09-17T05:46:07Z"
+              "updatedAt": "2020-09-23T14:00:57Z"
             },
             {
               "originalPosition": 54,
               "body": "For incremental resources, the time to deliver every byte is important.\r\n\r\nI wonder if the split here is between atomic and incremental.",
               "createdAt": "2020-09-17T05:18:58Z",
-              "updatedAt": "2020-09-17T05:46:07Z"
+              "updatedAt": "2020-09-23T14:00:57Z"
             },
             {
               "originalPosition": 60,
               "body": "```suggestion\r\n```",
               "createdAt": "2020-09-17T05:44:29Z",
-              "updatedAt": "2020-09-17T05:46:07Z"
+              "updatedAt": "2020-09-23T14:00:57Z"
             },
             {
               "originalPosition": 58,
               "body": "I don't get this point about unbalanced scheduling.  It seems to imply that there might be some other reason to balance between atomic and incremental resources, but I don't think that is the intent.",
               "createdAt": "2020-09-17T05:45:29Z",
-              "updatedAt": "2020-09-17T05:46:07Z"
+              "updatedAt": "2020-09-23T14:00:57Z"
             },
             {
               "originalPosition": 62,
               "body": "What if that is all it gets?  I think that you need to provide more exposition for this recommendation.",
               "createdAt": "2020-09-17T05:46:04Z",
-              "updatedAt": "2020-09-17T05:46:07Z"
+              "updatedAt": "2020-09-23T14:00:57Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk0NjQ2NjQy",
+          "commit": {
+            "abbreviatedOid": "6b7d1cd"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-23T13:15:38Z",
+          "updatedAt": "2020-09-23T13:15:38Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "This is probably open to interpretation a little so it would be good to hammer it down. Looking at this again, I don't like how I presented it and will tweak it. I was basing it on my understanding of curl and chrome as shown here https://blog.cloudflare.com/a-question-of-timing/. Do other client have alternative views?\r\n\r\nMy thinking, based on other discussions, is that a non-incremental payload can only be used when the whole payload is received. Therefore, factoring in the delta between request and TTFB is not super helpful in this context. However, non-incremental objects probably do benefit from a shorter TTFB and \"time to significant delineator\", such as a progressive jpeg header.",
+              "createdAt": "2020-09-23T13:15:38Z",
+              "updatedAt": "2020-09-23T14:00:57Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk0NjQ5NzE4",
+          "commit": {
+            "abbreviatedOid": "6b7d1cd"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-23T13:18:49Z",
+          "updatedAt": "2020-09-23T13:18:49Z",
+          "comments": [
+            {
+              "originalPosition": 54,
+              "body": "For some types of content not all bytes are important due to internal boundaries. I'd like to avoid falling into the trap of describing this in too much detail if possible. I tried to use \"chunk\" as the sub-unit that could be as small as 1 byte.\r\n\r\nWhat do you mean by atomic vs incremental?",
+              "createdAt": "2020-09-23T13:18:49Z",
+              "updatedAt": "2020-09-23T14:00:57Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk0NjU5OTQ1",
+          "commit": {
+            "abbreviatedOid": "6b7d1cd"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-23T13:29:04Z",
+          "updatedAt": "2020-09-23T13:29:04Z",
+          "comments": [
+            {
+              "originalPosition": 58,
+              "body": "From https://github.com/httpwg/http-extensions/issues/1232#issuecomment-663724137\r\n\r\n>  Let's imagine two cases:\r\n > 1) At the same urgency level, a huge non-incremental file download has started, then a small incremental resource is requested.\r\n>  2) At the same urgency level, an incremental hanging GET is waiting for response, while a non-incremental file download is requested.\r\n\r\nAn unbalanced scheduler might be designed to completely flush one type of resource before moving on the the other. Especially likely if resources are large in comparison to the BDP. This could starve the other type from ever getting a share. The text is attempting to say don't do that. To avoid it, an implemention could somehow yield sending one type in a given time period. Guoye's suggestion on https://github.com/httpwg/http-extensions/issues/1232#issuecomment-663889717 provides an example. I like to avoid recommending any specific solution.",
+              "createdAt": "2020-09-23T13:29:04Z",
+              "updatedAt": "2020-09-23T14:00:57Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk0Njk0MDg4",
+          "commit": {
+            "abbreviatedOid": "930fe0d"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-23T14:01:43Z",
+          "updatedAt": "2020-09-23T14:01:43Z",
+          "comments": [
+            {
+              "originalPosition": 62,
+              "body": "I added some more exposition in https://github.com/httpwg/http-extensions/pull/1266/commits/3c7f8e6ee059d0b879036560b2a998b53583fb4c. PTAL.",
+              "createdAt": "2020-09-23T14:01:43Z",
+              "updatedAt": "2020-09-23T14:02:02Z"
             }
           ]
         }
