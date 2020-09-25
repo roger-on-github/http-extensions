@@ -747,12 +747,13 @@ Internet-Draft               HTTP Priorities              September 2020
    server might pre-emptively send responses of a particular incremental
    type based on other information such as content size.
 
-   An HTTP/2 server implementing the Extensible Priorities scheme
-   instead of the HTTP/2 priority sends
-   SETTINGS_DEPRECATE_HTTP2_PRIORITIES; see Section 2.1.  It SHOULD NOT
-   act on priority signals belonging to the HTTP/2 scheme.  The absence
-   of a client Extensible Priority signal for SHOULD be treated as
-   though default urgency and incremental parameters were sent.
+   HTTP/2 endpoints can advertise that they using the Extensible
+   Priorities scheme instead of the HTTP/2 priority scheme by sending
+   SETTINGS_DEPRECATE_HTTP2_PRIORITIES; see Section 2.1.  A server that
+   sends or receives this setting SHOULD NOT act on priority signals
+   belonging to the HTTP/2 scheme.  The absence of a client Extensible
+   Priority signal SHOULD be treated as though default urgency and
+   incremental parameters were sent.
 
 10.  Fairness
 
@@ -777,7 +778,6 @@ Internet-Draft               HTTP Priorities              September 2020
    clients into one HTTP/2 or HTTP/3 connection going to the backend
    server, requests that originate from one client might have higher
    precedence than those coming from others.
-
 
 
 
