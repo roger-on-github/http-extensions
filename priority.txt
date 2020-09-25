@@ -699,7 +699,7 @@ Internet-Draft               HTTP Priorities              September 2020
    signals.  Servers can use other information to prioritize responses.
 
    It is RECOMMENDED that, when possible, servers respect urgency
-   values.  Sending higher urgency responses before lower urgency
+   values, sending higher urgency responses before lower urgency
    responses.
 
    It is RECOMMENDED that, when possible, servers respect incremental
