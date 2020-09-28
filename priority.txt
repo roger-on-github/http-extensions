@@ -287,7 +287,7 @@ Internet-Draft               HTTP Priorities              September 2020
    SHOULD stop sending the HTTP/2 priority signals.  If the client
    learns that the HTTP/2 priority scheme is not deprecated, it SHOULD
    stop sending PRIORITY_UPDATE frames (Section 6.1), but MAY continue
-   sending the Priority header field (Section 4), as if is an end-to-end
+   sending the Priority header field (Section 4), as it is an end-to-end
    signal that might be useful to nodes behind the server that the
    client is directly connected to.
 
