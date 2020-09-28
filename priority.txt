@@ -85,14 +85,14 @@ Table of Contents
    2.  Motivation for Replacing HTTP/2 Priorities  . . . . . . . . .   4
      2.1.  Disabling HTTP/2 Priorities . . . . . . . . . . . . . . .   5
    3.  Priority Parameters . . . . . . . . . . . . . . . . . . . . .   6
-     3.1.  Urgency . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     3.1.  Urgency . . . . . . . . . . . . . . . . . . . . . . . . .   7
      3.2.  Incremental . . . . . . . . . . . . . . . . . . . . . . .   7
      3.3.  Defining New Parameters . . . . . . . . . . . . . . . . .   8
    4.  The Priority HTTP Header Field  . . . . . . . . . . . . . . .   8
-   5.  Reprioritization  . . . . . . . . . . . . . . . . . . . . . .   8
+   5.  Reprioritization  . . . . . . . . . . . . . . . . . . . . . .   9
    6.  The PRIORITY_UPDATE Frame . . . . . . . . . . . . . . . . . .   9
-     6.1.  HTTP/2 PRIORITY_UPDATE Frame  . . . . . . . . . . . . . .   9
-     6.2.  HTTP/3 PRIORITY_UPDATE Frame  . . . . . . . . . . . . . .  10
+     6.1.  HTTP/2 PRIORITY_UPDATE Frame  . . . . . . . . . . . . . .  10
+     6.2.  HTTP/3 PRIORITY_UPDATE Frame  . . . . . . . . . . . . . .  11
    7.  Merging Client- and Server-Driven Parameters  . . . . . . . .  12
    8.  Client Scheduling . . . . . . . . . . . . . . . . . . . . . .  13
    9.  Server Scheduling . . . . . . . . . . . . . . . . . . . . . .  13
@@ -287,13 +287,19 @@ Internet-Draft               HTTP Priorities              September 2020
    SHOULD stop sending the HTTP/2 priority signals.  If the client
    learns that the HTTP/2 priority scheme is not deprecated, it SHOULD
    stop sending PRIORITY_UPDATE frames (Section 6.1), but MAY continue
-   sending the Priority header field (Section 4), as it is an end-to-end
+   sending the Priority header field (Section 4), as if is an end-to-end
    signal that might be useful to nodes behind the server that the
    client is directly connected to.
 
    The SETTINGS frame precedes any priority signal sent from a client in
    HTTP/2, so a server can determine if it should respect the HTTP/2
-   scheme before building state.
+   scheme before building state.  A server that receives
+   SETTINGS_DEPRECATE_HTTP2_PRIORITIES MUST ignore HTTP/2 priority
+   signals.
+
+   Where both endpoints disable HTTP/2 priorities, the client is
+   expected to send this scheme's priority signal.  Handling of omitted
+   signals is described in Section 3.
 
 3.  Priority Parameters
 
@@ -322,6 +328,16 @@ Internet-Draft               HTTP Priorities              September 2020
    Unknown parameters, parameters with out-of-range values or values of
    unexpected types MUST be ignored.
 
+
+
+
+
+
+Oku & Pardue              Expires April 1, 2021                 [Page 6]
+
+Internet-Draft               HTTP Priorities              September 2020
+
+
 3.1.  Urgency
 
    The urgency parameter ("u") takes an integer between 0 and 7, in
@@ -330,13 +346,6 @@ Internet-Draft               HTTP Priorities              September 2020
    minimal complexity.
 
    The value is encoded as an sf-integer.  The default value is 3.
-
-
-
-Oku & Pardue              Expires April 1, 2021                 [Page 6]
-
-Internet-Draft               HTTP Priorities              September 2020
-
 
    This parameter indicates the sender's recommendation, based on the
    expectation that the server would transmit HTTP responses in the
@@ -377,15 +386,6 @@ Internet-Draft               HTTP Priorities              September 2020
    If a client makes concurrent requests with the incremental parameter
    set to false, there is no benefit serving responses in parallel
    because the client is not going to process those responses
-   incrementally.  Serving non-incremental responses one by one, in the
-   order in which those requests were generated is considered to be the
-   best strategy.
-
-   The following example shows a request for a JPEG file with the
-   urgency parameter set to "5" and the incremental parameter set to
-   "true".
-
-
 
 
 
@@ -393,6 +393,14 @@ Oku & Pardue              Expires April 1, 2021                 [Page 7]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   incrementally.  Serving non-incremental responses one by one, in the
+   order in which those requests were generated is considered to be the
+   best strategy.
+
+   The following example shows a request for a JPEG file with the
+   urgency parameter set to "5" and the incremental parameter set to
+   "true".
 
    :method = GET
    :scheme = https
@@ -434,14 +442,6 @@ Internet-Draft               HTTP Priorities              September 2020
    requests.  When an origin server generates the Priority response
    header field based on properties of an HTTP request it receives, the
    server is expected to control the cacheability or the applicability
-   of the cached response, by using header fields that control the
-   caching behavior (e.g., Cache-Control, Vary).
-
-5.  Reprioritization
-
-   After a client sends a request, it may be beneficial to change the
-   priority of the response.  As an example, a web browser might issue a
-   prefetch request for a JavaScript file with the urgency parameter of
 
 
 
@@ -450,6 +450,14 @@ Oku & Pardue              Expires April 1, 2021                 [Page 8]
 Internet-Draft               HTTP Priorities              September 2020
 
 
+   of the cached response, by using header fields that control the
+   caching behavior (e.g., Cache-Control, Vary).
+
+5.  Reprioritization
+
+   After a client sends a request, it may be beneficial to change the
+   priority of the response.  As an example, a web browser might issue a
+   prefetch request for a JavaScript file with the urgency parameter of
    the Priority request header field set to "u=7" (background).  Then,
    when the user navigates to a page which references the new JavaScript
    file, while the prefetch is in progress, the browser would send a
@@ -490,14 +498,6 @@ Internet-Draft               HTTP Priorities              September 2020
    PRIORITY_UPDATES that can be sent, storing only the most recently
    received frame limits resource commitment.
 
-6.1.  HTTP/2 PRIORITY_UPDATE Frame
-
-   The HTTP/2 PRIORITY_UPDATE frame (type=0x10) is used by clients to
-   signal the initial priority of a response, or to reprioritize a
-   response or push stream.  It carries the stream ID of the response
-   and the priority in ASCII text, using the same representation as the
-   Priority header field value.
-
 
 
 
@@ -505,6 +505,14 @@ Oku & Pardue              Expires April 1, 2021                 [Page 9]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+6.1.  HTTP/2 PRIORITY_UPDATE Frame
+
+   The HTTP/2 PRIORITY_UPDATE frame (type=0x10) is used by clients to
+   signal the initial priority of a response, or to reprioritize a
+   response or push stream.  It carries the stream ID of the response
+   and the priority in ASCII text, using the same representation as the
+   Priority header field value.
 
    The Stream Identifier field ([RFC7540], Section 4.1) in the
    PRIORITY_UPDATE frame header MUST be zero (0x0).  Receiving a
@@ -545,14 +553,6 @@ Internet-Draft               HTTP Priorities              September 2020
    If a client receives a PRIORITY_UPDATE frame, it MUST respond with a
    connection error of type PROTOCOL_ERROR.
 
-6.2.  HTTP/3 PRIORITY_UPDATE Frame
-
-   The HTTP/3 PRIORITY_UPDATE frame (type=0xF0700 or 0xF0701) is used by
-   clients to signal the initial priority of a response, or to
-   reprioritize a response or push stream.  It carries the identifer of
-   the element that is being prioritized, and the updated priority in
-   ASCII text, using the same representation as that of the Priority
-   header field value.  PRIORITY_UPDATE with a frame type of 0xF0700 is
 
 
 
@@ -562,6 +562,14 @@ Oku & Pardue              Expires April 1, 2021                [Page 10]
 Internet-Draft               HTTP Priorities              September 2020
 
 
+6.2.  HTTP/3 PRIORITY_UPDATE Frame
+
+   The HTTP/3 PRIORITY_UPDATE frame (type=0xF0700 or 0xF0701) is used by
+   clients to signal the initial priority of a response, or to
+   reprioritize a response or push stream.  It carries the identifer of
+   the element that is being prioritized, and the updated priority in
+   ASCII text, using the same representation as that of the Priority
+   header field value.  PRIORITY_UPDATE with a frame type of 0xF0700 is
    used for request streams, while PRIORITY_UPDATE with a frame type of
    0xF0701 is used for push streams.
 
@@ -602,14 +610,6 @@ Internet-Draft               HTTP Priorities              September 2020
    ID or which has not yet been promised, this MUST be treated as a
    connection error of type H3_ID_ERROR.
 
-   PRIORITY_UPDATE frames of either type are only sent by clients.  If a
-   client receives a PRIORITY_UPDATE frame, this MUST be treated as a
-   connection error of type H3_FRAME_UNEXPECTED.
-
-
-
-
-
 
 
 
@@ -617,6 +617,10 @@ Oku & Pardue              Expires April 1, 2021                [Page 11]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   PRIORITY_UPDATE frames of either type are only sent by clients.  If a
+   client receives a PRIORITY_UPDATE frame, this MUST be treated as a
+   connection error of type H3_FRAME_UNEXPECTED.
 
 7.  Merging Client- and Server-Driven Parameters
 
@@ -661,11 +665,7 @@ Internet-Draft               HTTP Priorities              September 2020
    content-type = image/png
    priority = u=1
 
-   the intermediary might alter its understanding of the urgency from
-   "5" to "1", because it prefers the server-provided value over the
-   client's.  The incremental value continues to be "true", the value
-   specified by the client, as the server did not specify the
-   incremental("i") parameter.
+
 
 
 
@@ -673,6 +673,12 @@ Oku & Pardue              Expires April 1, 2021                [Page 12]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   the intermediary might alter its understanding of the urgency from
+   "5" to "1", because it prefers the server-provided value over the
+   client's.  The incremental value continues to be "true", the value
+   specified by the client, as the server did not specify the
+   incremental("i") parameter.
 
 8.  Client Scheduling
 
@@ -716,12 +722,6 @@ Internet-Draft               HTTP Priorities              September 2020
    The incremental parameter (Section 3.2) indicates how a client
    processes response bytes as they arrive.  Non-incremental resources
    are only used when all of the response payload has been received.
-   Incremental resources are used as parts, or chunks, of the response
-   payload are received.  Therefore, the timing of response data
-   reception at the client, such as the time to early bytes or the time
-   to receive the entire payload, plays an important role in perceived
-   performance.  Timings depend on resource size but this scheme
-   provides no explicit guidance about how a server should use size as
 
 
 
@@ -730,6 +730,12 @@ Oku & Pardue              Expires April 1, 2021                [Page 13]
 Internet-Draft               HTTP Priorities              September 2020
 
 
+   Incremental resources are used as parts, or chunks, of the response
+   payload are received.  Therefore, the timing of response data
+   reception at the client, such as the time to early bytes or the time
+   to receive the entire payload, plays an important role in perceived
+   performance.  Timings depend on resource size but this scheme
+   provides no explicit guidance about how a server should use size as
    an input to prioritization.  Instead, the following examples
    demonstrate how a server that strictly abides the scheduling guidance
    based on urgency and request generation order could find that early
@@ -746,14 +752,6 @@ Internet-Draft               HTTP Priorities              September 2020
    The method to do so is an implementation decision.  For example, a
    server might pre-emptively send responses of a particular incremental
    type based on other information such as content size.
-
-   HTTP/2 endpoints can advertise that they are using the Extensible
-   Priorities scheme instead of the HTTP/2 priority scheme by sending
-   SETTINGS_DEPRECATE_HTTP2_PRIORITIES; see Section 2.1.  A server that
-   sends or receives this setting SHOULD NOT act on priority signals
-   belonging to the HTTP/2 scheme.  The absence of a client Extensible
-   Priority signal SHOULD be treated as though default urgency and
-   incremental parameters were sent.
 
 10.  Fairness
 
@@ -778,6 +776,8 @@ Internet-Draft               HTTP Priorities              September 2020
    clients into one HTTP/2 or HTTP/3 connection going to the backend
    server, requests that originate from one client might have higher
    precedence than those coming from others.
+
+
 
 
 
