@@ -1,12 +1,12 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-09-27T00:16:32.856455+00:00",
+  "timestamp": "2020-09-29T00:16:27.452749+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
       "name": "alt-svc",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "editorial",
@@ -15,43 +15,43 @@
     },
     {
       "name": "opp-sec",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "tunnel-proto",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "auth-info",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "308bis",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "cice",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "451",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "5987bis",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "key",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "client-hints",
@@ -60,8 +60,8 @@
     },
     {
       "name": "encryption",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "6265bis",
@@ -70,18 +70,18 @@
     },
     {
       "name": "origin-frame",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "jfv",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "cache-digest",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "header-structure",
@@ -95,13 +95,13 @@
     },
     {
       "name": "immutable",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "early-hints",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "expect-ct",
@@ -115,13 +115,13 @@
     },
     {
       "name": "replay",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "secondary-certs",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "bcp56bis",
@@ -130,8 +130,8 @@
     },
     {
       "name": "h2-websockets",
-      "description": null,
-      "color": "fbca04"
+      "description": "",
+      "color": "cccccc"
     },
     {
       "name": "variants",
@@ -151,11 +151,11 @@
     {
       "name": "http2-tls13",
       "description": "",
-      "color": "fbca04"
+      "color": "cccccc"
     },
     {
       "name": "digest-headers",
-      "description": "Issues related to digest-headers",
+      "description": "",
       "color": "fbca04"
     },
     {
@@ -25800,7 +25800,7 @@
       "id": "MDU6SXNzdWU1NDcyNDAzNDg=",
       "title": "Coalescing intermediaries and fairness",
       "url": "https://github.com/httpwg/http-extensions/issues/1022",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "martinthomson",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -25809,8 +25809,8 @@
       ],
       "body": "In [Section 7.1](https://httpwg.org/http-extensions/draft-ietf-httpbis-priority.html#coalescing-intermediaries) there is a rather firm recommendation to erase priorities at servers that are served by coalescing intermediaries:\r\n\r\n> the server SHOULD prioritize the response as if it was assigned the priority of u=1, i=?1 (i.e. round-robin) \r\n\r\nThis seems wrong to me.  The Priority header field provides information about what the User Agent thinks of priority.  This might be adjusted by intermediaries on the path, and it might not be globally consistent, but that does not mean the information should be discarded.  Instead, I would prefer that we say that when an intermediary coalesces requests from multiple clients, servers need to be aware of that and account for that in their processing.\r\n\r\nThe remainder of this text is fine in the sense that it identifies information the server can use to more fairly allocate resources to different requests, but - again - this is just information the server uses when making prioritization decisions.\r\n\r\nThe model we operate on should not assume be that Priority is an instruction to the server, but that it provides the server (or intermediary) clues about how it might decide to allocate resources.",
       "createdAt": "2020-01-09T04:26:10Z",
-      "updatedAt": "2020-09-17T00:28:29Z",
-      "closedAt": null,
+      "updatedAt": "2020-09-28T11:18:50Z",
+      "closedAt": "2020-09-28T11:18:50Z",
       "comments": [
         {
           "author": "LPardue",
@@ -30146,7 +30146,7 @@
       "id": "MDU6SXNzdWU3MDU1OTM5MjM=",
       "title": "State that priority parameters cannot be split across PRIORITY_UPDATE frames",
       "url": "https://github.com/httpwg/http-extensions/issues/1267",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dtikhonov",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -30155,8 +30155,8 @@
       ],
       "body": "Because priority parameters are an sf-dictionary, they can be split across header lines.  This is not the case for priority updates carried in _PRIORITY_UPDATE_ frames.\r\n\r\nWhile this restriction can be inferred from a couple of sentences in the draft, stating it explicitly -- priority parameters cannot be split across _PRIORITY_UPDATE_ frames -- would make the draft clearer.",
       "createdAt": "2020-09-21T13:22:03Z",
-      "updatedAt": "2020-09-24T04:15:22Z",
-      "closedAt": null,
+      "updatedAt": "2020-09-28T10:53:24Z",
+      "closedAt": "2020-09-28T10:53:24Z",
       "comments": [
         {
           "author": "LPardue",
@@ -30186,7 +30186,7 @@
       "id": "MDU6SXNzdWU3MDc1NzY5MzI=",
       "title": "What happens if PRIORITY_UPDATE's PFV is not a valid SF?",
       "url": "https://github.com/httpwg/http-extensions/issues/1268",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dtikhonov",
       "authorAssociation": "NONE",
       "assignees": [],
@@ -30195,8 +30195,8 @@
       ],
       "body": "The `Priority` field's field value and the Priority Field Value carried in _PRIORITY_UPDATE_ frame may not be a well-structured Structured Field (i.e. it may fail to parse).  While ignoring unexpected parameters and values is discussed in the draft, handling unparseable Structured Fields is not.",
       "createdAt": "2020-09-23T18:15:48Z",
-      "updatedAt": "2020-09-24T04:12:49Z",
-      "closedAt": null,
+      "updatedAt": "2020-09-28T10:53:24Z",
+      "closedAt": "2020-09-28T10:53:24Z",
       "comments": [
         {
           "author": "LPardue",
@@ -30323,12 +30323,155 @@
       "author": "triple-underscore",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "client-hints",
+        "editorial"
+      ],
       "body": "The following sentence in [HTTP Client Hints, section 4.1](https://httpwg.org/http-extensions/draft-ietf-httpbis-client-hints.html#information-exposure) has parentheses unbalanced, making it somewhat confusing.\r\n\r\n> The header-based opt-in means that removal of passive fingerprinting vectors is possible, such as the User-Agent string (enabling active access to that information through User-Agent Client Hints ([UA-CH]) or otherwise expose information already available through script (e.g., the Save-Data Client Hint), without increasing the passive fingerprinting surface.",
       "createdAt": "2020-09-26T23:26:33Z",
-      "updatedAt": "2020-09-26T23:26:33Z",
+      "updatedAt": "2020-09-27T00:43:51Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 1273,
+      "id": "MDU6SXNzdWU3MDk3NzM2OTI=",
+      "title": "[structured-headers] bnf for dict-member",
+      "url": "https://github.com/httpwg/http-extensions/issues/1273",
+      "state": "OPEN",
+      "author": "Jxck",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "according to the current spec, `dict-member` is defined as\r\n\r\n```bnf\r\ndict-member = member-name [ \"=\" member-value ]\r\n```\r\n\r\nbut current test includes case like below as valid. [link to test](https://github.com/httpwg/structured-field-tests/blob/master/dictionary.json#L114-L117)\r\n\r\n```json\r\n    {\r\n        \"name\": \"missing value with params dictionary\",\r\n        \"raw\": [\"a=1, b;foo=9, c=3\"],\r\n        \"header_type\": \"dictionary\",\r\n        \"expected\": [[\"a\", [1, []]], [\"b\", [true, [[\"foo\", 9]]]], [\"c\", [3, []]]]\r\n    }\r\n```\r\n\r\n`b` 's member-value's are omitted, so `b` is implicitly `true` and it **has parameters** `foo=9` too.\r\n\r\nin my understand from BNF,  if `=` doesn't appear next to member-name, member name section are omitted.\r\n\r\nso if its should valid, BNF should be seems like this.\r\n\r\n```bnf\r\ndict-member = member-name [ ( \"=\" member-value) / parameters ]\r\n```\r\n",
+      "createdAt": "2020-09-27T16:47:08Z",
+      "updatedAt": "2020-09-27T16:57:48Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 1274,
+      "id": "MDU6SXNzdWU3MDk4MTMxMjE=",
+      "title": "Need a way to tell if server supports priority",
+      "url": "https://github.com/httpwg/http-extensions/issues/1274",
+      "state": "OPEN",
+      "author": "guoye-zhang",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [
+        "priorities"
+      ],
+      "body": "Extensible priority scheme is an extension which server might not choose to implement. However, [Low-Latency HTTP Live Streaming](https://tools.ietf.org/html/draft-pantos-hls-rfc8216bis-07) depends on current HTTP/2 dependencies and weights, and if it is to switch to the new scheme, client needs to tell if the server supports priority. In case priority isn't supported, client would disable low-latency features and fallback to regular HLS.",
+      "createdAt": "2020-09-27T20:46:49Z",
+      "updatedAt": "2020-09-28T18:36:12Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I believe this is already covered under section 2.1  https://tools.ietf.org/html/draft-ietf-httpbis-priority-01#section-2. An HTTP/2 server that implement the extension MUST send the setting.",
+          "createdAt": "2020-09-27T21:04:16Z",
+          "updatedAt": "2020-09-27T21:04:16Z"
+        },
+        {
+          "author": "guoye-zhang",
+          "authorAssociation": "NONE",
+          "body": "@LPardue This is not exactly about detecting old or new priority scheme in HTTP/2. We also want to know if an HTTP/3 server supports priority. And when HTTP/2 dependency is removed from the next version of RFC, there could HTTP/2 servers that don't support either scheme.",
+          "createdAt": "2020-09-27T22:14:57Z",
+          "updatedAt": "2020-09-27T22:14:57Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "OK, it sounds like a slightly different requirement. \r\n\r\nAn explicit \"I support extensible priorities\" signal would likely want to future proof itself for some other scheme or signal. This is a slippery slope of complexity. I have an unpushed branch for draft-lassey-priority-setting that explored advertising multiple priority schemes and agreeing on one. This got gnarly pretty quick, and seemed to me way more complicated than needed for the problem the design team set out to solve.\r\n\r\nLooking at LLHLS, it says\r\n\r\n> Efficient delivery requires HTTP/2 priority control (dependencies  and weights) \r\n\r\nThis requirement is IMO at odds with the premise of priorities, even the H2 scheme we have today. RFC 7540 says:\r\n\r\n> An endpoint cannot force a peer to process concurrent streams in a particular order using priority.\r\n\r\nGiven that LLHLS seems to be a specialisation of HTTP/2, I wonder if it would be better served by an ability for a server to advertise if it supports LLHLS or not, rather than building up the picture from protocol foundations or extensions.\r\n",
+          "createdAt": "2020-09-27T23:02:04Z",
+          "updatedAt": "2020-09-27T23:02:04Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "And while exploring this tangent, I wonder how JavaScript-based HAS players using Fetch or XHR would approach connection-based HTTP feature detection. Maybe @wilaw could share some insight about how this can or can't be done.",
+          "createdAt": "2020-09-27T23:11:23Z",
+          "updatedAt": "2020-09-27T23:11:23Z"
+        },
+        {
+          "author": "roger-on-github",
+          "authorAssociation": "NONE",
+          "body": "@LPardue the Apple LL-HLS client will fall back to regular latency if the server does not support a required set of functionality because the algorithms will behave improperly otherwise. This includes request multiplexing within a single connection, the ability to strictly order pipelined requests for a single flavor of media , and the ability to prioritize simultaneous requests for certain flavors (bit rates, metadata) above others. \r\n\r\nThis does not require a negotiation of prioritization schemes, the direction it seems you went in your \"slippery slope of complexity\" tangent. It only requires that the service positively indicate the current generation of scheme that it supports.",
+          "createdAt": "2020-09-27T23:26:51Z",
+          "updatedAt": "2020-09-27T23:26:51Z"
+        },
+        {
+          "author": "guoye-zhang",
+          "authorAssociation": "NONE",
+          "body": "One of the goals of HLS is that it can be served by any HTTP server and takes advantage of existing CDN infrastructure, so we want to avoid a dedicated signal for LLHLS if possible.",
+          "createdAt": "2020-09-27T23:31:49Z",
+          "updatedAt": "2020-09-27T23:31:49Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The use case is quite focused. The general the problem I see is that if you have both endpoints stating they support future multiple schemes, how do the endpoints agree to on which scheme to use? If you don't agree on one, then you'll end up having to send them all, and they might not even be compatible. That's not a very nice situation.\r\n\r\nOne problem today is _all_ HTTP/2 servers support the tree-based scheme. But they might not respect the prioritization requirements that you have. If we had a means to state extensible priority support, I wouldn't be surprised if some servers also didn't live up to the requirements. That's why I question the value of such a signal.\r\n\r\n",
+          "createdAt": "2020-09-27T23:54:16Z",
+          "updatedAt": "2020-09-27T23:54:38Z"
+        },
+        {
+          "author": "guoye-zhang",
+          "authorAssociation": "NONE",
+          "body": "The hope is that this priority scheme is general enough for LLHLS use case. Inventing another prioritization scheme which achieves largely the same thing would not be ideal. Nor if server is forced to interpret this priority scheme in a more specific way to support LLHLS.\r\n\r\nI wonder if it's possible to add feature detection for HTTP extensions in general. It would also be useful for, for example, resumable upload support.",
+          "createdAt": "2020-09-28T07:40:40Z",
+          "updatedAt": "2020-09-28T07:40:40Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> The hope is that this priority scheme is general enough for LLHLS use case. Inventing another prioritization scheme which achieves largely the same thing would not be ideal. Nor if server is forced to interpret this priority scheme in a more specific way to support LLHLS.\r\n\r\nThen I'm confused. The issue appears to state that a client needs to know if the server provides \"strictly order pipelined requests for a single flavor of media , and the ability to prioritize simultaneous requests for certain flavors (bit rates, metadata) above others.\". Since extensible priorities does not mandate server behaviour, advertising it's being used isn't a strong enough contract for you.\r\n",
+          "createdAt": "2020-09-28T10:01:27Z",
+          "updatedAt": "2020-09-28T10:01:27Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I can see the desire to use different prioritization signals based on what the server claims to do. But I think I agree with @LPardue that, in general, it is dangerous to assume that the two properties are equal: if a server implements a prioritization scheme, and if a client can exploit certain capabilities of that prioritization scheme.\r\n\r\nTo give an example, consider the case where a H2 terminator sits in front of a H1 server, the number of concurrent requests from the H2 terminator to the H1 server is limited to 5 per each H2 connection, the stream-level concurrency of the H2 connection would be 100. This as a reasonable configuration; it provides enough concurrency for the H2 hop to hide the latency, avoids excessive use of the application server (doing H1). But a client cannot utilize the capability of receiving 100 incremental responses concurrently.",
+          "createdAt": "2020-09-28T10:41:21Z",
+          "updatedAt": "2020-09-28T10:41:21Z"
+        },
+        {
+          "author": "roger-on-github",
+          "authorAssociation": "NONE",
+          "body": "I'm confused about your apparent desire to not signal prioritization capability. How is a client to use any sort of prioritization scheme if the supported scheme(s) are not signaled?",
+          "createdAt": "2020-09-28T15:17:57Z",
+          "updatedAt": "2020-09-28T15:17:57Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Sending the signals causes no interoperability problems if the target server does not support the prioritization scheme. This is part of the strength of extensible priorities, that it can be extended without the requirement of upfront coordination. Adding a signal for supporting extensible priorities could soon degrade to needing to enumerate all supported priority parameters. \r\n\r\n",
+          "createdAt": "2020-09-28T15:43:43Z",
+          "updatedAt": "2020-09-28T15:43:43Z"
+        },
+        {
+          "author": "wilaw",
+          "authorAssociation": "NONE",
+          "body": "Quoting from this [source](https://developers.google.com/web/fundamentals/performance/http2) and repeating a point made by Lucas earlier about RFC 7540 \"_Stream dependencies and weights express a transport preference, not a requirement, and as such do not guarantee a particular processing or transmission order. That is, the client cannot force the server to process the stream in a particular order using stream prioritization. While this may seem counterintuitive, it is in fact the desired behavior. We do not want to block the server from making progress on a lower priority resource if a higher priority resource is blocked_.\".\r\n\r\nSo it would seem that any LL-HLS client cannot depend upon prioritization taking place in a H2 conformant server. The client may ask for prioritization but it will not receive an explicit signal that this has been implemented by the server. It will receive an implicit signal however, which is the turn-around time and throughput it receives on its playlist and part requests. Its algorithm should be robust at interpreting and handling these signals. The performance a client receives over a poor last mile network talking to a server implementing prioritization may well be indistinguishable from the performance it receives from a good last mile network talking to a non-prioritizing server. It needs to work under either scenario. It may need to back off on its target latency based on these signals for example. ",
+          "createdAt": "2020-09-28T15:46:37Z",
+          "updatedAt": "2020-09-28T15:46:37Z"
+        },
+        {
+          "author": "roger-on-github",
+          "authorAssociation": "NONE",
+          "body": "@LPardue so your recommendation to clients is that they just start playing whack-a-mole with the server, sending it a variety of prioritization signals, until they find one that it responds to?",
+          "createdAt": "2020-09-28T16:42:12Z",
+          "updatedAt": "2020-09-28T16:42:12Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Since there is no way to validate that a server behaves in any particular way that a client wants, then they are already playing whack-a-mole. HTTP/2 prioritization signal parsing is mandatory to implement but acting on that is not. And that leads to varying quality of implementation; see https://github.com/andydavies/http2-prioritization-issues where a significant portion of tested services report failure for a certain type of test.\r\n\r\nFurthermore, servers can take any signals into account when making prioritization decisions. That could be signals outside this scheme, which may interfere with your prioritization requirements.\r\n\r\nWould you really be happy with a setting that says \"I support parsing the Priority header\"? We don't tend to have such signals for other HTTP headers, it seems like an anti-pattern.\r\n\r\nIf a LL-HLS client wants a server to assert that it support LL-HLS, it seems more natural to have a setting that advertises just that. Then you can apply more stringent prioritization/ multiplexing requirements and performance goals on that server.",
+          "createdAt": "2020-09-28T18:01:40Z",
+          "updatedAt": "2020-09-28T18:02:11Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -65280,7 +65423,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDI2MDAwNjc1",
       "title": "Fix: #850. Support for parameters.",
       "url": "https://github.com/httpwg/http-extensions/pull/1213",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "ioggstream",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -65289,14 +65432,14 @@
       ],
       "body": "## This PR\r\n\r\ndefines a way to pass parameters to be used for digest computation.\r\n\r\n## It's done\r\n\r\nTaking into account the fact that RFC3230 references parameter in the definition of `instance-digest` https://tools.ietf.org/html/rfc3230#section-4.2\r\n\r\nConsidering that being `digest-algorithm` just a token,  we can't add parameters to it.\r\n\r\n```\r\nThis second example shows an hypotetical `bikeshed` digest algorithm using\r\ntwo parameters: `bs` and `offset`.\r\n\r\n~~~ example\r\n    bikeshed=8E9q0okq; bs=8; offset=2\r\n~~~\r\n```\r\n\r\n## Note\r\n\r\nfixes #850 ",
       "createdAt": "2020-06-01T14:03:14Z",
-      "updatedAt": "2020-06-30T23:36:20Z",
+      "updatedAt": "2020-09-27T10:13:48Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "d522c9ba75d7ac355c122276f5d801111cfc1fc0",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "ioggstream-850-digest-parameter",
       "headRefOid": "01b76af4d8112fa8238b709200fc6efc26f479ab",
-      "closedAt": null,
+      "closedAt": "2020-09-27T10:13:48Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -65342,6 +65485,13 @@
           "body": "Discussion should probably be on the issue, not the PR...",
           "createdAt": "2020-06-30T23:36:20Z",
           "updatedAt": "2020-06-30T23:36:20Z"
+        },
+        {
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Closed in favor of #1259 ",
+          "createdAt": "2020-09-27T10:13:48Z",
+          "updatedAt": "2020-09-27T10:13:48Z"
         }
       ],
       "reviews": [
@@ -65376,19 +65526,6 @@
           "body": "",
           "createdAt": "2020-06-30T16:16:47Z",
           "updatedAt": "2020-06-30T16:16:47Z",
-          "comments": []
-        },
-        {
-          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDQwMTg2MTc3",
-          "commit": {
-            "abbreviatedOid": "01b76af"
-          },
-          "author": "mshahdadi44",
-          "authorAssociation": "NONE",
-          "state": "APPROVED",
-          "body": "",
-          "createdAt": "2020-06-30T16:25:18Z",
-          "updatedAt": "2020-06-30T16:25:18Z",
           "comments": []
         }
       ]
@@ -67276,7 +67413,7 @@
       ],
       "body": "## This PR\r\n\r\n- obsoletes digest parameters",
       "createdAt": "2020-09-07T16:46:16Z",
-      "updatedAt": "2020-09-08T17:59:23Z",
+      "updatedAt": "2020-09-27T10:25:22Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "01511073277183a21344e8a22ee59eacfb6e5777",
@@ -67306,6 +67443,26 @@
               "body": "These paragraphs are confusing under the section title. I think it would be clearer to \r\n\r\n1) Take what's in the first paragraph and combine it with what's in section 12.2 and 12.3. I suggest we do that in a different PR\r\n\r\n2) Rename the section to something like \"Paramaterising digest-algorithms\"\r\n\r\n3) Take the second paragraph and explain a little more why the old means was \"bad or insecure\". For example, what could have gone wrong? That makes the problem statement clearer so that the solution of embedding parameters make more sense to anyone considering what to do.\r\n",
               "createdAt": "2020-09-08T17:59:23Z",
               "updatedAt": "2020-09-08T17:59:23Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk3MDcwOTcz",
+          "commit": {
+            "abbreviatedOid": "1000200"
+          },
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-27T10:25:21Z",
+          "updatedAt": "2020-09-27T10:25:22Z",
+          "comments": [
+            {
+              "originalPosition": 60,
+              "body": "Sure, I'll move \r\n```\r\nAlgorithm agility is achieved establishing the IANA Digest Algorithm Values registry,\r\nand adding it the \"Status\" field making it possible to deprecate and obsolete insecure algorithms.\r\n```\r\nto another PR!",
+              "createdAt": "2020-09-27T10:25:22Z",
+              "updatedAt": "2020-09-27T10:25:22Z"
             }
           ]
         }
@@ -67482,7 +67639,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDg4MzM3Nzgy",
       "title": "Be less specific about urgency when behind an intermediary",
       "url": "https://github.com/httpwg/http-extensions/pull/1264",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -67491,17 +67648,19 @@
       ],
       "body": "Closes #1022",
       "createdAt": "2020-09-17T00:55:30Z",
-      "updatedAt": "2020-09-25T10:57:12Z",
+      "updatedAt": "2020-09-28T11:18:51Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "8b665dce1fdd65105adb7a7d85c9bedd7ea2dbd8",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority-coalescing",
       "headRefOid": "10de5098c138cbea009d9e1f7a4c3b4516520171",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2020-09-28T11:18:50Z",
+      "mergedAt": "2020-09-28T11:18:50Z",
+      "mergedBy": "kazuho",
+      "mergeCommit": {
+        "oid": "088a4ec551bbb6c2dd4df75d63e732f47eb90940"
+      },
       "comments": [
         {
           "author": "LPardue",
@@ -67689,13 +67848,13 @@
       ],
       "body": "This tries to address two sets of comments on \"what signals are subsumed by priority hints\" and \"how should a server implement things\". \r\n\r\nOne aspect of this is setting client expectations straight; they should have a vague idea what will happen if a server plays ball but also expect that servers can and will do whatever they want.\r\n\r\nThe other aspect of this is describing what signals servers have at their disposal, and presenting some of the gotchas or tradeoffs that might happen if the extensible priority scheme is implemented too matter-of-fact. Some people would like to see more explicit guidance for servers, that's a fine request. However, I don't see how any single scheduling algorithm would work for the range of vendors and deployments that have shown an interest Priorities, so I've focused on the common criteria.\r\n\r\nWhile adding this section, the thought did cross my mind to move the sections on scheduling. We can always do that as a followup.\r\n\r\nCloses #1216 and #1232.\r\n\r\ncc @ekinnear, @guoye-zhang, @martinthomson ",
       "createdAt": "2020-09-17T02:47:10Z",
-      "updatedAt": "2020-09-25T09:09:51Z",
+      "updatedAt": "2020-09-28T13:32:44Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
-      "baseRefOid": "465911e1b9e7f5acc81e5c4055ae1214207e55d1",
+      "baseRefOid": "088a4ec551bbb6c2dd4df75d63e732f47eb90940",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority-server-scheduling",
-      "headRefOid": "a53296640fe490999cae9f8730aff54a6638c515",
+      "headRefOid": "f29bd50a4d8f9c5ac75b6ddee82844c6fdaa19fd",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -67718,37 +67877,37 @@
               "originalPosition": 27,
               "body": "\"Priority\" as a proper noun or an error?",
               "createdAt": "2020-09-17T05:16:57Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 52,
               "body": "isn't it time from request to last byte delivered?",
               "createdAt": "2020-09-17T05:18:03Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 54,
               "body": "For incremental resources, the time to deliver every byte is important.\r\n\r\nI wonder if the split here is between atomic and incremental.",
               "createdAt": "2020-09-17T05:18:58Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 60,
               "body": "```suggestion\r\n```",
               "createdAt": "2020-09-17T05:44:29Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 58,
               "body": "I don't get this point about unbalanced scheduling.  It seems to imply that there might be some other reason to balance between atomic and incremental resources, but I don't think that is the intent.",
               "createdAt": "2020-09-17T05:45:29Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 62,
               "body": "What if that is all it gets?  I think that you need to provide more exposition for this recommendation.",
               "createdAt": "2020-09-17T05:46:04Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67768,7 +67927,7 @@
               "originalPosition": 52,
               "body": "This is probably open to interpretation a little so it would be good to hammer it down. Looking at this again, I don't like how I presented it and will tweak it. I was basing it on my understanding of curl and chrome as shown here https://blog.cloudflare.com/a-question-of-timing/. Do other client have alternative views?\r\n\r\nMy thinking, based on other discussions, is that a non-incremental payload can only be used when the whole payload is received. Therefore, factoring in the delta between request and TTFB is not super helpful in this context. However, non-incremental objects probably do benefit from a shorter TTFB and \"time to significant delineator\", such as a progressive jpeg header.",
               "createdAt": "2020-09-23T13:15:38Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67788,7 +67947,7 @@
               "originalPosition": 54,
               "body": "For some types of content not all bytes are important due to internal boundaries. I'd like to avoid falling into the trap of describing this in too much detail if possible. I tried to use \"chunk\" as the sub-unit that could be as small as 1 byte.\r\n\r\nWhat do you mean by atomic vs incremental?",
               "createdAt": "2020-09-23T13:18:49Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67808,7 +67967,7 @@
               "originalPosition": 58,
               "body": "From https://github.com/httpwg/http-extensions/issues/1232#issuecomment-663724137\r\n\r\n>  Let's imagine two cases:\r\n > 1) At the same urgency level, a huge non-incremental file download has started, then a small incremental resource is requested.\r\n>  2) At the same urgency level, an incremental hanging GET is waiting for response, while a non-incremental file download is requested.\r\n\r\nAn unbalanced scheduler might be designed to completely flush one type of resource before moving on the the other. Especially likely if resources are large in comparison to the BDP. This could starve the other type from ever getting a share. The text is attempting to say don't do that. To avoid it, an implemention could somehow yield sending one type in a given time period. Guoye's suggestion on https://github.com/httpwg/http-extensions/issues/1232#issuecomment-663889717 provides an example. I like to avoid recommending any specific solution.",
               "createdAt": "2020-09-23T13:29:04Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67828,7 +67987,7 @@
               "originalPosition": 62,
               "body": "I added some more exposition in https://github.com/httpwg/http-extensions/pull/1266/commits/3c7f8e6ee059d0b879036560b2a998b53583fb4c. PTAL.",
               "createdAt": "2020-09-23T14:01:43Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67848,31 +68007,31 @@
               "originalPosition": 36,
               "body": "This is a little odd.  It says \"Server's gonna do what server wanna do.\" in a somewhat roundabout way.  How about: \r\n\r\n> Clients cannot depend on particular treatment based on priority signals. Servers can use other information to prioritize responses.",
               "createdAt": "2020-09-24T03:43:31Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 48,
               "body": "I think that the \"might server the responses one-by-one\" is distracting, and the phrasing here implies far more discretion for servers.  Maybe just\r\n\r\n> Prioritizing concurrent requests at the same urgency level based on the stream ID, which corresponds to the order in which clients make requests, ensures that clients can use request ordering to influence response order.",
               "createdAt": "2020-09-24T03:46:39Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 52,
               "body": "For things like JS, we often can't continue processing until we have all the bytes.  That's what I meant by atomic below: the whole thing is needed, it can't be divided into smaller parts and be useful.  But atomic probably has connotations that aren't helpful.",
               "createdAt": "2020-09-24T03:48:31Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 54,
               "body": "See above.\r\n\r\nThis is a simplification: absent more specific information the server must assume that i=false the entire resource needs to be delivered to be of use.  For i=true the more of the resource that is delivered the more utility is obtained.  Obviously this isn't smoothly linear and there are some bytes that don't allow any more value to be extracted than those preceding, but that is the model that we are operating under.\r\n\r\nExtensions can define cut points or chunking.  Like a stepped incremental extension that lists a number of byte offsets that contain significant value (which likely needs to come from the server...).  Or something that says \"don't bother delivering anything less than the following chunk size, because MICE doesn't allow data to be used\".",
               "createdAt": "2020-09-24T03:52:19Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 58,
               "body": "I don't think that you want to use the word unbalanced because it carries negative connotations.\r\n\r\nWhat those examples are suggesting is a few questions:\r\n\r\nDo you want to permit small responses to jump ahead of in-progress responses?\r\nWhat if something that is nominally higher priority (by order, not urgency) can't start until a lower priority response has begun? Can it pre-empt?  Can it pre-empt only based on size?\r\n(There's another one I thought of: Do you permit non-incremental responses to start when incremental responses are in progress? Maybe you have an answer for that already.)\r\n\r\nThese imply judgment being exercised or the presence of \"other inputs\".  But it is probably sensible to allow it, but that is clearly not the intent conveyed by the signal.  Maybe size-based discrimination is appropriate, but it's not something that this scheme supports, so you need to be careful.\r\n\r\nWhat I would do then is to enumerate corner cases where we know that strict adherence to the scheme could end up with suboptimal results.  These cases are exactly the ones that I'd include there.\r\n\r\nThis scheme can't address these cases.  So you need a clear delineation between what following the scheme gets you and where you are using \"special sauce\".  This paragraph went from describing how this scheme operates and the consequences of that straight to special sauce stuff with no pause for breath.",
               "createdAt": "2020-09-24T04:03:25Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67892,7 +68051,7 @@
               "originalPosition": 58,
               "body": "I've reworked this paragraph to address the points here and in the other comment. See https://github.com/httpwg/http-extensions/pull/1266/commits/a215d40b52b0d1ed5ae67235ee23aad49d75adf5\r\n\r\n(my force push seems to have broken Github's tracking, I aplogize).",
               "createdAt": "2020-09-24T21:41:36Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67912,19 +68071,19 @@
               "originalPosition": 37,
               "body": "```suggestion\r\nIt is RECOMMENDED that, when possible, servers respect urgency values, sending\r\n```",
               "createdAt": "2020-09-24T23:32:39Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 48,
               "body": "How about moving the contents of this paragraph to the one above that talks about urgency, and going like: _When there are multiple responses with same urgency, a server SHOULD ..._",
               "createdAt": "2020-09-24T23:35:55Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             },
             {
               "originalPosition": 74,
               "body": "This sentence sounds like that a server cannot respect the PRIORITY frames sent by a legacy HTTP/2 client.\r\n\r\nI think that the intent is to state something like: When a client sends SETTINGS_DEPRECATE_HTTP2_PRIORITIES, a server SHOULD NOT act ...",
               "createdAt": "2020-09-24T23:41:26Z",
-              "updatedAt": "2020-09-25T08:54:01Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67944,7 +68103,7 @@
               "originalPosition": 74,
               "body": "Ok I think we come to this from different viewpoints. I was trying to address the statement in {{disabling}}\r\n\r\n> The SETTINGS frame precedes any priority signal sent from a client in HTTP/2, so a server can determine if it should respect the HTTP/2 scheme before building state.\r\n\r\nI've reworked the paragraph to accomodate either client or server sending the setting, PTAL.",
               "createdAt": "2020-09-25T08:55:36Z",
-              "updatedAt": "2020-09-25T08:55:36Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
             }
           ]
         },
@@ -67964,7 +68123,99 @@
               "originalPosition": 48,
               "body": "I tried this and didn't like what I came up with. The progression from urgency, to incremental, to request order feels more natural to me. Combining the text as you suggest also produced a strange implication that request order is only important for requests at the same urgency, which I don't agree with.\r\n\r\nI'd happily review a suggestion that avoids these problems. Perhaps we can make a separate editorial PR?",
               "createdAt": "2020-09-25T09:09:51Z",
-              "updatedAt": "2020-09-25T09:09:51Z"
+              "updatedAt": "2020-09-28T13:31:54Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk3NDE3Nzcy",
+          "commit": {
+            "abbreviatedOid": "a532966"
+          },
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-28T11:23:23Z",
+          "updatedAt": "2020-09-28T11:29:00Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "```suggestion\r\nHTTP/2 endpoints can advertise that they are using the Extensible Priorities scheme\r\n```",
+              "createdAt": "2020-09-28T11:23:23Z",
+              "updatedAt": "2020-09-28T13:31:54Z"
+            },
+            {
+              "originalPosition": 76,
+              "body": "I'm not sure if this sentence is correct. I think that a server is expected to respect the H2 prioritization scheme unless the client sends  SETTINGS_DEPRECATE_HTTP2_SETTINGS.\r\n\r\nI also think that we might want to move the suggestion to {{disabling}}, as it talks about how the client handles the existence (or absence) of the settings parameter? Doing so would be fine, as we refer to that section in the previous sentence.",
+              "createdAt": "2020-09-28T11:27:55Z",
+              "updatedAt": "2020-09-28T13:31:54Z"
+            },
+            {
+              "originalPosition": 48,
+              "body": ":+1: I think I can work on a separate PR. That PR can point to this PR or master, depending on how we proceed.",
+              "createdAt": "2020-09-28T11:28:43Z",
+              "updatedAt": "2020-09-28T13:31:54Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk3NDM2NDU3",
+          "commit": {
+            "abbreviatedOid": "d691bec"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-28T11:53:26Z",
+          "updatedAt": "2020-09-28T11:53:27Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "I agree this would fit in {{disabling}}. That section includes the sentence \r\n\r\n> The SETTINGS frame precedes any priority signal sent from a client in HTTP/2, so a server can determine if it should respect the HTTP/2 scheme before building state.\r\n\r\nSo I intended the new text to build on that. My mental model was that a server might just want to cut out a lot of H2 priorities code, leaving only the bits necessary for parsing. Such a server cannot act on the signal and declares so using the deprecate setting. It's unfortunate if the client wants to continue using the old scheme, but there would not be an interop failure.\r\n\r\nI could live with downgrading things to only provide this guidance when a server receives the setting. Would that work for you?",
+              "createdAt": "2020-09-28T11:53:26Z",
+              "updatedAt": "2020-09-28T13:31:54Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk3NDUyMjk5",
+          "commit": {
+            "abbreviatedOid": "d691bec"
+          },
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-28T12:17:12Z",
+          "updatedAt": "2020-09-28T12:17:12Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "> I could live with downgrading things to only provide this guidance when a server receives the setting. Would that work for you?\r\n\r\nThanks. I think my preference goes there. IMO, we do not need to recommend servers degrade performance of legacy HTTP/2 clients. So maybe something like: When receiving SETTINGS_DEPRECATE_HTTP2_PRIORITIES, a server MUST ignore the HTTP/2 PRIORITY frames received on that connection.",
+              "createdAt": "2020-09-28T12:17:12Z",
+              "updatedAt": "2020-09-28T13:31:54Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk3NTE1MTk5",
+          "commit": {
+            "abbreviatedOid": "f29bd50"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-09-28T13:32:44Z",
+          "updatedAt": "2020-09-28T13:32:44Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "done in https://github.com/httpwg/http-extensions/pull/1266/commits/f29bd50a4d8f9c5ac75b6ddee82844c6fdaa19fd",
+              "createdAt": "2020-09-28T13:32:44Z",
+              "updatedAt": "2020-09-28T13:32:44Z"
             }
           ]
         }
@@ -67975,24 +68226,26 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDkzMDEyNzcy",
       "title": "Describe frame/header dichotomy and error handling for SFV failures",
       "url": "https://github.com/httpwg/http-extensions/pull/1271",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "As noted in the discussion on #1267, there is some asymmetry between the Priority header and PRIORITY_UPDATE frame. This PR addresses the dichotomy by localized description of the frame. I've avoided great exposition of the dichotomy because I feel it could be wordy and distracting; others might disagree.\r\n\r\nThe changes dovetail nicely with the discussion #1268 about how to handle parsing failures. So adding that at the same time.\r\n\r\nCloses #1267 and #1268 \r\n\r\ncc: @martinthomson @dtikhonov @kazuho \r\n",
       "createdAt": "2020-09-25T11:31:47Z",
-      "updatedAt": "2020-09-25T17:54:40Z",
+      "updatedAt": "2020-09-28T10:53:26Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "465911e1b9e7f5acc81e5c4055ae1214207e55d1",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority_update_malcontentness",
       "headRefOid": "b9ed66d2b3a2a8cfce04771fc0dcc157eccaaf76",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2020-09-28T10:53:24Z",
+      "mergedAt": "2020-09-28T10:53:24Z",
+      "mergedBy": "LPardue",
+      "mergeCommit": {
+        "oid": "005d9c19b51df0dd88ce10c98b0eb79f948ab31d"
+      },
       "comments": [
         {
           "author": "dtikhonov",
@@ -68000,6 +68253,13 @@
           "body": "This looks good: everything is spelled out now.",
           "createdAt": "2020-09-25T14:09:37Z",
           "updatedAt": "2020-09-25T14:09:37Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "2 approvals is quorum for me. Merging. ",
+          "createdAt": "2020-09-28T10:52:22Z",
+          "updatedAt": "2020-09-28T10:52:22Z"
         }
       ],
       "reviews": [
@@ -68082,6 +68342,19 @@
               "updatedAt": "2020-09-25T17:54:40Z"
             }
           ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NDk3Mzc4OTk0",
+          "commit": {
+            "abbreviatedOid": "b9ed66d"
+          },
+          "author": "kazuho",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Looks good to me.\r\n\r\nThe MUST-close clause for the PRIORITY_UPDATE frame sounded bit harsh to me, until I realized that an endpoint is required to support reprioritization. Because we require hop-by-hop handling or priorities, we can assume that an endpoint has the capability of parsing the frame payload, regardless of the role of that endpoint (e.g., intermediary, forwarder).",
+          "createdAt": "2020-09-28T10:23:18Z",
+          "updatedAt": "2020-09-28T10:23:18Z",
+          "comments": []
         }
       ]
     }
