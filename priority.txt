@@ -5,8 +5,8 @@
 HTTP Working Group                                                K. Oku
 Internet-Draft                                                    Fastly
 Intended status: Standards Track                               L. Pardue
-Expires: April 1, 2021                                        Cloudflare
-                                                      September 28, 2020
+Expires: April 3, 2021                                        Cloudflare
+                                                      September 30, 2020
 
 
                Extensible Prioritization Scheme for HTTP
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 1]
+Oku & Pardue              Expires April 3, 2021                 [Page 1]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -61,7 +61,7 @@ Internet-Draft               HTTP Priorities              September 2020
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 1, 2021.
+   This Internet-Draft will expire on April 3, 2021.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 2]
+Oku & Pardue              Expires April 3, 2021                 [Page 2]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -165,7 +165,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 3]
+Oku & Pardue              Expires April 3, 2021                 [Page 3]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -221,7 +221,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 4]
+Oku & Pardue              Expires April 3, 2021                 [Page 4]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -277,7 +277,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 5]
+Oku & Pardue              Expires April 3, 2021                 [Page 5]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -333,7 +333,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 6]
+Oku & Pardue              Expires April 3, 2021                 [Page 6]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -389,7 +389,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 7]
+Oku & Pardue              Expires April 3, 2021                 [Page 7]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -445,7 +445,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 8]
+Oku & Pardue              Expires April 3, 2021                 [Page 8]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -501,7 +501,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                 [Page 9]
+Oku & Pardue              Expires April 3, 2021                 [Page 9]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -557,7 +557,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 10]
+Oku & Pardue              Expires April 3, 2021                [Page 10]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -613,7 +613,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 11]
+Oku & Pardue              Expires April 3, 2021                [Page 11]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -669,7 +669,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 12]
+Oku & Pardue              Expires April 3, 2021                [Page 12]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -704,42 +704,38 @@ Internet-Draft               HTTP Priorities              September 2020
    Clients cannot depend on particular treatment based on priority
    signals.  Servers can use other information to prioritize responses.
 
-   It is RECOMMENDED that, when possible, servers respect urgency
-   values, sending higher urgency responses before lower urgency
-   responses.
+   It is RECOMMENDED that, when possible, servers respect the urgency
+   parameter (Section 3.1), sending higher urgency responses before
+   lower urgency responses.
 
-   It is RECOMMENDED that, when possible, servers respect incremental
-   values.  Sending non-incremental responses of the same urgency one-
-   by-one, and sending incremental responses of the same urgency in
-   round-robin manner.
+   It is RECOMMENDED that, when possible, servers respect the
+   incremental parameter (Section 3.2).  Non-incremental responses of
+   the same urgency SHOULD be served one-by-one based on the Stream ID,
+   which corresponds to the order in which clients make requests.  Doing
+   so ensures that clients can use request ordering to influence
+   response order.  Incremental responses of the same urgency SHOULD be
+   served in round-robin manner.
 
-   It is RECOMMENDED that a server considers request generation order as
-   an input to prioritization.  Prioritizing concurrent requests at the
-   same urgency level based on the Stream ID, which corresponds to the
-   order in which clients make requests, ensures that clients can use
-   request ordering to influence response order.
-
-   The incremental parameter (Section 3.2) indicates how a client
-   processes response bytes as they arrive.  Non-incremental resources
-   are only used when all of the response payload has been received.
+   The incremental parameter indicates how a client processes response
+   bytes as they arrive.  Non-incremental resources are only used when
+   all of the response payload has been received.  Incremental resources
+   are used as parts, or chunks, of the response payload are received.
+   Therefore, the timing of response data reception at the client, such
+   as the time to early bytes or the time to receive the entire payload,
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 13]
+Oku & Pardue              Expires April 3, 2021                [Page 13]
 
 Internet-Draft               HTTP Priorities              September 2020
 
 
-   Incremental resources are used as parts, or chunks, of the response
-   payload are received.  Therefore, the timing of response data
-   reception at the client, such as the time to early bytes or the time
-   to receive the entire payload, plays an important role in perceived
-   performance.  Timings depend on resource size but this scheme
-   provides no explicit guidance about how a server should use size as
-   an input to prioritization.  Instead, the following examples
-   demonstrate how a server that strictly abides the scheduling guidance
-   based on urgency and request generation order could find that early
-   requests prevent serving of later requests.
+   plays an important role in perceived performance.  Timings depend on
+   resource size but this scheme provides no explicit guidance about how
+   a server should use size as an input to prioritization.  Instead, the
+   following examples demonstrate how a server that strictly abides the
+   scheduling guidance based on urgency and request generation order
+   could find that early requests prevent serving of later requests.
 
    1.  At the same urgency level, a non-incremental request for a large
        resource followed by an incremental request for a small resource.
@@ -777,20 +773,19 @@ Internet-Draft               HTTP Priorities              September 2020
    server, requests that originate from one client might have higher
    precedence than those coming from others.
 
-
-
-
-
-Oku & Pardue              Expires April 1, 2021                [Page 14]
-
-Internet-Draft               HTTP Priorities              September 2020
-
-
    It is sometimes beneficial for the server running behind an
    intermediary to obey to the value of the Priority header field.  As
    an example, a resource-constrained server might defer the
    transmission of software update files that would have the background
    urgency being associated.  However, in the worst case, the asymmetry
+
+
+
+Oku & Pardue              Expires April 3, 2021                [Page 14]
+
+Internet-Draft               HTTP Priorities              September 2020
+
+
    between the precedence declared by multiple clients might cause
    responses going to one end client to be delayed totally after those
    going to another.
@@ -837,7 +832,12 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 15]
+
+
+
+
+
+Oku & Pardue              Expires April 3, 2021                [Page 15]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -893,7 +893,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 16]
+Oku & Pardue              Expires April 3, 2021                [Page 16]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -949,7 +949,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 17]
+Oku & Pardue              Expires April 3, 2021                [Page 17]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -1005,7 +1005,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 18]
+Oku & Pardue              Expires April 3, 2021                [Page 18]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft               HTTP Priorities              September 2020
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 19]
+Oku & Pardue              Expires April 3, 2021                [Page 19]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -1117,7 +1117,7 @@ B.2.  Since draft-kazuho-httpbis-priority-04
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 20]
+Oku & Pardue              Expires April 3, 2021                [Page 20]
 
 Internet-Draft               HTTP Priorities              September 2020
 
@@ -1173,4 +1173,4 @@ Authors' Addresses
 
 
 
-Oku & Pardue              Expires April 1, 2021                [Page 21]
+Oku & Pardue              Expires April 3, 2021                [Page 21]
