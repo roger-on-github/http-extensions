@@ -99,7 +99,7 @@ Table of Contents
    10. Fairness  . . . . . . . . . . . . . . . . . . . . . . . . . .  14
      10.1.  Coalescing Intermediaries  . . . . . . . . . . . . . . .  14
      10.2.  HTTP/1.x Back Ends . . . . . . . . . . . . . . . . . . .  15
-     10.3.  Intentional Introduction of Unfairness . . . . . . . . .  16
+     10.3.  Intentional Introduction of Unfairness . . . . . . . . .  15
    11. Why use an End-to-End Header Field? . . . . . . . . . . . . .  16
    12. Security Considerations . . . . . . . . . . . . . . . . . . .  16
    13. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  17
@@ -453,6 +453,9 @@ Internet-Draft               HTTP Priorities              September 2020
    of the cached response, by using header fields that control the
    caching behavior (e.g., Cache-Control, Vary).
 
+   An endpoint that fails to parse the Priority header field SHOULD use
+   default parameter values.
+
 5.  Reprioritization
 
    After a client sends a request, it may be beneficial to change the
@@ -479,7 +482,13 @@ Internet-Draft               HTTP Priorities              September 2020
    allowing them to be sent independent from the stream that carries the
    response.  This means they can be used to reprioritize a response or
    a push stream; or signal the initial priority of a response instead
-   of the Priority header.
+   of the Priority header field.
+
+   A PRIORITY_UPDATE frame communicates a complete set of all parameters
+   in the Priority Field Value field.  Omitting a parameter is a signal
+   to use the parameter's default value.  Failure to parse the Priority
+   Field Value MUST be treated as a connection error of type
+   FRAME_ENCODING_ERROR.
 
    A client MAY send a PRIORITY_UPDATE frame before the stream that it
    references is open.  Furthermore, HTTP/3 offers no guaranteed
@@ -489,6 +498,14 @@ Internet-Draft               HTTP Priorities              September 2020
    stream that is yet to be opened.  To solve this condition, for the
    purposes of scheduling, the most recently received PRIORITY_UPDATE
    frame can be considered as the most up-to-date information that
+
+
+
+Oku & Pardue              Expires April 3, 2021                 [Page 9]
+
+Internet-Draft               HTTP Priorities              September 2020
+
+
    overrides any other signal.  Servers SHOULD buffer the most recently
    received PRIORITY_UPDATE frame and apply it once the referenced
    stream is opened.  Holding PRIORITY_UPDATE frames for each stream
@@ -497,14 +514,6 @@ Internet-Draft               HTTP Priorities              September 2020
    more text about bounds).  Although there is no limit to the number
    PRIORITY_UPDATES that can be sent, storing only the most recently
    received frame limits resource commitment.
-
-
-
-
-Oku & Pardue              Expires April 3, 2021                 [Page 9]
-
-Internet-Draft               HTTP Priorities              September 2020
-
 
 6.1.  HTTP/2 PRIORITY_UPDATE Frame
 
@@ -546,21 +555,19 @@ Internet-Draft               HTTP Priorities              September 2020
    is beyond the stream limits, this SHOULD be treated as a connection
    error of type PROTOCOL_ERROR.
 
-   If a PRIORITY_UPDATE frame is received with a Prioritized Stream ID
-   of 0x0, the recipient MUST respond with a connection error of type
-   PROTOCOL_ERROR.
-
-   If a client receives a PRIORITY_UPDATE frame, it MUST respond with a
-   connection error of type PROTOCOL_ERROR.
-
-
-
 
 
 Oku & Pardue              Expires April 3, 2021                [Page 10]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   If a PRIORITY_UPDATE frame is received with a Prioritized Stream ID
+   of 0x0, the recipient MUST respond with a connection error of type
+   PROTOCOL_ERROR.
+
+   If a client receives a PRIORITY_UPDATE frame, it MUST respond with a
+   connection error of type PROTOCOL_ERROR.
 
 6.2.  HTTP/3 PRIORITY_UPDATE Frame
 
@@ -604,19 +611,18 @@ Internet-Draft               HTTP Priorities              September 2020
    Stream ID that is beyond the stream limits, this SHOULD be treated as
    a connection error of type H3_ID_ERROR.
 
-   The push-stream variant PRIORITY_UPDATE (type=0xF0701) MUST reference
-   a promised push stream.  If a server receives a PRIORITY_UPDATE
-   (type=0xF0701) with a Push ID that is greater than the maximum Push
-   ID or which has not yet been promised, this MUST be treated as a
-   connection error of type H3_ID_ERROR.
-
-
 
 
 Oku & Pardue              Expires April 3, 2021                [Page 11]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   The push-stream variant PRIORITY_UPDATE (type=0xF0701) MUST reference
+   a promised push stream.  If a server receives a PRIORITY_UPDATE
+   (type=0xF0701) with a Push ID that is greater than the maximum Push
+   ID or which has not yet been promised, this MUST be treated as a
+   connection error of type H3_ID_ERROR.
 
    PRIORITY_UPDATE frames of either type are only sent by clients.  If a
    client receives a PRIORITY_UPDATE frame, this MUST be treated as a
@@ -661,18 +667,16 @@ Internet-Draft               HTTP Priorities              September 2020
 
    and the origin responds with
 
-   :status = 200
-   content-type = image/png
-   priority = u=1
-
-
-
 
 
 Oku & Pardue              Expires April 3, 2021                [Page 12]
 
 Internet-Draft               HTTP Priorities              September 2020
 
+
+   :status = 200
+   content-type = image/png
+   priority = u=1
 
    the intermediary might alter its understanding of the urgency from
    "5" to "1", because it prefers the server-provided value over the
@@ -718,10 +722,6 @@ Internet-Draft               HTTP Priorities              September 2020
 
    The incremental parameter indicates how a client processes response
    bytes as they arrive.  Non-incremental resources are only used when
-   all of the response payload has been received.  Incremental resources
-   are used as parts, or chunks, of the response payload are received.
-   Therefore, the timing of response data reception at the client, such
-   as the time to early bytes or the time to receive the entire payload,
 
 
 
@@ -730,6 +730,10 @@ Oku & Pardue              Expires April 3, 2021                [Page 13]
 Internet-Draft               HTTP Priorities              September 2020
 
 
+   all of the response payload has been received.  Incremental resources
+   are used as parts, or chunks, of the response payload are received.
+   Therefore, the timing of response data reception at the client, such
+   as the time to early bytes or the time to receive the entire payload,
    plays an important role in perceived performance.  Timings depend on
    resource size but this scheme provides no explicit guidance about how
    a server should use size as an input to prioritization.  Instead, the
@@ -773,11 +777,7 @@ Internet-Draft               HTTP Priorities              September 2020
    server, requests that originate from one client might have higher
    precedence than those coming from others.
 
-   It is sometimes beneficial for the server running behind an
-   intermediary to obey to the value of the Priority header field.  As
-   an example, a resource-constrained server might defer the
-   transmission of software update files that would have the background
-   urgency being associated.  However, in the worst case, the asymmetry
+
 
 
 
@@ -786,16 +786,23 @@ Oku & Pardue              Expires April 3, 2021                [Page 14]
 Internet-Draft               HTTP Priorities              September 2020
 
 
+   It is sometimes beneficial for the server running behind an
+   intermediary to obey to the value of the Priority header field.  As
+   an example, a resource-constrained server might defer the
+   transmission of software update files that would have the background
+   urgency being associated.  However, in the worst case, the asymmetry
    between the precedence declared by multiple clients might cause
-   responses going to one end client to be delayed totally after those
+   responses going to one user agent to be delayed totally after those
    going to another.
 
-   In order to mitigate this fairness problem, when a server responds to
-   a request that is known to have come through an intermediary, the
-   server SHOULD prioritize the response as if it was assigned the
-   priority of "u=1, i" (i.e. round-robin) regardless of the value of
-   the Priority header field being transmitted, unless the server knows
-   the intermediary is not coalescing requests from multiple clients.
+   In order to mitigate this fairness problem, a server could use
+   knowledge about the intermediary as another signal in its
+   prioritization decisions.  For instance, if a server knows the
+   intermediary is coalescing requests, then it could serve the
+   responses in round-robin manner.  This can work if the constrained
+   resource is network capacity between the intermediary and the user
+   agent, as the intermediary buffers responses and forwards the chunks
+   based on the prioritization scheme it implements.
 
    A server can determine if a request came from an intermediary through
    configuration, or by consulting if that request contains one of the
@@ -804,16 +811,6 @@ Internet-Draft               HTTP Priorities              September 2020
    o  Forwarded, X-Forwarded-For ([RFC7239])
 
    o  Via ([RFC7230], Section 5.7.1)
-
-   Responding to requests coming through an intermediary in a round-
-   robin manner works well when the network bottleneck exists between
-   the intermediary and the end client, as the intermediary would be
-   buffering the responses and then be forwarding the chunks of those
-   buffered responses based on the prioritization scheme it implements.
-   A sophisticated server MAY use a weighted round-robin reflecting the
-   urgencies expressed in the requests, so that less urgent responses
-   would receive less bandwidth in case the bottleneck exists between
-   the server and the intermediary.
 
 10.2.  HTTP/1.x Back Ends
 
@@ -830,9 +827,12 @@ Internet-Draft               HTTP Priorities              September 2020
    can be scoped to individual end clients.  Authentication and other
    session information might provide this linkability.
 
+10.3.  Intentional Introduction of Unfairness
 
-
-
+   It is sometimes beneficial to deprioritize the transmission of one
+   connection over others, knowing that doing so introduces a certain
+   amount of unfairness between the connections and therefore between
+   the requests served on those connections.
 
 
 
@@ -841,13 +841,6 @@ Oku & Pardue              Expires April 3, 2021                [Page 15]
 
 Internet-Draft               HTTP Priorities              September 2020
 
-
-10.3.  Intentional Introduction of Unfairness
-
-   It is sometimes beneficial to deprioritize the transmission of one
-   connection over others, knowing that doing so introduces a certain
-   amount of unfairness between the connections and therefore between
-   the requests served on those connections.
 
    For example, a server might use a scavenging congestion controller on
    connections that only convey background priority responses such as
@@ -890,6 +883,13 @@ Internet-Draft               HTTP Priorities              September 2020
 
    [RFC7540], Section 5.3.4 describes a scenario where closure of
    streams in the priority tree could cause suboptimal prioritization.
+   To avoid this, [RFC7540] states that "an endpoint SHOULD retain
+   stream prioritization state for a period after streams become
+   closed".  Retaining state for streams no longer counted towards
+   stream concurrency consumes server resources.  Furthermore, [RFC7540]
+   identifies that reprioritization of a closed stream could affect
+   dependents; it recommends updating the priority tree if sufficient
+   state is stored, which will also consume server resources.  To limit
 
 
 
@@ -898,13 +898,6 @@ Oku & Pardue              Expires April 3, 2021                [Page 16]
 Internet-Draft               HTTP Priorities              September 2020
 
 
-   To avoid this, [RFC7540] states that "an endpoint SHOULD retain
-   stream prioritization state for a period after streams become
-   closed".  Retaining state for streams no longer counted towards
-   stream concurrency consumes server resources.  Furthermore, [RFC7540]
-   identifies that reprioritization of a closed stream could affect
-   dependents; it recommends updating the priority tree if sufficient
-   state is stored, which will also consume server resources.  To limit
    this commitment, it is stated that "The amount of prioritization
    state that is retained MAY be limited" and "If a limit is applied,
    endpoints SHOULD maintain state for at least as many streams as
@@ -946,6 +939,13 @@ Internet-Draft               HTTP Priorities              September 2020
 
    Name:  SETTINGS_DEPRECATE_HTTP2_PRIORITIES
 
+   Code:  0x9
+
+   Initial value:  0
+
+   Specification:  This document
+
+
 
 
 
@@ -953,12 +953,6 @@ Oku & Pardue              Expires April 3, 2021                [Page 17]
 
 Internet-Draft               HTTP Priorities              September 2020
 
-
-   Code:  0x9
-
-   Initial value:  0
-
-   Specification:  This document
 
    This specification registers the following entry in the HTTP/2 Frame
    Type registry established by [RFC7540]:
@@ -1002,6 +996,12 @@ Internet-Draft               HTTP Priorities              September 2020
               RFC 7230, DOI 10.17487/RFC7230, June 2014,
               <https://www.rfc-editor.org/info/rfc7230>.
 
+   [RFC7540]  Belshe, M., Peon, R., and M. Thomson, Ed., "Hypertext
+              Transfer Protocol Version 2 (HTTP/2)", RFC 7540,
+              DOI 10.17487/RFC7540, May 2015,
+              <https://www.rfc-editor.org/info/rfc7540>.
+
+
 
 
 
@@ -1009,11 +1009,6 @@ Oku & Pardue              Expires April 3, 2021                [Page 18]
 
 Internet-Draft               HTTP Priorities              September 2020
 
-
-   [RFC7540]  Belshe, M., Peon, R., and M. Thomson, Ed., "Hypertext
-              Transfer Protocol Version 2 (HTTP/2)", RFC 7540,
-              DOI 10.17487/RFC7540, May 2015,
-              <https://www.rfc-editor.org/info/rfc7540>.
 
    [STRUCTURED-FIELDS]
               Nottingham, M. and P. Kamp, "Structured Field Values for
@@ -1058,6 +1053,11 @@ Internet-Draft               HTTP Priorities              September 2020
 
    [3] https://github.com/httpwg/http-extensions/labels/priorities
 
+   [4] http://tools.ietf.org/agenda/83/slides/slides-83-httpbis-5.pdf
+
+   [5] https://github.com/pmeenan/http3-prioritization-proposal
+
+
 
 
 
@@ -1065,10 +1065,6 @@ Oku & Pardue              Expires April 3, 2021                [Page 19]
 
 Internet-Draft               HTTP Priorities              September 2020
 
-
-   [4] http://tools.ietf.org/agenda/83/slides/slides-83-httpbis-5.pdf
-
-   [5] https://github.com/pmeenan/http3-prioritization-proposal
 
 Appendix A.  Acknowledgements
 
@@ -1115,14 +1111,16 @@ B.2.  Since draft-kazuho-httpbis-priority-04
 
    o  Make changes due to WG adoption
 
+   o  Removed outdated Consideration (#118)
+
+
+
 
 
 Oku & Pardue              Expires April 3, 2021                [Page 20]
 
 Internet-Draft               HTTP Priorities              September 2020
 
-
-   o  Removed outdated Consideration (#118)
 
 B.3.  Since draft-kazuho-httpbis-priority-03
 
@@ -1165,6 +1163,8 @@ Authors' Addresses
    Cloudflare
 
    Email: lucaspardue.24.7@gmail.com
+
+
 
 
 
