@@ -115,7 +115,7 @@ Internet-Draft            Signing HTTP Messages             October 2020
 
 
      4.1.  Signature Header Parameters . . . . . . . . . . . . . . .  16
-     4.2.  Example . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     4.2.  Example . . . . . . . . . . . . . . . . . . . . . . . . .  18
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
      5.1.  HTTP Signature Algorithms Registry  . . . . . . . . . . .  18
        5.1.1.  Registration Template . . . . . . . . . . . . . . . .  18
@@ -130,7 +130,7 @@ Internet-Draft            Signing HTTP Messages             October 2020
      7.3.  URIs  . . . . . . . . . . . . . . . . . . . . . . . . . .  24
    Appendix A.  Examples . . . . . . . . . . . . . . . . . . . . . .  24
      A.1.  Example Keys  . . . . . . . . . . . . . . . . . . . . . .  24
-       A.1.1.  Example Key RSA test  . . . . . . . . . . . . . . . .  24
+       A.1.1.  Example Key RSA test  . . . . . . . . . . . . . . . .  25
      A.2.  Example keyId Values  . . . . . . . . . . . . . . . . . .  25
      A.3.  Test Cases  . . . . . . . . . . . . . . . . . . . . . . .  26
        A.3.1.  Signature Generation  . . . . . . . . . . . . . . . .  26
@@ -803,8 +803,17 @@ Internet-Draft            Signing HTTP Messages             October 2020
    3.  Use the signature's Algorithm and Verification Key Material with
        the recreated Signing Input to verify the signature value.
 
-   A signature with a Creation Time that is in the future or an
-   Expiration Time that is in the past MUST NOT be processed.
+   The verifier MUST examine the signature's Creation Time and
+   Expiration Time and evaluate whether they meet the verifier's
+   requirements.  These requirements may vary depending on the use case.
+   When comparing Creation Time and/or Expiration Time to a timestamp
+   obtained from another source (e.g., testing that the Expiration Time
+   is later than the local time at the verifier), the verifier MAY allow
+   for some variability due to clock skew between the two timestamp
+   sources (e.g., the signer and the verifier).  The verifier MAY impose
+   its own maximum age limits, and reject signatures that are too old
+   (i.e., have a Creation Time too far in the past) regardless of
+   whether the signer gave the signatures an Expiration Time.
 
    The verifier MUST ensure that a signature's Algorithm is appropriate
    for the key material the verifier will use to verify the signature.
@@ -826,6 +835,13 @@ Internet-Draft            Signing HTTP Messages             October 2020
    o  Requiring a specific set of header fields to be signed (e.g.,
       Authorization, Digest).
 
+
+
+Backman, et al.           Expires April 4, 2021                [Page 15]
+
+Internet-Draft            Signing HTTP Messages             October 2020
+
+
    o  Enforcing a maximum signature age.
 
    o  Prohibiting the use of certain algorithms, or mandating the use of
@@ -833,14 +849,6 @@ Internet-Draft            Signing HTTP Messages             October 2020
 
    o  Requiring keys to be of a certain size (e.g., 2048 bits vs. 1024
       bits).
-
-
-
-
-Backman, et al.           Expires April 4, 2021                [Page 15]
-
-Internet-Draft            Signing HTTP Messages             October 2020
-
 
    Application-specific requirements are expected and encouraged.  When
    an application defines additional requirements, it MUST enforce them
@@ -882,14 +890,6 @@ Internet-Draft            Signing HTTP Messages             October 2020
       "rsa-sha256" but "keyId" identifies an EdDSA key), then
       implementations MUST produce an error.  Implementers should note
       that previous versions of this specification determined the
-      signature's Algorithm using the algorithm parameter only, and thus
-      could be utilized by attackers to expose security vulnerabilities.
-      The default value for this parameter is "hs2019".
-
-   created
-
-      RECOMMENDED.  The created parameter contains the signature's
-      Creation Time, expressed as the canonicalized value of the
 
 
 
@@ -898,6 +898,14 @@ Backman, et al.           Expires April 4, 2021                [Page 16]
 Internet-Draft            Signing HTTP Messages             October 2020
 
 
+      signature's Algorithm using the algorithm parameter only, and thus
+      could be utilized by attackers to expose security vulnerabilities.
+      The default value for this parameter is "hs2019".
+
+   created
+
+      RECOMMENDED.  The created parameter contains the signature's
+      Creation Time, expressed as the canonicalized value of the
       "(created)" content identifier, as defined in Section 2.  If not
       specified, the signature's Creation Time is undefined.  This
       parameter is useful when signers are not capable of controlling
@@ -934,14 +942,6 @@ Internet-Draft            Signing HTTP Messages             October 2020
       REQUIRED.  The signature parameter contains the signature value,
       as described in Section 3.2.3.
 
-4.2.  Example
-
-   The following is a non-normative example Signature header field
-   representing the signature in Figure 2:
-
-
-
-
 
 
 
@@ -953,6 +953,11 @@ Backman, et al.           Expires April 4, 2021                [Page 17]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+4.2.  Example
+
+   The following is a non-normative example Signature header field
+   representing the signature in Figure 2:
 
    Signature: keyId="test-key-b", algorithm="rsa-sha256",
        created=1402170695, expires=1402170995,
@@ -996,11 +1001,6 @@ Internet-Draft            Signing HTTP Messages             October 2020
 
    Description
 
-      A description of the algorithm used to sign the signing string
-      when generating an HTTP Message Signature, or instructions on how
-      to determine that algorithm.  When the description specifies an
-      algorithm, it MUST include a reference to the document or
-      documents that define the algorithm.
 
 
 
@@ -1009,6 +1009,12 @@ Backman, et al.           Expires April 4, 2021                [Page 18]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+      A description of the algorithm used to sign the signing string
+      when generating an HTTP Message Signature, or instructions on how
+      to determine that algorithm.  When the description specifies an
+      algorithm, it MUST include a reference to the document or
+      documents that define the algorithm.
 
 5.1.2.  Initial Contents
 
@@ -1050,13 +1056,7 @@ Internet-Draft            Signing HTTP Messages             October 2020
 
       *  Ed25519ph, Ed25519ctx, and Ed25519 [RFC8032]
 
-5.1.2.2.  rsa-sha1
 
-   Algorithm Name
-
-      "rsa-sha1"
-
-   Status
 
 
 
@@ -1065,6 +1065,14 @@ Backman, et al.           Expires April 4, 2021                [Page 19]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+5.1.2.2.  rsa-sha1
+
+   Algorithm Name
+
+      "rsa-sha1"
+
+   Status
 
       Deprecated; SHA-1 not secure.
 
@@ -1106,14 +1114,6 @@ Internet-Draft            Signing HTTP Messages             October 2020
 
       "ecdsa-sha256"
 
-   Status
-
-      Deprecated; specifying signature algorithm enables attack vector.
-
-   Description
-
-      ECDSA using curve P-256 DSS [FIPS186-4] and SHA-256 [RFC6234]
-
 
 
 
@@ -1121,6 +1121,14 @@ Backman, et al.           Expires April 4, 2021                [Page 20]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+   Status
+
+      Deprecated; specifying signature algorithm enables attack vector.
+
+   Description
+
+      ECDSA using curve P-256 DSS [FIPS186-4] and SHA-256 [RFC6234]
 
 5.2.  HTTP Signature Parameters Registry
 
@@ -1161,14 +1169,6 @@ Internet-Draft            Signing HTTP Messages             October 2020
    what's referenced below is actually applicable, or if it covers
    everything we need to worry about. ))
 
-   (( TODO: Should provide some recommendations on how to determine what
-   content needs to be signed for a given use case. ))
-
-   There are a number of security considerations to take into account
-   when implementing or utilizing this specification.  A thorough
-   security analysis of this protocol, including its strengths and
-   weaknesses, can be found in [WP-HTTP-Sig-Audit].
-
 
 
 
@@ -1177,6 +1177,14 @@ Backman, et al.           Expires April 4, 2021                [Page 21]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+   (( TODO: Should provide some recommendations on how to determine what
+   content needs to be signed for a given use case. ))
+
+   There are a number of security considerations to take into account
+   when implementing or utilizing this specification.  A thorough
+   security analysis of this protocol, including its strengths and
+   weaknesses, can be found in [WP-HTTP-Sig-Audit].
 
 7.  References
 
@@ -1216,14 +1224,6 @@ Internet-Draft            Signing HTTP Messages             October 2020
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
 
-   [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
-              Protocol (HTTP/1.1): Message Syntax and Routing",
-              RFC 7230, DOI 10.17487/RFC7230, June 2014,
-              <https://www.rfc-editor.org/info/rfc7230>.
-
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 
 
@@ -1233,6 +1233,15 @@ Backman, et al.           Expires April 4, 2021                [Page 22]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+   [RFC7230]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
+              Protocol (HTTP/1.1): Message Syntax and Routing",
+              RFC 7230, DOI 10.17487/RFC7230, June 2014,
+              <https://www.rfc-editor.org/info/rfc7230>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
 7.2.  Informative References
 
@@ -1270,15 +1279,6 @@ Internet-Draft            Signing HTTP Messages             October 2020
               HTTP/2", RFC 7541, DOI 10.17487/RFC7541, May 2015,
               <https://www.rfc-editor.org/info/rfc7541>.
 
-   [RFC8017]  Moriarty, K., Ed., Kaliski, B., Jonsson, J., and A. Rusch,
-              "PKCS #1: RSA Cryptography Specifications Version 2.2",
-              RFC 8017, DOI 10.17487/RFC8017, November 2016,
-              <https://www.rfc-editor.org/info/rfc8017>.
-
-   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
-              Signature Algorithm (EdDSA)", RFC 8032,
-              DOI 10.17487/RFC8032, January 2017,
-              <https://www.rfc-editor.org/info/rfc8032>.
 
 
 
@@ -1289,6 +1289,16 @@ Backman, et al.           Expires April 4, 2021                [Page 23]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+   [RFC8017]  Moriarty, K., Ed., Kaliski, B., Jonsson, J., and A. Rusch,
+              "PKCS #1: RSA Cryptography Specifications Version 2.2",
+              RFC 8017, DOI 10.17487/RFC8017, November 2016,
+              <https://www.rfc-editor.org/info/rfc8017>.
+
+   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
+              Signature Algorithm (EdDSA)", RFC 8032,
+              DOI 10.17487/RFC8032, January 2017,
+              <https://www.rfc-editor.org/info/rfc8032>.
 
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
@@ -1327,16 +1337,6 @@ A.1.  Example Keys
    example signatures throughout this document.  These keys MUST NOT be
    used for any purpose other than testing.
 
-A.1.1.  Example Key RSA test
-
-   The following key is a 2048-bit RSA public and private key pair:
-
-
-
-
-
-
-
 
 
 
@@ -1345,6 +1345,10 @@ Backman, et al.           Expires April 4, 2021                [Page 24]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+A.1.1.  Example Key RSA test
+
+   The following key is a 2048-bit RSA public and private key pair:
 
    -----BEGIN RSA PUBLIC KEY-----
    MIIBCgKCAQEAhAKYdtoeoy8zcAcR874L8cnZxKzAGwd7v36APp7Pv6Q2jdsPBRrw
@@ -1390,10 +1394,6 @@ A.2.  Example keyId Values
    the context of examples in examples within this and future documents
    that reference this section.  Unless otherwise specified, within the
    context of examples it should be assumed that the signer and verifier
-   understand these "keyId" mappings.  These "keyId" values are not
-   reserved, and deployments are free to use them, with these
-   associations or others.
-
 
 
 
@@ -1401,6 +1401,10 @@ Backman, et al.           Expires April 4, 2021                [Page 25]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+   understand these "keyId" mappings.  These "keyId" values are not
+   reserved, and deployments are free to use them, with these
+   associations or others.
 
    +--------------+-----------------------------+----------------------+
    | keyId        | Algorithm                   | Verification Key     |
@@ -1447,16 +1451,14 @@ A.3.1.1.  hs2019 signature over minimal recommended content
    | Material            |                                             |
    +---------------------+---------------------------------------------+
 
-   The Signature Input is:
-
-
-
 
 
 Backman, et al.           Expires April 4, 2021                [Page 26]
 
 Internet-Draft            Signing HTTP Messages             October 2020
 
+
+   The Signature Input is:
 
    (created): 1402170695
    (request-target): post /foo?param=value&pet=dog
@@ -1499,8 +1501,6 @@ A.3.1.2.  hs2019 signature covering all header fields
    +-----------------+-------------------------------------------------+
 
    The Signature Input is:
-
-
 
 
 
