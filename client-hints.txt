@@ -5,7 +5,7 @@
 HTTP Working Group                                           I. Grigorik
 Internet-Draft                                                  Y. Weiss
 Intended status: Experimental                                     Google
-Expires: April 3, 2021                                September 30, 2020
+Expires: April 4, 2021                                   October 1, 2020
 
 
                            HTTP Client Hints
@@ -53,12 +53,12 @@ Status of This Memo
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 1]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 1]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
-   This Internet-Draft will expire on April 3, 2021.
+   This Internet-Draft will expire on April 4, 2021.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 2]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 2]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
      A.10. Since -09 . . . . . . . . . . . . . . . . . . . . . . . .  13
@@ -165,9 +165,9 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 3]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 3]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
    causes performance concerns (because it creates "bloat" in requests),
@@ -221,9 +221,9 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 4]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 4]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
    in mechanism outlined below to negotiate which header fields need to
@@ -277,9 +277,9 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 5]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 5]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
      Accept-CH = sf-list
@@ -333,9 +333,9 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 6]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 6]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
 4.  Security Considerations
@@ -389,9 +389,9 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 7]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 7]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
       Reducing the set of header field values that can be expressed, or
@@ -445,9 +445,9 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 8]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 8]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
 4.2.  Deployment and Security Risks
@@ -501,9 +501,9 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                 [Page 9]
+Grigorik & Weiss          Expires April 4, 2021                 [Page 9]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
    Due to request byte size increase, features relying on this document
@@ -557,9 +557,9 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                [Page 10]
+Grigorik & Weiss          Expires April 4, 2021                [Page 10]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
    [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
@@ -613,9 +613,9 @@ A.1.  Since -00
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                [Page 11]
+Grigorik & Weiss          Expires April 4, 2021                [Page 11]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
    o  Issue 153 (NetInfo API citation) added normative reference.
@@ -669,9 +669,9 @@ A.8.  Since -07
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                [Page 12]
+Grigorik & Weiss          Expires April 4, 2021                [Page 12]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
 A.9.  Since -08
@@ -725,9 +725,9 @@ Authors' Addresses
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                [Page 13]
+Grigorik & Weiss          Expires April 4, 2021                [Page 13]
 
-Internet-Draft              HTTP Client Hints             September 2020
+Internet-Draft              HTTP Client Hints               October 2020
 
 
    Ilya Grigorik
@@ -781,4 +781,4 @@ Internet-Draft              HTTP Client Hints             September 2020
 
 
 
-Grigorik & Weiss          Expires April 3, 2021                [Page 14]
+Grigorik & Weiss          Expires April 4, 2021                [Page 14]
