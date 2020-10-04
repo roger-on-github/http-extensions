@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-10-01T00:16:39.765008+00:00",
+  "timestamp": "2020-10-04T00:17:41.723316+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -28460,17 +28460,17 @@
       "id": "MDU6SXNzdWU2MjQ1MDAzMzY=",
       "title": "Creation Time and Expiration Time do not allow for clock skew",
       "url": "https://github.com/httpwg/http-extensions/issues/1187",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "richanna",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "signatures"
       ],
       "body": "The processing instructions for Creation Time and Expiration Time imply that verifiers are not permitted to account for clock skew during signature verification.",
       "createdAt": "2020-05-25T22:01:15Z",
-      "updatedAt": "2020-05-26T09:26:51Z",
-      "closedAt": null,
+      "updatedAt": "2020-10-01T19:26:33Z",
+      "closedAt": "2020-10-01T19:26:33Z",
       "comments": [
         {
           "author": "ioggstream",
@@ -28486,17 +28486,17 @@
       "id": "MDU6SXNzdWU2MjQ1MDA1NDU=",
       "title": "Require lowercased header field names as identifiers",
       "url": "https://github.com/httpwg/http-extensions/issues/1188",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "richanna",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
         "signatures"
       ],
       "body": "The current text allows mixed-case header field names when they are being used as content identifiers. This is unnecessary \u2013 header field names are case-insensitive \u2013 and creates opportunity for incompatibility.  Instead, content identifiers should always be lowercase.",
       "createdAt": "2020-05-25T22:02:09Z",
-      "updatedAt": "2020-05-25T23:15:30Z",
-      "closedAt": null,
+      "updatedAt": "2020-10-01T19:26:33Z",
+      "closedAt": "2020-10-01T19:26:33Z",
       "comments": []
     },
     {
@@ -30393,7 +30393,7 @@
       ],
       "body": "Extensible priority scheme is an extension which server might not choose to implement. However, [Low-Latency HTTP Live Streaming](https://tools.ietf.org/html/draft-pantos-hls-rfc8216bis-07) depends on current HTTP/2 dependencies and weights, and if it is to switch to the new scheme, client needs to tell if the server supports priority. In case priority isn't supported, client would disable low-latency features and fallback to regular HLS.",
       "createdAt": "2020-09-27T20:46:49Z",
-      "updatedAt": "2020-09-30T12:26:58Z",
+      "updatedAt": "2020-10-01T07:59:12Z",
       "closedAt": null,
       "comments": [
         {
@@ -30553,9 +30553,9 @@
         {
           "author": "kazuho",
           "authorAssociation": "CONTRIBUTOR",
-          "body": "@LPardue \r\n>> Not anticipating someone defining another prioritization scheme is a poor excuse not to plan for it.\r\n> \r\n> I did the thought experiment and wrote a candidate design. I didn't like the complexity this added to the protocol.\r\n\r\nI think that there is a distinction between having a signal and having a plan.\r\n\r\nWhile it is true that we do not have a signal to indicate support for extensible priorities, it does not mean that the new scheme is unextensible or replaceable. If there becomes a necessity, people can define new parameters to extend the scheme, or define new set of header fields / frames that would supersede the extensible priorities.\r\n\r\nRegarding if it would be a good idea to define a signal indicating support for extensible priorities _now_, under the premise that it would be used by the client to change it's behavior, I would reiterate what others (including me) have pointed out. Doing do that, because recognizing the prioritization signal does not mean that the server would (can) obey to those signals sent by the client.\r\n\r\nThe hard lesson we learned from HTTP/2 is that many servers do not (correctly) implement the prioritization scheme. We have seen poor performance due to that. That's why we are introducing a new scheme that is conservative, that would not lead to unnecessarily bad performance even when there are issues within the endpoints.",
+          "body": "@LPardue \r\n>> Not anticipating someone defining another prioritization scheme is a poor excuse not to plan for it.\r\n> \r\n> I did the thought experiment and wrote a candidate design. I didn't like the complexity this added to the protocol.\r\n\r\nI think that there is a distinction between having a signal and having a plan.\r\n\r\nWhile it is true that we do not have a signal to indicate support for extensible priorities, it does not mean that the new scheme is unextensible or replaceable. If there becomes a necessity, people can define new parameters to extend the scheme, or define new set of header fields / frames that would supersede the extensible priorities.\r\n\r\nRegarding if it would be a good idea to define a signal indicating support for extensible priorities _now_, under the premise that it would be used by the client to change it's behavior, I would reiterate what others (including me) have pointed out. Don't do that, because recognizing the prioritization signal does not mean that the server would (can) obey to those signals sent by the client.\r\n\r\nThe hard lesson we learned from HTTP/2 is that many servers do not (correctly) implement the prioritization scheme. We have seen poor performance due to that. That's why we are introducing a new scheme that is conservative, that would not lead to unnecessarily bad performance even when there are issues within the endpoints.",
           "createdAt": "2020-09-30T12:26:57Z",
-          "updatedAt": "2020-09-30T12:26:57Z"
+          "updatedAt": "2020-10-01T07:59:12Z"
         }
       ]
     },
@@ -30564,7 +30564,7 @@
       "id": "MDU6SXNzdWU3MTIxNDk4NTE=",
       "title": "The priorities I-D draft refers to non-existent FRAME_ENCODING_ERROR",
       "url": "https://github.com/httpwg/http-extensions/issues/1277",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "dtikhonov",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -30573,8 +30573,8 @@
       ],
       "body": "The latest version of the draft states:\r\n\r\n> Failure to parse the Priority Field Value MUST be treated as a connection error of type FRAME_ENCODING_ERROR.\r\n\r\nThere is no such error either in [the HTTP/3 draft](https://tools.ietf.org/html/draft-ietf-quic-http-31#section-11.2.3) or in [RFC7540](https://tools.ietf.org/html/rfc7540#section-7).\r\n\r\nPerhaps HTTP/3's _H3_FRAME_ERROR_ was meant?",
       "createdAt": "2020-09-30T17:49:19Z",
-      "updatedAt": "2020-09-30T17:59:50Z",
-      "closedAt": null,
+      "updatedAt": "2020-10-01T11:00:17Z",
+      "closedAt": "2020-10-01T11:00:17Z",
       "comments": [
         {
           "author": "LPardue",
@@ -66071,7 +66071,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDU2NTI1OTAz",
       "title": "Incorporating WG feedback",
       "url": "https://github.com/httpwg/http-extensions/pull/1235",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "richanna",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -66080,17 +66080,19 @@
       ],
       "body": "- Strengthened requirement for content identifiers for header fields to be lower-case (changed from SHOULD to MUST).\r\n- Relaxed guidance on processing Creation Time and Expiration Time to only require verifiers to examine them and test against the verifier\u2019s requirements.\r\n- Minor editorial corrections and readability improvements.\r\n\r\nResolves #1187, resolves #1188 ",
       "createdAt": "2020-07-24T23:14:24Z",
-      "updatedAt": "2020-08-18T10:55:43Z",
+      "updatedAt": "2020-10-01T19:26:33Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "a01b9d4abb116685fdad1061fd2f7ce6335c0748",
       "headRepository": "richanna/http-extensions",
       "headRefName": "master",
-      "headRefOid": "b60a4cd176db43f41b25a6c76483914d54324af4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "97576096de20e9272e7752a98e6ba1b9a33d30bb",
+      "closedAt": "2020-10-01T19:26:33Z",
+      "mergedAt": "2020-10-01T19:26:33Z",
+      "mergedBy": "jricher",
+      "mergeCommit": {
+        "oid": "ec43ebf7444441b4640a0f56d89ef331d5a46715"
+      },
       "comments": [],
       "reviews": [
         {
@@ -66122,7 +66124,47 @@
               "originalPosition": 48,
               "body": "I would split this passage in a separate PR and provide considerations. The rest LGTM.",
               "createdAt": "2020-08-18T10:54:59Z",
-              "updatedAt": "2020-08-18T10:55:22Z"
+              "updatedAt": "2020-10-01T19:24:53Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTAwNjUxNDEx",
+          "commit": {
+            "abbreviatedOid": "b60a4cd"
+          },
+          "author": "jricher",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-10-01T19:24:37Z",
+          "updatedAt": "2020-10-01T19:24:37Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "```suggestion\r\nA signature with a Creation Time that is in the future or an Expiration Time that is in the past MUST NOT be processed.  \r\n```",
+              "createdAt": "2020-10-01T19:24:37Z",
+              "updatedAt": "2020-10-01T19:24:53Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTAwNjUxOTY4",
+          "commit": {
+            "abbreviatedOid": "9757609"
+          },
+          "author": "jricher",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-10-01T19:25:21Z",
+          "updatedAt": "2020-10-01T19:25:22Z",
+          "comments": [
+            {
+              "originalPosition": 48,
+              "body": "Done, now available in #1280 as a starting point",
+              "createdAt": "2020-10-01T19:25:22Z",
+              "updatedAt": "2020-10-01T19:25:22Z"
             }
           ]
         }
@@ -68575,7 +68617,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDk1NzM2OTMz",
       "title": "fix the error type when PRIORITY_UPDATE is bogus",
       "url": "https://github.com/httpwg/http-extensions/pull/1278",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -68584,17 +68626,19 @@
       ],
       "body": "Fixes #1277 \r\n\r\n@dtikhonov correctly pointed out that the draft contained a made up error code. On inspection, we need to define specific error codes for both H2 and H3. This change does that.",
       "createdAt": "2020-09-30T19:29:16Z",
-      "updatedAt": "2020-09-30T23:41:11Z",
+      "updatedAt": "2020-10-01T11:00:18Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "6d32a39ece881399f34211bb92ea44e71a5bad92",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority-update-encoding-error-type",
       "headRefOid": "7427617dd679faff6e7dc92a662b159d014eb7d6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2020-10-01T11:00:17Z",
+      "mergedAt": "2020-10-01T11:00:17Z",
+      "mergedBy": "LPardue",
+      "mergeCommit": {
+        "oid": "3c4d5d7a1e996b869b3efd96f0faf80217c3c798"
+      },
       "comments": [],
       "reviews": [
         {
@@ -68630,7 +68674,7 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDk1NzQ2MDM0",
       "title": "Priorities-01 changelog",
       "url": "https://github.com/httpwg/http-extensions/pull/1279",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -68639,17 +68683,19 @@
       ],
       "body": "",
       "createdAt": "2020-09-30T19:45:16Z",
-      "updatedAt": "2020-09-30T23:41:40Z",
+      "updatedAt": "2020-10-01T10:58:39Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "6d32a39ece881399f34211bb92ea44e71a5bad92",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "priority-01-changelog",
       "headRefOid": "842618def07b891063c01e0195c03ca3dd2632f6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2020-10-01T10:58:38Z",
+      "mergedAt": "2020-10-01T10:58:38Z",
+      "mergedBy": "LPardue",
+      "mergeCommit": {
+        "oid": "58fff3f0765a7230f128bb1b67f0344d8c50f646"
+      },
       "comments": [],
       "reviews": [
         {
@@ -68666,6 +68712,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 1280,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDk2NDk0Mzg4",
+      "title": "Extract creation and expiration time requirements language",
+      "url": "https://github.com/httpwg/http-extensions/pull/1280",
+      "state": "OPEN",
+      "author": "jricher",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Originally in #1235",
+      "createdAt": "2020-10-01T19:24:19Z",
+      "updatedAt": "2020-10-01T19:25:55Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "3c4d5d7a1e996b869b3efd96f0faf80217c3c798",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "jricher-signature-time-check",
+      "headRefOid": "fb662931285d2a2c69312c43a616921b5f1eff48",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
