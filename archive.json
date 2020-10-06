@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2020-10-04T00:17:41.723316+00:00",
+  "timestamp": "2020-10-06T00:16:52.988075+00:00",
   "repo": "httpwg/http-extensions",
   "labels": [
     {
@@ -30257,9 +30257,24 @@
       ],
       "body": "The structured field definition of dictionaries [says](https://tools.ietf.org/html/draft-ietf-httpbis-header-structure-19#section-3.2):\r\n\r\n> Note that Dictionaries can have their members split across multiple\r\n   lines inside a header or trailer section;\r\n\r\nThe priority work is debating updates to priorities, which can be piecemeal.  I could read this two ways:\r\n\r\n1. The value of a field can be split within a field section.\r\n2. The value of a field can be split across multiple field sections.\r\n\r\nThough the \"or\" implies that it is more of the former than the latter.\r\n\r\nThe core spec says this of trailers:\r\n\r\n> Trailer fields ought to be processed and stored separately from the fields in the header section to avoid contradicting message semantics known at the time the header section was complete. \r\n\r\nWhich reinforces that view.\r\n\r\nA simple fix might be to s/inside a header or trailer section/of the same header or trailer section/.\r\n\r\nHowever, I couldn't find anything in the core spec about combining field lines.  It is a common practice that might be worth documenting/defining somehow.",
       "createdAt": "2020-09-24T04:25:29Z",
-      "updatedAt": "2020-09-24T04:25:29Z",
+      "updatedAt": "2020-10-05T06:16:40Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "mnot",
+          "authorAssociation": "MEMBER",
+          "body": "Agreed WRT the suggestion. See [here](https://httpwg.org/http-core/draft-ietf-httpbis-semantics-latest.html#field-order) in the core spec for what you're looking for.",
+          "createdAt": "2020-10-05T05:49:49Z",
+          "updatedAt": "2020-10-05T05:49:49Z"
+        },
+        {
+          "author": "bsdphk",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "agreed.",
+          "createdAt": "2020-10-05T06:16:40Z",
+          "updatedAt": "2020-10-05T06:16:40Z"
+        }
+      ]
     },
     {
       "number": 1270,
@@ -30350,10 +30365,12 @@
       "author": "Jxck",
       "authorAssociation": "NONE",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "header-structure"
+      ],
       "body": "according to the current spec, `dict-member` is defined as\r\n\r\n```bnf\r\ndict-member = member-name [ \"=\" member-value ]\r\n```\r\n\r\nbut current test includes case like below as valid. [link to test](https://github.com/httpwg/structured-field-tests/blob/master/dictionary.json#L114-L117)\r\n\r\n```json\r\n    {\r\n        \"name\": \"missing value with params dictionary\",\r\n        \"raw\": [\"a=1, b;foo=9, c=3\"],\r\n        \"header_type\": \"dictionary\",\r\n        \"expected\": [[\"a\", [1, []]], [\"b\", [true, [[\"foo\", 9]]]], [\"c\", [3, []]]]\r\n    }\r\n```\r\n\r\n`b` 's member-value's are omitted, so `b` is implicitly `true` and it **has parameters** `foo=9` too.\r\n\r\nin my understand from BNF,  if `=` doesn't appear next to member-name, member name section are omitted.\r\n\r\nso if its should valid, BNF should be seems like this.\r\n\r\n```bnf\r\ndict-member = member-name [ ( \"=\" member-value) / parameters ]\r\n```\r\n",
       "createdAt": "2020-09-27T16:47:08Z",
-      "updatedAt": "2020-09-29T12:36:13Z",
+      "updatedAt": "2020-10-05T23:01:51Z",
       "closedAt": null,
       "comments": [
         {
@@ -30376,6 +30393,62 @@
           "body": "This indeed looks like an oversight, and yes, the ABNF needs to be fixed.",
           "createdAt": "2020-09-29T12:36:12Z",
           "updatedAt": "2020-09-29T12:36:12Z"
+        },
+        {
+          "author": "mnot",
+          "authorAssociation": "MEMBER",
+          "body": "Oh, that's very annoying; I remember seeing this, but I thought it was fixed.\r\n\r\nPeople should not implemented based upon the ABNF, but yes, it should be fixed.\r\n\r\nI think the right approach is:\r\n\r\n~~~ abnf\r\ndict-member    = member-name ( \"=\" member-value ) / parameters\r\n~~~",
+          "createdAt": "2020-10-05T05:56:19Z",
+          "updatedAt": "2020-10-05T05:56:19Z"
+        },
+        {
+          "author": "mnot",
+          "authorAssociation": "MEMBER",
+          "body": "ooh, Github knows ABNF, @reschke!",
+          "createdAt": "2020-10-05T05:57:01Z",
+          "updatedAt": "2020-10-05T05:57:01Z"
+        },
+        {
+          "author": "bsdphk",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Agree to @mnots ABNF.\r\n\r\nOn a first quick reading it might give people the wrong idea, that parameters are only possible without a value, but the text (and the rest of the ABNF) clarifies that well.",
+          "createdAt": "2020-10-05T06:24:45Z",
+          "updatedAt": "2020-10-05T06:24:45Z"
+        },
+        {
+          "author": "Jxck",
+          "authorAssociation": "NONE",
+          "body": "@mnot just a question\r\n> People should not implemented based upon the ABNF\r\n\r\nWhy should not ? What should I implement based upon ?",
+          "createdAt": "2020-10-05T09:17:00Z",
+          "updatedAt": "2020-10-05T09:17:34Z"
+        },
+        {
+          "author": "phluid61",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@mnot \r\n> \r\n> I think the right approach is:\r\n> \r\n> ```abnf\r\n> dict-member    = member-name ( \"=\" member-value ) / parameters\r\n> ```\r\n\r\nDo you mean:\r\n\r\n```abnf\r\ndict-member    = member-name ( \"=\" member-value / parameters ) \r\n```\r\n\r\n? ",
+          "createdAt": "2020-10-05T21:17:34Z",
+          "updatedAt": "2020-10-05T21:18:34Z"
+        },
+        {
+          "author": "phluid61",
+          "authorAssociation": "COLLABORATOR",
+          "body": "@Jxck \r\n> \r\n> Why should not ? What should I implement based upon ?\r\n\r\nThe algorithms. See Section 1.2: \"When parsing from HTTP fields, implementations MUST have behavior that is indistinguishable from following the algorithms. If there is disagreement between the parsing algorithms and ABNF, the specified algorithms take precedence.\" Etc. ",
+          "createdAt": "2020-10-05T21:22:59Z",
+          "updatedAt": "2020-10-05T21:22:59Z"
+        },
+        {
+          "author": "dtikhonov",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> Implementations MUST have behavior that is indistinguishable from following the algorithms.\r\n\r\nOne way to parse it is that one can use ABNF as long as it produces the right answer...",
+          "createdAt": "2020-10-05T21:28:14Z",
+          "updatedAt": "2020-10-05T21:28:14Z"
+        },
+        {
+          "author": "phluid61",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> \r\n> \r\n> > Implementations MUST have behavior that is indistinguishable from following the algorithms.\r\n> \r\n> One way to parse it is that one can use ABNF as long as it produces the right answer...\r\n\r\nSure, if the ABNF is correct. Which it, apparently, isn't (currently).",
+          "createdAt": "2020-10-05T23:01:51Z",
+          "updatedAt": "2020-10-05T23:01:51Z"
         }
       ]
     },
@@ -65424,23 +65497,23 @@
       "id": "MDExOlB1bGxSZXF1ZXN0NDIzMTcyOTk2",
       "title": "header-structure: rephrase sentence in list parsing section",
       "url": "https://github.com/httpwg/http-extensions/pull/1201",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "undef1nd",
-      "authorAssociation": "FIRST_TIME_CONTRIBUTOR",
+      "authorAssociation": "NONE",
       "assignees": [],
       "labels": [
         "header-structure"
       ],
       "body": "As I find this sentence from `Parsing a List` and `Parsing a Dictionary` sections a bit confusing, here's how I'd rephrase it.",
       "createdAt": "2020-05-26T12:24:34Z",
-      "updatedAt": "2020-06-01T13:27:05Z",
+      "updatedAt": "2020-10-05T06:01:06Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "68b78457dabe97e9bbedd687ee1cbc3a4089cac0",
       "headRepository": "undef1nd/http-extensions",
       "headRefName": "header-structure-minor-change",
       "headRefOid": "7cb1c3835d0d46fb36e8f53e567f4f13f3e58116",
-      "closedAt": null,
+      "closedAt": "2020-10-05T06:01:06Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
@@ -66526,7 +66599,7 @@
       "labels": [],
       "body": "Fix: #1238 \r\n\r\n@yoavweiss \r\n@igrigorik \r\n@davidben ",
       "createdAt": "2020-08-12T14:29:56Z",
-      "updatedAt": "2020-08-13T12:22:46Z",
+      "updatedAt": "2020-10-05T09:52:57Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "a3c00db173ed74703dd0d0b6d16d72add63cd761",
@@ -66544,6 +66617,13 @@
           "body": "Adjusted scope of change because the Client Hints proposal is further along in the process than I realized",
           "createdAt": "2020-08-13T12:22:46Z",
           "updatedAt": "2020-08-13T12:22:46Z"
+        },
+        {
+          "author": "yoavweiss",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This LGTM based on the discussion in #1238\r\n\r\n@mnot - thoughts on landing this at this point? Note that https://github.com/httpwg/http-extensions/pull/1282 means we'd probably need to republish a draft anyway.",
+          "createdAt": "2020-10-05T09:52:57Z",
+          "updatedAt": "2020-10-05T09:52:57Z"
         }
       ],
       "reviews": []
@@ -68725,13 +68805,123 @@
       "labels": [],
       "body": "Originally in #1235",
       "createdAt": "2020-10-01T19:24:19Z",
-      "updatedAt": "2020-10-01T19:25:55Z",
+      "updatedAt": "2020-10-06T00:04:10Z",
       "baseRepository": "httpwg/http-extensions",
       "baseRefName": "master",
       "baseRefOid": "3c4d5d7a1e996b869b3efd96f0faf80217c3c798",
       "headRepository": "httpwg/http-extensions",
       "headRefName": "jricher-signature-time-check",
       "headRefOid": "fb662931285d2a2c69312c43a616921b5f1eff48",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTAxNjYyODYw",
+          "commit": {
+            "abbreviatedOid": "fb66293"
+          },
+          "author": "ioggstream",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "imho this PR introduces a very weak normative part. I'd ask for feedback from the community/ML.",
+          "createdAt": "2020-10-04T21:56:55Z",
+          "updatedAt": "2020-10-04T21:58:27Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "At first, thanks @jricher  for asking me to review!\r\n\r\nIn this paragraph imho we are giving information that does not help interoperability:\r\n- the first sentence states that \"the verifier MUST comply with their own requirements, that depend on the use case\", but it does not make a clear statement on those requirements;\r\n- the fact that an \"expired\" signature MAY be accepted can be perceived as an abuse from a signer which instead wants to be in control of the data he signed.\r\n\r\nI think that using fields like `nbf`,`iat`,`exp` allows to implement the very same behavior without removing control from the signer, and  putting a solid interoperability ground instead: signer and verifier just have to agree about the interval they accept.\r\n\r\nThis is clearly IMHO, and probably @martinthomson or @jyasskin can give more useful guidance than me on this subject.",
+              "createdAt": "2020-10-04T21:56:55Z",
+              "updatedAt": "2020-10-04T21:58:27Z"
+            }
+          ]
+        },
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTAyNDk5ODM4",
+          "commit": {
+            "abbreviatedOid": "fb66293"
+          },
+          "author": "richanna",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2020-10-06T00:03:28Z",
+          "updatedAt": "2020-10-06T00:03:29Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Thanks for the feedback!\r\n\r\nThere are three objectives that this paragraph is trying to achieve:\r\n\r\n- 1st Sentence: Require implementers' time-related constraints to be enforced relative to the Creation Time and Expiration Time properties defined by the spec (as opposed to the Date header, or some proprietary property embedded in the request somewhere).\r\n- 2nd Sentence: Allow verifiers to account for clock skew between the signer and verifier, which may be significant.\r\n- 3rd Sentence: Allow verifiers to reject signatures based on their own requirements, i.e., \"I don't care if you're telling me this 2 year old signature fine, I'm not going to accept it.\"\r\n\r\nOpen to suggestions on rewording to make these objectives clearer.\r\n\r\n> the first sentence states that \"the verifier MUST comply with their own requirements, that depend on the use case\", but it does not make a clear statement on those requirements;\r\n\r\nExplained above, but restating for clarity: the purpose is to ensure that verifiers use the spec-defined Creation Time and Expiration Time properties to evaluate time-related constraints. Would it help to give example constraints? (e.g., a maximum signature age)\r\n\r\n> the fact that an \"expired\" signature MAY be accepted can be perceived as an abuse from a signer which instead wants to be in control of the data he signed.\r\n\r\nIt may be necessary for a verifier to accept a signature whose Expiration Time is after the current time as measured by the verifier, in order to allow verifiers to account for clock skew between signer and verifier. Maybe it would be better to reframe this as a verifier may offset their current time by some amount to account for clock skew, at least for the purposes of evaluating time-related constraints? That would allow us to bring back in the prohibition on accepting signatures past their Expiration Time.\r\n\r\n> I think that using fields like nbf, iat, exp allows to implement the very same behavior\r\n\r\nI'm not sure how to interpret this in the context of this spec, since it does not use JWTs.",
+              "createdAt": "2020-10-06T00:03:28Z",
+              "updatedAt": "2020-10-06T00:04:10Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 1281,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDk3NDczNDAy",
+      "title": "digest-headers: update to semantics-12",
+      "url": "https://github.com/httpwg/http-extensions/pull/1281",
+      "state": "OPEN",
+      "author": "reschke",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [
+        "digest-headers",
+        "editorial"
+      ],
+      "body": "",
+      "createdAt": "2020-10-04T17:59:22Z",
+      "updatedAt": "2020-10-04T18:00:47Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "ec43ebf7444441b4640a0f56d89ef331d5a46715",
+      "headRepository": "httpwg/http-extensions",
+      "headRefName": "reschke-patch-1",
+      "headRefOid": "4b5e89977bb23f9a91332ddf06550a0624c8be20",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3NTAxNjQ1NDk2",
+          "commit": {
+            "abbreviatedOid": "4b5e899"
+          },
+          "author": "LPardue",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "Thanks!",
+          "createdAt": "2020-10-04T18:00:47Z",
+          "updatedAt": "2020-10-04T18:00:47Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 1282,
+      "id": "MDExOlB1bGxSZXF1ZXN0NDk3NzMxMjUx",
+      "title": "[client-hints] Remove unclosed parens and rearrange related sentences",
+      "url": "https://github.com/httpwg/http-extensions/pull/1282",
+      "state": "OPEN",
+      "author": "yoavweiss",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #1272",
+      "createdAt": "2020-10-05T09:50:07Z",
+      "updatedAt": "2020-10-05T09:50:07Z",
+      "baseRepository": "httpwg/http-extensions",
+      "baseRefName": "master",
+      "baseRefOid": "ec43ebf7444441b4640a0f56d89ef331d5a46715",
+      "headRepository": "yoavweiss/http-extensions",
+      "headRefName": "client_hints_unclosed_parens",
+      "headRefOid": "45c20991efd24d8289f73d3847eceb20e41e0ac5",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
