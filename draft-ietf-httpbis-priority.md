@@ -212,7 +212,7 @@ the Priority header field.
 In both cases, the set of priority parameters is encoded as a Structured Fields
 Dictionary ({{!STRUCTURED-FIELDS}}).
 
-This document defines the urgency(`u`) and incremental(`i`) parameters. When
+This document defines the urgency(`u`), incremental(`i`) and acknowledge ('ack') parameters. When
 receiving an HTTP request that does not carry these priority parameters, a
 server SHOULD act as if their default values were specified. Note that handling
 of omitted parameters is different when processing an HTTP response; see
@@ -281,6 +281,24 @@ set to `5` and the incremental parameter set to `true`.
 :authority = example.net
 :path = /image.jpg
 priority = u=5, i
+~~~
+
+## Acknowledge
+
+The acknowledge parameter (“ack") takes an sf-boolean. A value of true (`1`)
+is a request for the response to carry a Priority HTTP Header Field.
+
+The default value of the acknowledge parameter is false (`0`).
+
+The following example shows a request that requests a Priority HTTP Header Field
+in its response.
+
+~~~ example
+:method = GET
+:scheme = https
+:authority = example.net
+:path = /image.jpg
+priority = u=5, i, ack
 ~~~
 
 ## Defining New Parameters
@@ -531,7 +549,7 @@ decisions. No guidance is provided about how this can or should be done. Factors
 such as implementation choices or deployment environment also play a role. Any
 given connection is likely to have many dynamic permutations. For these reasons,
 there is no unilateral perfect scheduler and this document only provides some
-basic recommendations for implementations. 
+basic recommendations for implementations.
 
 Clients cannot depend on particular treatment based on priority signals. Servers
 can use other information to prioritize responses.
@@ -568,6 +586,13 @@ to do so is an implementation decision. For example, a server might
 pre-emptively send responses of a particular incremental type based on other
 information such as content size.
 
+If a server or intermediary that supports prioritization as described by this
+document responds to a request with a Priority HTTP Header Field containing
+an acknowledge parameter with a value of true, it MUST ensure that the response
+carries a Priority HTTP Header Field. The parameters of the response Priority HTTP
+Header Field SHOULD reflect any prioritization performed, by the intermediary if
+it performed prioritization or by the server otherwise. A response Priority
+HTTP Header Field MAY contain no parameters if no prioritization was performed.
 
 
 # Fairness {#fairness}
